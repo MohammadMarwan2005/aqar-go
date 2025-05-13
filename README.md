@@ -7,7 +7,8 @@ This is the AqarGo Flutter App Repo.
 - [x] Setup Core Classes like: `DomainError`, `Resource`, `APIService`, `SafeAPICaller`, `APIError`
 - [ ] Setup Theme
 - [ ] Setup Typography
-- [ ] Setup LangCubit
+- [x] Setup LangFeature
+- [x] Setup routing using GoRouter
 - [x] Setup LocalDataRepo (with shared prefs and secure storage)
-- [ ] Setup DI using get_it
+- [x] Setup DI using get_it
 - [ ] Setup Reusables like Button, TextField and so on...

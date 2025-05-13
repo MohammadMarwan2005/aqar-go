@@ -1,17 +1,21 @@
-import 'package:aqar_go/presentation/feature/onboarding/onboarding_screen.dart';
-import 'package:aqar_go/presentation/routing/routes.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:go_router/go_router.dart';
 
-class AppRouter {
-  Route? generateRoute(RouteSettings settings) {
-    //this arguments to be passed in any screen like this ( arguments as ClassName )
-    final arguments = settings.arguments;
+import '../feature/onboarding/onboarding_screen.dart';
+import '../feature/test/test_screen.dart';
+import '../routing/routes.dart';
 
-    switch (settings.name) {
-      case Routes.onboarding:
-        return MaterialPageRoute(builder: (_) => OnboardingScreen());
-      default:
-        return null;
-    }
-  }
-}
+final GlobalKey<NavigatorState> goRouteRootNavigatorKey =
+    GlobalKey<NavigatorState>();
+
+final appRouter = GoRouter(
+  navigatorKey: goRouteRootNavigatorKey,
+  initialLocation: Routes.test,
+  routes: [
+    GoRoute(
+      path: Routes.onboarding,
+      builder: (context, state) => OnboardingScreen(),
+    ),
+    GoRoute(path: Routes.test, builder: (context, state) => TestScreen()),
+  ],
+);
