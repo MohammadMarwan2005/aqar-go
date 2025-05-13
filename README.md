@@ -8,6 +8,6 @@ This is the AqarGo Flutter App Repo.
 - [ ] Setup Theme
 - [ ] Setup Typography
 - [ ] Setup LangCubit
-- [ ] Setup LocalDataRepo (with shared prefs and secure storage)
+- [x] Setup LocalDataRepo (with shared prefs and secure storage)
 - [ ] Setup DI using get_it
 - [ ] Setup Reusables like Button, TextField and so on...
