@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 
-import '../../domain/model/Resource.dart';
+import '../../domain/model/resource.dart';
 import '../../domain/model/domain_error.dart';
 import '../model/api_error.dart';
 

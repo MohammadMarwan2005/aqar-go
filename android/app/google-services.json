@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "759335379864",
+    "project_id": "aqar-go",
+    "storage_bucket": "aqar-go.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:759335379864:android:6bed5dad18690c487401ed",
+        "android_client_info": {
+          "package_name": "com.alaishat.mohammad.aqargo.aqar_go"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAusOT_L2N8IaH7FZ1Bpj46xyneWmgZxxM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

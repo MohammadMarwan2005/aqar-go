@@ -4,7 +4,7 @@ import 'package:aqar_go/data/model/api_response.dart';
 import 'package:aqar_go/data/model/auth/auth_response_data.dart';
 import 'package:aqar_go/data/model/auth/login_request.dart';
 import 'package:aqar_go/data/model/auth/register_request.dart';
-import 'package:aqar_go/domain/model/Resource.dart';
+import 'package:aqar_go/domain/model/resource.dart';
 
 class AuthRepo {
   final APIService _apiService;
