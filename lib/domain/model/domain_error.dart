@@ -1,3 +1,6 @@
+import 'package:aqar_go/presentation/lang/app_localization.dart';
+import 'package:flutter/cupertino.dart';
+
 class DomainError {
   final String message;
   final String? messageId;
@@ -38,4 +41,11 @@ class DomainError {
     message: _badCertificateErrorMessage,
     messageId: _badCertificateErrorMessage,
   );
+}
+
+
+extension X on DomainError {
+  String getMessage(BuildContext context) {
+    return messageId?.tr(context) ?? message;
+  }
 }

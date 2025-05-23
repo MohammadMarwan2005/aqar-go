@@ -1,6 +1,10 @@
+import 'package:aqar_go/data/repo/auth_repo.dart';
+import 'package:aqar_go/presentation/feature/auth/register/register_cubit.dart';
+
 import '../../data/api/api_service.dart';
 import '../../data/api/safe_api_caller.dart';
 import '../../data/repo/local_data_repo.dart';
+import '../../presentation/feature/auth/login/login_cubit.dart';
 import '../../presentation/lang/lang_cubit.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -45,8 +49,12 @@ Future<void> di() async {
   getIt.registerLazySingleton<LocalDataRepo>(
     () => LocalDataRepo(sharedPrefs: sharedPrefs, storage: storage),
   );
+  getIt.registerLazySingleton<AuthRepo>(() => AuthRepo(getIt(), getIt()));
 
 
   // cubits:
   getIt.registerFactory<LangCubit>(() => LangCubit(getIt()));
+  getIt.registerLazySingleton<LoginCubit>(() => LoginCubit(getIt(), getIt()));
+  getIt.registerLazySingleton<RegisterCubit>(() => RegisterCubit(getIt(), getIt()));
+
 }

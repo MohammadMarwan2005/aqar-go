@@ -6,9 +6,10 @@ part 'api_error.g.dart';
 @JsonSerializable()
 class APIError {
   final String message;
-  // todo: add more fields like details and code
+  final int status;
+  final Map<String, List<String>>? data;
 
-  APIError({required this.message});
+  APIError(this.message, this.status, this.data);
 
   factory APIError.fromJson(Map<String, dynamic> json) =>
       _$APIErrorFromJson(json);
@@ -18,6 +19,8 @@ class APIError {
 
 extension X on APIError {
   DomainError toDomainError() {
-    return DomainError(message: message);
+    final List<String> details =
+        (data?.values ?? {}).expand((element) => element).toList();
+    return DomainError(message: message, details: details);
   }
 }

@@ -44,7 +44,7 @@ class AppButton extends StatelessWidget {
     );
 
     final child = Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
       child: Row(
         mainAxisAlignment:
             isLoading
