@@ -39,9 +39,10 @@ class RegisterCubit extends Cubit<AuthState> {
     final firstNameValidation = firstName.validateNotEmpty();
     final lastNameNameValidation = lastName.validateNotEmpty();
     final phoneNumberValidation = phoneNumber.validatePhoneNumber();
-    final passwordConfirmationValidation = lastName
+    final passwordConfirmationValidation = password
         .validatePasswordConfirmations(passwordConfirmation);
 
+    formKey.currentState?.validate();
     if (validate &&
         (emailValidation != null ||
             passwordValidation != null ||

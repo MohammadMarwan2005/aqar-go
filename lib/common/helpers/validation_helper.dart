@@ -49,7 +49,7 @@ extension ValidationHelper on String? {
   String? validatePhoneNumber() {
     final phoneRegex = RegExp(r'^09\d{8}$');
     if (!phoneRegex.hasMatch(this ?? "")) {
-      return "Invalid phone number";
+      return "Enter a valid phone number";
     }
     return null;
   }

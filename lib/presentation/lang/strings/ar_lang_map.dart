@@ -42,5 +42,16 @@ const Map<String, String> _arLangMap = {
   "Email": "البريد الإلكتروني",
   "Something went wrong!": "حدث خطأ!",
   "Already have an account?": "هل لديك حساب بالفعل؟",
-  "Password Confirmation": "تأكيد كلمة المرور"
+  "Password Confirmation": "تأكيد كلمة المرور",
+  "Email cannot be empty": "لا يمكن أن يكون البريد الإلكتروني فارغًا",
+  "Enter a valid email address": "أدخل عنوان بريد إلكتروني صالح",
+  "This field cannot be empty": "لا يمكن أن يكون هذا الحقل فارغًا",
+  "Password cannot be empty": "لا يمكن أن تكون كلمة المرور فارغة",
+  "Password must have at least one uppercase letter": "يجب أن تحتوي كلمة المرور على حرف كبير واحد على الأقل",
+  "Password must have at least one lowercase letter": "يجب أن تحتوي كلمة المرور على حرف صغير واحد على الأقل",
+  "Password must have at least one special character": "يجب أن تحتوي كلمة المرور على رمز خاص واحد على الأقل",
+  "Password must have at least one number": "يجب أن تحتوي كلمة المرور على رقم واحد على الأقل",
+  "Password should be at least 8 characters": "يجب أن تكون كلمة المرور مكونة من 8 أحرف على الأقل",
+  "Passwords do not match": "كلمتا المرور غير متطابقتين",
+  "Enter a valid phone number" : "أدخل رقم هاتف صالح"
 };

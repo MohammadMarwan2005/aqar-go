@@ -27,6 +27,9 @@ class LoginCubit extends Cubit<AuthState> {
     final password = passwordController.text;
     final emailValidation = email.validateEmail();
     final passwordValidation = password.validatePassword();
+
+    formKey.currentState?.validate();
+
     if (validate && (emailValidation != null || passwordValidation != null)) {
       emit(
         AuthState.invalidInput(() {
