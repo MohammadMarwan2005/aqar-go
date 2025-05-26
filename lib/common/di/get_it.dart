@@ -1,5 +1,6 @@
 import 'package:aqar_go/data/repo/auth_repo.dart';
 import 'package:aqar_go/presentation/feature/auth/register/register_cubit.dart';
+import 'package:aqar_go/presentation/routing/routing_use_case.dart';
 
 import '../../data/api/api_service.dart';
 import '../../data/api/safe_api_caller.dart';
@@ -50,6 +51,9 @@ Future<void> di() async {
     () => LocalDataRepo(sharedPrefs: sharedPrefs, storage: storage),
   );
   getIt.registerLazySingleton<AuthRepo>(() => AuthRepo(getIt(), getIt()));
+
+  // use cases:
+  getIt.registerLazySingleton<RoutingUseCase>(() => RoutingUseCase(getIt()));
 
 
   // cubits:

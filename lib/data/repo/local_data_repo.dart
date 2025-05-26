@@ -26,8 +26,8 @@ class LocalDataRepo {
     hasTokenVar = true;
   }
 
-  Future<String> getToken() async {
-    var token = await _storage.read(key: DataAccessKeys.tokenKey) ?? "";
+  Future<String?> getToken() async {
+    var token = await _storage.read(key: DataAccessKeys.tokenKey);
     debugLog("🟢 Debug: READ TOKEN:$token");
     return token;
   }

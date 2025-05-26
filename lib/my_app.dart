@@ -1,4 +1,3 @@
-import 'package:aqar_go/common/helpers/logging_helper.dart';
 import 'package:aqar_go/presentation/lang/app_localization.dart';
 import 'package:aqar_go/presentation/lang/lang_cubit.dart';
 import 'package:aqar_go/presentation/lang/lang_state.dart';
@@ -7,7 +6,6 @@ import 'package:aqar_go/presentation/theme/dark_blue_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'common/di/get_it.dart';
 
 class MyApp extends StatelessWidget {

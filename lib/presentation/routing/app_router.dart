@@ -14,9 +14,11 @@ import '../routing/routes.dart';
 final GlobalKey<NavigatorState> goRouteRootNavigatorKey =
     GlobalKey<NavigatorState>();
 
+String firstRoute = Routes.onboarding;
+
 final appRouter = GoRouter(
   navigatorKey: goRouteRootNavigatorKey,
-  initialLocation: Routes.onboarding,
+  initialLocation: firstRoute,
   routes: [
     GoRoute(
       path: Routes.onboarding,
@@ -32,11 +34,13 @@ final appRouter = GoRouter(
     ),
     GoRoute(
       path: Routes.register,
-      builder: (context, state) => BlocProvider(
-        create: (context) => getIt<RegisterCubit>(),
-        child: RegisterScreen(),
-      ),
+      builder:
+          (context, state) => BlocProvider(
+            create: (context) => getIt<RegisterCubit>(),
+            child: RegisterScreen(),
+          ),
     ),
     GoRoute(path: Routes.test, builder: (context, state) => TestScreen()),
+    GoRoute(path: Routes.home, builder: (context, state) => TestScreen()),
   ],
 );

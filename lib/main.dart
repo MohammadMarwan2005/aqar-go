@@ -1,4 +1,6 @@
 import 'package:aqar_go/common/di/get_it.dart';
+import 'package:aqar_go/presentation/routing/app_router.dart';
+import 'package:aqar_go/presentation/routing/routing_use_case.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -11,6 +13,8 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+  final routingUseCase = getIt<RoutingUseCase>();
+  firstRoute = await routingUseCase.getFirstRoute();
   // usePathUrlStrategy();
   runApp(const MyApp());
 }
