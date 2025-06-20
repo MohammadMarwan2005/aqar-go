@@ -6,6 +6,7 @@ sealed class Routes {
   static const verifyPhone = "/phone-verify";
   static const profile = "/profile";
   static const home = "/home-user";
+  static const createPost = "/create-post";
 
   static bool isAllowed(String route) {
     return true;

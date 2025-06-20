@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../theme/app_static_colors.dart';
 
 class AppTextField extends StatefulWidget {
+  final String? initialValue;
   final String labelText;
   final bool isPassword;
   final TextInputType? keyboardType;
@@ -28,6 +29,7 @@ class AppTextField extends StatefulWidget {
     this.maxLines,
     this.textInputAction,
     this.fieldKey,
+    this.initialValue,
   });
 
   @override
@@ -48,6 +50,7 @@ class _AppTextFieldState extends State<AppTextField> {
     final colorScheme = Theme.of(context).colorScheme;
 
     return TextFormField(
+      initialValue: widget.initialValue,
       textInputAction: widget.textInputAction,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       maxLines: (obscureText) ? 1 : widget.maxLines,

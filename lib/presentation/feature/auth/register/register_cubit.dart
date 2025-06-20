@@ -26,7 +26,7 @@ class RegisterCubit extends Cubit<AuthState> {
     });
   }
 
-  register({bool validate = true}) async {
+  Future<void> register({bool validate = true}) async {
     final email = emailController.text;
     final password = passwordController.text;
     final firstName = firstNameController.text;
@@ -39,7 +39,7 @@ class RegisterCubit extends Cubit<AuthState> {
     final firstNameValidation = firstName.validateNotEmpty();
     final lastNameNameValidation = lastName.validateNotEmpty();
     final phoneNumberValidation = phoneNumber.validatePhoneNumber();
-    final passwordConfirmationValidation = lastName
+    final passwordConfirmationValidation = password
         .validatePasswordConfirmations(passwordConfirmation);
 
     if (validate &&

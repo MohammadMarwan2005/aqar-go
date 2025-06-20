@@ -1,12 +1,16 @@
-import 'package:aqar_go/presentation/feature/auth/login/login_cubit.dart';
-import 'package:aqar_go/presentation/feature/auth/login/login_screen.dart';
-import 'package:aqar_go/presentation/feature/auth/register/register_cubit.dart';
-import 'package:aqar_go/presentation/feature/auth/register/register_screen.dart';
+import 'package:aqar_go/presentation/feature/media_picker/media_picker_cubit.dart';
+
+import '../../presentation/feature/auth/login/login_cubit.dart';
+import '../../presentation/feature/auth/login/login_screen.dart';
+import '../../presentation/feature/auth/register/register_cubit.dart';
+import '../../presentation/feature/auth/register/register_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../common/di/get_it.dart';
+import '../feature/edit_create_post/cubit/edit_create_post_cubit.dart';
+import '../feature/edit_create_post/edit_create_post_screen.dart';
 import '../feature/onboarding/onboarding_screen.dart';
 import '../feature/test/test_screen.dart';
 import '../routing/routes.dart';
@@ -42,5 +46,16 @@ final appRouter = GoRouter(
     ),
     GoRoute(path: Routes.test, builder: (context, state) => TestScreen()),
     GoRoute(path: Routes.home, builder: (context, state) => TestScreen()),
+    GoRoute(
+      path: Routes.createPost,
+      builder:
+          (context, state) => MultiBlocProvider(
+            providers: [
+              BlocProvider<MediaPickerCubit>(create: (context) => getIt()),
+              BlocProvider<EditCreatePostCubit>(create: (context) => getIt()),
+            ],
+            child: EditCreatePostScreen(),
+          ),
+    ),
   ],
 );

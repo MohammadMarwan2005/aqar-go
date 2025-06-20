@@ -18,13 +18,14 @@ authListener(BuildContext context, AuthState state) {
       );
     },
     error: (domainError) {
-      var details = domainError.details;
-      var title = domainError.getMessage(context);
-      if(details == null || details.isEmpty) {
-        details = [title];
-        title = "Something went wrong!".tr(context);
-      }
-      context.showMyAlertDialog(title, details, true);
+      // var details = domainError.details;
+      // var title = domainError.getMessage(context);
+      // if(details == null || details.isEmpty) {
+      //   details = [title];
+      //   title = "Something went wrong!".tr(context);
+      // }
+      // context.showMyAlertDialog(title, details, true);
+      context.showMyAlertDialogFromDomainError(domainError);
     },
     success: (_) {
       context.goRoute(Routes.test);

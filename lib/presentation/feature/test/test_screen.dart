@@ -24,20 +24,16 @@ class TestScreen extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text("Hello, AqarGo!".tr(context)),
+                Text("This is a test screen, I know it's not a great UI, but it will be changed later...".tr(context)),
                 SizedBox(height: 32),
                 AppButton(
                   onPressed: () {
-                    context.pushRoute(Routes.onboarding);
+                    context.pushRoute(Routes.createPost);
                   },
-                  text: "Let's Go!".tr(context),
-                  isLoading: false,
-                  isSecondary: true,
+                  text: "Create Post".tr(context),
                 ),
                 SizedBox(height: 32),
                 SwitchLangLabel(),
-                _TextFieldTests(),
-                // _ButtonTests(),
               ],
             ),
           ),

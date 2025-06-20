@@ -1,3 +1,4 @@
+import 'package:aqar_go/domain/model/domain_error.dart';
 import 'package:aqar_go/presentation/lang/app_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -50,6 +51,7 @@ extension UiHelper on BuildContext {
     Function()? onGotItClicked,
     String? smallTitle,
     String? gotItPlaceholder,
+    Widget? firstAction,
   }) {
     showDialog(
       context: this,
@@ -61,8 +63,34 @@ extension UiHelper on BuildContext {
           onGotItClicked: onGotItClicked,
           smallTitle: smallTitle,
           gotItPlaceholder: gotItPlaceholder,
+          firstAction: firstAction,
         );
       },
+    );
+  }
+
+  // why can't I overload this?
+  showMyAlertDialogFromDomainError(
+    DomainError error, {
+    Function()? onGotItClicked,
+    String? smallTitle,
+    String? gotItPlaceholder,
+    Widget? firstAction,
+  }) {
+    var details = error.details;
+    var title = error.getMessage(this);
+    if (details == null || details.isEmpty) {
+      details = [title];
+      title = "Something went wrong!".tr(this);
+    }
+    showMyAlertDialog(
+      title,
+      details,
+      true,
+      onGotItClicked: onGotItClicked,
+      smallTitle: smallTitle,
+      gotItPlaceholder: gotItPlaceholder,
+      firstAction: firstAction,
     );
   }
 }
@@ -74,6 +102,7 @@ class _MyAlertDialog extends StatelessWidget {
   final bool isError;
   final Function()? onGotItClicked;
   final String? gotItPlaceholder;
+  final Widget? firstAction;
 
   const _MyAlertDialog({
     super.key,
@@ -83,6 +112,7 @@ class _MyAlertDialog extends StatelessWidget {
     this.onGotItClicked,
     this.gotItPlaceholder,
     this.smallTitle,
+    this.firstAction,
   });
 
   @override
@@ -106,6 +136,7 @@ class _MyAlertDialog extends StatelessWidget {
         ],
       ),
       actions: [
+        if (firstAction != null) firstAction!,
         TextButton(
           onPressed: () {
             context.pop();
@@ -117,4 +148,3 @@ class _MyAlertDialog extends StatelessWidget {
     );
   }
 }
-

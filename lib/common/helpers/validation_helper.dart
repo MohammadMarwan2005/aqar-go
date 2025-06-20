@@ -1,11 +1,11 @@
-
-
 extension ValidationHelper on String? {
   String? validateEmail() {
     if (this == null || this!.isEmpty) {
       return "Email cannot be empty";
     }
-    final emailRegExp = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+    final emailRegExp = RegExp(
+      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+    );
     if (!emailRegExp.hasMatch(this!)) {
       return "Enter a valid email address";
     }
@@ -40,12 +40,14 @@ extension ValidationHelper on String? {
     }
     return null;
   }
+
   String? validatePasswordConfirmations(String confirmation) {
     if (this != confirmation) {
       return "Passwords do not match";
     }
     return null;
   }
+
   String? validatePhoneNumber() {
     final phoneRegex = RegExp(r'^09\d{8}$');
     if (!phoneRegex.hasMatch(this ?? "")) {
@@ -54,8 +56,40 @@ extension ValidationHelper on String? {
     return null;
   }
 
-}
+  String? validatePrice() {
+    if (this == null || this!.trim().isEmpty) {
+      return "Price is required";
+    }
 
+    final value = int.tryParse(this!);
+    if (value == null) {
+      return "Invalid price";
+    }
+
+    if (value <= 0) {
+      return "Price must be positive";
+    }
+
+    return null;
+  }
+
+  String? validateArea() {
+    if (this == null || this!.trim().isEmpty) {
+      return "Area is required";
+    }
+
+    final value = double.tryParse(this!);
+    if (value == null) {
+      return "Invalid area";
+    }
+
+    if (value <= 0) {
+      return "Area must be positive";
+    }
+
+    return null;
+  }
+}
 
 extension StringValidationHelper on String {
   bool hasLowerCase() {

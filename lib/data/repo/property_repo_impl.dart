@@ -1,0 +1,31 @@
+import 'package:aqar_go/data/model/api_response.dart';
+import 'package:aqar_go/data/model/create_property/create_property_request.dart';
+import 'package:aqar_go/data/model/property/property_data.dart';
+
+import '../../domain/model/property.dart';
+import '../../domain/model/resource.dart';
+import '../../domain/repo/property_repo.dart';
+import '../api/api_service.dart';
+import '../api/safe_api_caller.dart';
+
+class PropertyRepoImpl extends PropertyRepo {
+  final APIService _apiService;
+  final SafeAPICaller _safeAPICaller;
+
+  PropertyRepoImpl(this._apiService, this._safeAPICaller);
+
+  @override
+  Future<Resource<Property>> createProperty(
+    Property property,
+  ) async {
+    final data =await property.asFormData();
+    return await _safeAPICaller.call<Property, APIResponse<PropertyData>>(
+      apiCall: () {
+        return _apiService.createProperty(data);
+      },
+      dataToDomain: (data) {
+        return data.data.toDomain();
+      },
+    );
+  }
+}
