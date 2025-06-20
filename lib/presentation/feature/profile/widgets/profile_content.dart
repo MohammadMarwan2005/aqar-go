@@ -69,29 +69,8 @@ class ProfileContent extends StatelessWidget {
           iconAsset: Assets.svgs.land.path,
           title: "My Properties",
           onTap: () {
-            _showNotImplementedYet(context);
+            context.pushRoute(Routes.myProperties);
           },
-        ),
-        SizedBox(height: 32),
-        AppButton(
-          isSecondary: true,
-          onPressed: () {
-            context.showMyAlertDialog(
-              "Logout?".tr(context),
-              ["Are you sure you want to logout?".tr(context)],
-              true,
-              gotItPlaceholder: "Cancel",
-
-              firstAction: TextButton(
-                onPressed: () {
-                  context.read<ProfileCubit>().deleteToken();
-                  context.goRoute(Routes.login);
-                },
-                child: Text("Logout".tr(context)),
-              ),
-            );
-          },
-          text: "Logout".tr(context),
         ),
       ],
     );

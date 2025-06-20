@@ -1,4 +1,6 @@
+import 'package:aqar_go/common/di/get_it.dart';
 import 'package:aqar_go/common/helpers/navigation_helper.dart';
+import 'package:aqar_go/data/repo/local_data_repo.dart';
 import 'package:aqar_go/presentation/lang/app_localization.dart';
 import 'package:aqar_go/presentation/lang/switch_lang_label.dart';
 import 'package:aqar_go/presentation/widgets/app_text_field.dart';
@@ -41,9 +43,11 @@ class TestScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 32),
                 AppButton(
+                  isSecondary: true,
                   onPressed: () {
-                    //
-                    // context.pushRoute(Routes.login);
+                    final LocalDataRepo repo = getIt();
+                    repo.deleteToken();
+                    context.pushRoute(Routes.login);
                   },
                   text: "Logout".tr(context),
                 ),

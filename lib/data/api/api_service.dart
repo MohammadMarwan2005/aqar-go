@@ -34,5 +34,7 @@ abstract class APIService {
   @GET(APIConstants.getProfileUrl)
   Future<APIResponse<DataUserProfile>> getProfile();
 
+  @GET(APIConstants.getUserPropertiesUrl)
+  Future<APIResponse<List<PropertyData>>> getUserProperties();
 
 }

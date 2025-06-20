@@ -22,6 +22,7 @@ class PropertyData {
   @JsonKey(name: 'propertyable_id')
   final int propertableId;
   final String type;
+  @JsonKey(name: "propertyable")
   final Map<String, dynamic> propertable;
   final List<MediaFileData> images;
 

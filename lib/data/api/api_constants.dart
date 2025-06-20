@@ -5,4 +5,5 @@ class APIConstants {
   static const String registerUrl = "$baseUrl/auth/register";
   static const String createPropertyUrl = "$baseUrl/property/create";
   static const String getProfileUrl = "$baseUrl/profile/show";
+  static const String getUserPropertiesUrl = "$baseUrl/property/getUserProperties";
 }

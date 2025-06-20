@@ -12,6 +12,7 @@ import '../../data/repo/local_data_repo.dart';
 import '../../domain/repo/property_repo.dart';
 import '../../domain/usecase/create_property_usecase.dart';
 import '../../presentation/feature/auth/login/login_cubit.dart';
+import '../../presentation/feature/my_properties/cubit/my_properties_cubit.dart';
 import '../../presentation/feature/profile/cubit/profile_cubit.dart';
 import '../../presentation/lang/lang_cubit.dart';
 import 'package:dio/dio.dart';
@@ -46,8 +47,7 @@ Future<void> di() async {
     dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
-          final token =
-              await localDataRepo.getToken();
+          final token = await localDataRepo.getToken();
           if (token != null && token.isNotEmpty) {
             options.headers['Authorization'] = 'Bearer $token';
           }
@@ -91,9 +91,8 @@ Future<void> di() async {
   getIt.registerFactory<EditCreatePostCubit>(
     () => EditCreatePostCubit(getIt()),
   );
-  getIt.registerFactory<ProfileCubit>(
-    () => ProfileCubit(getIt(), getIt()),
-  );
+  getIt.registerFactory<ProfileCubit>(() => ProfileCubit(getIt(), getIt()));
+  getIt.registerFactory<MyPropertiesCubit>(() => MyPropertiesCubit(getIt()));
   getIt.registerFactory<MediaPickerCubit>(
     () => MediaPickerCubit(ImagePicker()),
   );

@@ -1,4 +1,5 @@
 import 'package:aqar_go/presentation/feature/media_picker/media_picker_cubit.dart';
+import 'package:aqar_go/presentation/feature/my_properties/my_properties_screen.dart';
 import 'package:aqar_go/presentation/feature/profile/cubit/profile_cubit.dart';
 import 'package:aqar_go/presentation/feature/profile/profile_screen.dart';
 
@@ -13,6 +14,7 @@ import 'package:go_router/go_router.dart';
 import '../../common/di/get_it.dart';
 import '../feature/edit_create_post/cubit/edit_create_post_cubit.dart';
 import '../feature/edit_create_post/edit_create_post_screen.dart';
+import '../feature/my_properties/cubit/my_properties_cubit.dart';
 import '../feature/onboarding/onboarding_screen.dart';
 import '../feature/test/test_screen.dart';
 import '../routing/routes.dart';
@@ -68,6 +70,16 @@ final appRouter = GoRouter(
               BlocProvider<ProfileCubit>(create: (context) => getIt())
             ],
             child: ProfileScreen(),
+          ),
+    ),
+    GoRoute(
+      path: Routes.myProperties,
+      builder:
+          (context, state) => MultiBlocProvider(
+            providers: [
+              BlocProvider<MyPropertiesCubit>(create: (context) => getIt())
+            ],
+            child: MyPropertiesScreen(),
           ),
     ),
   ],

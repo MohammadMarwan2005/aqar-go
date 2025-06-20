@@ -143,6 +143,43 @@ class _APIService implements APIService {
     return _value;
   }
 
+  @override
+  Future<APIResponse<List<PropertyData>>> getUserProperties() async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<APIResponse<List<PropertyData>>>(
+      Options(method: 'GET', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            'http://116.203.254.150:8001/api/property/getUserProperties',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late APIResponse<List<PropertyData>> _value;
+    try {
+      _value = APIResponse<List<PropertyData>>.fromJson(
+        _result.data!,
+        (json) =>
+            json is List<dynamic>
+                ? json
+                    .map<PropertyData>(
+                      (i) => PropertyData.fromJson(i as Map<String, dynamic>),
+                    )
+                    .toList()
+                : List.empty(),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||

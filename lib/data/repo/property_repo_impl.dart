@@ -15,10 +15,8 @@ class PropertyRepoImpl extends PropertyRepo {
   PropertyRepoImpl(this._apiService, this._safeAPICaller);
 
   @override
-  Future<Resource<Property>> createProperty(
-    Property property,
-  ) async {
-    final data =await property.asFormData();
+  Future<Resource<Property>> createProperty(Property property) async {
+    final data = await property.asFormData();
     return await _safeAPICaller.call<Property, APIResponse<PropertyData>>(
       apiCall: () {
         return _apiService.createProperty(data);
@@ -27,5 +25,20 @@ class PropertyRepoImpl extends PropertyRepo {
         return data.data.toDomain();
       },
     );
+  }
+
+  @override
+  Future<Resource<List<Property>>> getUserProperties() async {
+    return await _safeAPICaller
+        .call<List<Property>, APIResponse<List<PropertyData>>>(
+          apiCall: () {
+            return _apiService.getUserProperties();
+          },
+          dataToDomain: (data) {
+            return data.data
+                .map((dataProperty) => dataProperty.toDomain())
+                .toList();
+          },
+        );
   }
 }

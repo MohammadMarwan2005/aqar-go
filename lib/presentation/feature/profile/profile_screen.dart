@@ -1,3 +1,4 @@
+import 'package:aqar_go/common/helpers/navigation_helper.dart';
 import 'package:aqar_go/common/helpers/ui_helper.dart';
 import 'package:aqar_go/presentation/lang/app_localization.dart';
 import 'package:aqar_go/presentation/widgets/error_message.dart';
@@ -5,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../domain/model/profile/user_profile.dart';
+import '../../routing/routes.dart';
+import '../../widgets/app_button.dart';
 import '../../widgets/loading_screen.dart';
 import '../../widgets/screen_horizontal_padding.dart';
 import 'cubit/profile_cubit.dart';
@@ -20,25 +23,49 @@ class ProfileScreen extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: ScreenPadding(
-            child: BlocBuilder<ProfileCubit, ProfileState>(
-              builder: (context, state) {
-                return state.when(
-                  loading: () {
-                    return LoadingScreen();
-                  },
-                  error: (domainError) {
-                    return ErrorMessage(
-                      error: domainError,
-                      onTryAgain: () {
-                        context.read<ProfileCubit>().fetchProfile();
+            child: Column(
+              children: [
+                BlocBuilder<ProfileCubit, ProfileState>(
+                  builder: (context, state) {
+                    return state.when(
+                      loading: () {
+                        return LoadingScreen();
+                      },
+                      error: (domainError) {
+                        return ErrorMessage(
+                          error: domainError,
+                          onTryAgain: () {
+                            context.read<ProfileCubit>().fetchProfile();
+                          },
+                        );
+                      },
+                      success: (profile) {
+                        return ProfileContent(userProfile: profile);
                       },
                     );
                   },
-                  success: (profile) {
-                    return ProfileContent(userProfile: profile);
+                ),
+                SizedBox(height: 32),
+                AppButton(
+                  isSecondary: true,
+                  onPressed: () {
+                    context.showMyAlertDialog(
+                      "Logout?".tr(context),
+                      ["Are you sure you want to logout?".tr(context)],
+                      true,
+                      gotItPlaceholder: "Cancel",
+                      firstAction: TextButton(
+                        onPressed: () {
+                          context.read<ProfileCubit>().deleteToken();
+                          context.goRoute(Routes.login);
+                        },
+                        child: Text("Logout".tr(context)),
+                      ),
+                    );
                   },
-                );
-              },
+                  text: "Logout".tr(context),
+                ),
+              ],
             ),
           ),
         ),
