@@ -1,9 +1,8 @@
-import 'package:aqar_go/common/helpers/validation_helper.dart';
 import 'package:aqar_go/data/model/auth/login_request.dart';
 import 'package:aqar_go/data/repo/auth_repo.dart';
 import 'package:aqar_go/data/repo/local_data_repo.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../auth_state.dart';
 
@@ -11,8 +10,8 @@ class LoginCubit extends Cubit<AuthState> {
   final LocalDataRepo _localDataRepo;
   final AuthRepo _authRepo;
   final formKey = GlobalKey<FormState>();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  final emailController = TextEditingController(text: "mohammadalaishat2005@gmail.com");
+  final passwordController = TextEditingController(text: "password");
   final ValueNotifier<String> passwordNotifier = ValueNotifier("");
 
   LoginCubit(this._authRepo, this._localDataRepo)
@@ -23,11 +22,9 @@ class LoginCubit extends Cubit<AuthState> {
   }
 
   login({bool validate = true}) async {
-    final email = emailController.text;
-    final password = passwordController.text;
-    final emailValidation = email.validateEmail();
-    final passwordValidation = password.validatePassword();
-    if (validate && (emailValidation != null || passwordValidation != null)) {
+    final isValid = formKey.currentState?.validate() == true;
+
+    if (validate && !isValid) {
       emit(
         AuthState.invalidInput(() {
           login(validate: false);

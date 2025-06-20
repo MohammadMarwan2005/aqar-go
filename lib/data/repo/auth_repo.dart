@@ -4,6 +4,8 @@ import 'package:aqar_go/data/model/api_response.dart';
 import 'package:aqar_go/data/model/auth/auth_response_data.dart';
 import 'package:aqar_go/data/model/auth/login_request.dart';
 import 'package:aqar_go/data/model/auth/register_request.dart';
+import 'package:aqar_go/data/model/profile/data_user_profile.dart';
+import 'package:aqar_go/domain/model/profile/user_profile.dart';
 import 'package:aqar_go/domain/model/resource.dart';
 
 class AuthRepo {
@@ -30,6 +32,17 @@ class AuthRepo {
       },
       dataToDomain: (data) {
         return data.data;
+      },
+    );
+  }
+
+  Future<Resource<UserProfile>> getProfile() async {
+    return _safeAPICaller.call<UserProfile, APIResponse<DataUserProfile>>(
+      apiCall: () {
+        return _apiService.getProfile();
+      },
+      dataToDomain: (data) {
+        return data.data.toDomain();
       },
     );
   }

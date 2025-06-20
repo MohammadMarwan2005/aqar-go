@@ -12,6 +12,7 @@ import '../../data/repo/local_data_repo.dart';
 import '../../domain/repo/property_repo.dart';
 import '../../domain/usecase/create_property_usecase.dart';
 import '../../presentation/feature/auth/login/login_cubit.dart';
+import '../../presentation/feature/profile/cubit/profile_cubit.dart';
 import '../../presentation/lang/lang_cubit.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -89,6 +90,9 @@ Future<void> di() async {
 
   getIt.registerFactory<EditCreatePostCubit>(
     () => EditCreatePostCubit(getIt()),
+  );
+  getIt.registerFactory<ProfileCubit>(
+    () => ProfileCubit(getIt(), getIt()),
   );
   getIt.registerFactory<MediaPickerCubit>(
     () => MediaPickerCubit(ImagePicker()),

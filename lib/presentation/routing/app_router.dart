@@ -1,4 +1,6 @@
 import 'package:aqar_go/presentation/feature/media_picker/media_picker_cubit.dart';
+import 'package:aqar_go/presentation/feature/profile/cubit/profile_cubit.dart';
+import 'package:aqar_go/presentation/feature/profile/profile_screen.dart';
 
 import '../../presentation/feature/auth/login/login_cubit.dart';
 import '../../presentation/feature/auth/login/login_screen.dart';
@@ -55,6 +57,17 @@ final appRouter = GoRouter(
               BlocProvider<EditCreatePostCubit>(create: (context) => getIt()),
             ],
             child: EditCreatePostScreen(),
+          ),
+    ),
+    GoRoute(
+      path: Routes.profile,
+      builder:
+          (context, state) => MultiBlocProvider(
+            providers: [
+              BlocProvider<MediaPickerCubit>(create: (context) => getIt()),
+              BlocProvider<ProfileCubit>(create: (context) => getIt())
+            ],
+            child: ProfileScreen(),
           ),
     ),
   ],

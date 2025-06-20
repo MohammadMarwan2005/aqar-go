@@ -14,7 +14,7 @@ class DarkBlueTheme {
       onPrimary: Color(4294967295),
       primaryContainer: Color(4292600319),
       onPrimaryContainer: Color(4278196042),
-      secondary: Color(4285684748),
+      secondary: Color(-1656028),
       onSecondary: Color(4294967295),
       secondaryContainer: Color(4294959240),
       onSecondaryContainer: Color(4280556032),

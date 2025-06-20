@@ -16,7 +16,7 @@ PropertyData _$PropertyDataFromJson(Map<String, dynamic> json) => PropertyData(
   description: json['description'] as String,
   propertableId: (json['propertyable_id'] as num).toInt(),
   type: json['type'] as String,
-  propertable: json['propertable'],
+  propertable: json['propertable'] as Map<String, dynamic>,
   images:
       (json['images'] as List<dynamic>)
           .map((e) => MediaFileData.fromJson(e as Map<String, dynamic>))

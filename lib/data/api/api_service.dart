@@ -1,6 +1,7 @@
 import 'package:aqar_go/data/model/api_response.dart';
 import 'package:aqar_go/data/model/auth/auth_response_data.dart';
 import 'package:aqar_go/data/model/create_property/create_property_request.dart';
+import 'package:aqar_go/data/model/profile/data_user_profile.dart';
 import 'package:aqar_go/data/model/property/property_data.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/error_logger.dart';
@@ -29,4 +30,9 @@ abstract class APIService {
 
   @POST(APIConstants.createPropertyUrl)
   Future<APIResponse<PropertyData>> createProperty(@Body() FormData formData);
+
+  @GET(APIConstants.getProfileUrl)
+  Future<APIResponse<DataUserProfile>> getProfile();
+
+
 }

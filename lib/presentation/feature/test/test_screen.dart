@@ -33,6 +33,21 @@ class TestScreen extends StatelessWidget {
                   text: "Create Post".tr(context),
                 ),
                 SizedBox(height: 32),
+                AppButton(
+                  onPressed: () {
+                    context.pushRoute(Routes.profile);
+                  },
+                  text: "Profile".tr(context),
+                ),
+                SizedBox(height: 32),
+                AppButton(
+                  onPressed: () {
+                    //
+                    // context.pushRoute(Routes.login);
+                  },
+                  text: "Logout".tr(context),
+                ),
+                SizedBox(height: 32),
                 SwitchLangLabel(),
               ],
             ),
