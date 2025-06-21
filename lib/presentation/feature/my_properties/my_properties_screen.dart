@@ -132,7 +132,7 @@ class PropertyCard extends StatelessWidget {
                       Text('${property.price}'),
                       Spacer(),
                       Chip(
-                        label: Text(property.propertable.toEnum().labelId),
+                        label: Text(property.propertable.toEnum().labelId.tr(context)),
                         backgroundColor: Colors.blue.shade50,
                         labelStyle: TextStyle(color: Colors.blue.shade800),
                         padding: EdgeInsets.symmetric(horizontal: 8),

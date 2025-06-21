@@ -14,7 +14,8 @@ const Map<String, String> _arLangMap = {
   "Got it!": "تم",
   "Try Again": "حاول مجددًا",
   "Logout": "تسجيل الخروج",
-  "Please log in to continue and access all features.": "يرجى تسجيل الدخول للمتابعة والوصول إلى جميع الميزات.",
+  "Please log in to continue and access all features.":
+      "يرجى تسجيل الدخول للمتابعة والوصول إلى جميع الميزات.",
   "Login First": "سجل الدخول أولاً",
   "Enter valid values": "أدخل قيمًا صالحة",
   "Proceed": "موافقة",
@@ -23,7 +24,8 @@ const Map<String, String> _arLangMap = {
   "Password": "كلمة المرور",
   "Please enter a valid password": "يرجى إدخال كلمة مرور صالحة",
   "Create Account": "إنشاء حساب",
-  "Join us today and start exploring everything our app has to offer. We’re excited to welcome you to our community!": "انضم إلينا اليوم وابدأ في استكشاف كل ما تقدمه تطبيقنا. نحن متحمسون لاستقبالك في مجتمعنا!",
+  "Join us today and start exploring everything our app has to offer. We’re excited to welcome you to our community!":
+      "انضم إلينا اليوم وابدأ في استكشاف كل ما تقدمه تطبيقنا. نحن متحمسون لاستقبالك في مجتمعنا!",
   "First Name": "الاسم الأول",
   "Your Address": "عنوانك",
   "Please enter a valid name.": "يرجى إدخال اسم صالح.",
@@ -31,10 +33,13 @@ const Map<String, String> _arLangMap = {
   "Last Name": "الاسم الأخير",
   "Confirm Password": "تأكيد كلمة المرور",
   "Passwords don't match!": "كلمات المرور لا تتطابق!",
-  "Must have at least one lower case letter": "يجب أن تحتوي على حرف صغير واحد على الأقل",
-  "Must have at least one upper case letter": "يجب أن تحتوي على حرف كبير واحد على الأقل",
+  "Must have at least one lower case letter":
+      "يجب أن تحتوي على حرف صغير واحد على الأقل",
+  "Must have at least one upper case letter":
+      "يجب أن تحتوي على حرف كبير واحد على الأقل",
   "Must have at least one number": "يجب أن تحتوي على رقم واحد على الأقل",
-  "Must have at least one special Character": "يجب أن تحتوي على رمز خاص واحد على الأقل",
+  "Must have at least one special Character":
+      "يجب أن تحتوي على رمز خاص واحد على الأقل",
   "Must be at least 8 characters": "يجب أن تحتوي على 8 أحرف على الأقل",
   "Best Doctor\nAppointment App": "أفضل تطبيق\nلحجز مواعيد الأطباء",
   "Don't forget the password again! 🥲": "لا تنسى كلمة المرور مرة أخرى! 🥲",
@@ -42,5 +47,50 @@ const Map<String, String> _arLangMap = {
   "Email": "البريد الإلكتروني",
   "Something went wrong!": "حدث خطأ!",
   "Already have an account?": "هل لديك حساب بالفعل؟",
-  "Password Confirmation": "تأكيد كلمة المرور"
+  "Password Confirmation": "تأكيد كلمة المرور",
+  "This is a test screen, I know it's not a great UI, but it will be changed later...":
+      "هذه شاشة اختبار، أعلم أن التصميم ليس جيدًا، لكنه سيتغير لاحقًا...",
+  "Create Post": "إنشاء منشور",
+  "Profile": "الملف الشخصي",
+  "Post uploaded successfully!": "تم رفع المنشور بنجاح!",
+  "Update": "تعديل",
+  "Post": "نشر",
+  "Update Post": "تعديل المنشور",
+  "Create New Post": "إنشاء منشور جديد",
+  "Description": "الوصف",
+  "Title": "العنوان",
+  "Price": "السعر",
+  "Area in m^2": "المساحة بالمتر المربع",
+  "LocationId (Temp)": "معرّف الموقع (مؤقت)",
+  "Images are required!": "الصور مطلوبة!",
+  "Images": "الصور",
+  "My Properties": "عقاراتي",
+
+  "Land": "قطعة أرض",
+  "Shop": "محل",
+  "Land Type": "نوع الأرض",
+  "industrial": "صناعي",
+  "agricultural": "زراعي",
+  "commercial": "تجاري",
+  "residential": "سكني",
+  "Land Slope": "انحدار الأرض",
+  "Slop": "مستوية",
+  "flat": "مستوية",
+  "sloped": "منحدرة",
+  "mountainous": "جبلية",
+  "Yes": "نعم",
+  "No": "لا",
+  "Serviced?": "هل هي مخدّمة؟",
+  "Inside master plan?": "هل هي ضمن المخطط الرئيسي؟",
+  "Shop Type": "نوع المحل",
+  "retail": "تجزئة",
+  "grocery": "بقالة",
+  "pharmacy": "صيدلية",
+  "bookstore": "مكتبة",
+  "restaurant": "مطعم",
+  "salon": "صالون حلاقة",
+  "other": "أخرى",
+  "Has warehouse?": "هل يحتوي على مستودع؟",
+  "Has bathroom?": "هل يحتوي على حمام؟",
+  "Has electrical source?": "هل يحتوي على مصدر كهرباء؟",
 };

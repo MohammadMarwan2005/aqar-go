@@ -20,7 +20,7 @@ class ImagePickerWidget extends StatelessWidget {
       initialValue: context.read<MediaPickerCubit>().state.files,
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return "Images are required!";
+          return "Images are required!".tr(context);
         }
         return null;
       },

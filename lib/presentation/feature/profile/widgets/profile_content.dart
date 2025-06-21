@@ -67,7 +67,7 @@ class ProfileContent extends StatelessWidget {
         SizedBox(height: 32),
         SettingsListItem(
           iconAsset: Assets.svgs.land.path,
-          title: "My Properties",
+          title: "My Properties".tr(context),
           onTap: () {
             context.pushRoute(Routes.myProperties);
           },
@@ -77,6 +77,6 @@ class ProfileContent extends StatelessWidget {
   }
 
   void _showNotImplementedYet(BuildContext context) {
-    context.showMySnackBar("Not implemented yet!");
+    context.showMySnackBar("Not implemented yet!".tr(context));
   }
 }

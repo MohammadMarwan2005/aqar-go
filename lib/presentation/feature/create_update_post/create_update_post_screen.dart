@@ -29,7 +29,7 @@ class CreateUpdatePostScreen extends StatelessWidget {
           case CreateUpdatePostLoading():
             return;
           case CreateUpdatePostSuccess():
-            context.showMySnackBar("Post uploaded successfully!");
+            context.showMySnackBar("Post uploaded successfully!".tr(context));
             context.popRoute();
             return;
           case CreateUpdatePostError(
@@ -57,7 +57,7 @@ class CreateUpdatePostScreen extends StatelessWidget {
               text: cubit.isUpdate ? "Update".tr(context) : "Post".tr(context),
             ),
           ),
-          appBar: AppBar(title: Text("Edit/Add Post")),
+          appBar: AppBar(title: Text( cubit.isUpdate ? "Update Post".tr(context) : "Create New Post".tr(context))),
           body: SafeArea(
             child: SingleChildScrollView(
               child: ScreenPadding(
@@ -104,7 +104,7 @@ class PropertyFields extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ImagePickerWidget(),
+        ImagePickerWidget(titleId: "Images"),
         _LocalSizedBox(),
         // do the same like this...:
         AppTextField(
@@ -238,7 +238,7 @@ class PropertableSelector extends StatelessWidget {
                         ),
                         const SizedBox(height: 6),
                         Text(
-                          e.labelId,
+                          e.labelId.tr(context),
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: iconTextColor,

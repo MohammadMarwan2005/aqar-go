@@ -44,12 +44,12 @@ extension X on PropertableEnum {
                           currentFormData.copyWith(selectedLandType: newValue),
                     );
                   },
-                  enumToName: (enu) => enu.name,
+                  enumToName: (enu) => enu.name.tr(context),
                 ),
                 // todo: // single select params: selected enum, its values, enum to string, on select
                 // todo: // switch form true false
                 _SingleSelectFieldWithTitle(
-                  title: "Slop".tr(context),
+                  title: "Slope".tr(context),
                   values: LandSlop.values,
                   selectedValue: state.formData.selectedLandSlop,
                   onSelect: (newValue) {
@@ -58,10 +58,10 @@ extension X on PropertableEnum {
                           currentFormData.copyWith(selectedLandSlop: newValue),
                     );
                   },
-                  enumToName: (enu) => enu.name,
+                  enumToName: (enu) => enu.name.tr(context),
                 ),
                 _BooleanFiledWithTitle(
-                  title: "Is Serviced",
+                  title: "Serviced?".tr(context),
                   value: state.formData.isServiced,
                   onChanged: (newValue) {
                     cubit.updateFormData(
@@ -71,7 +71,7 @@ extension X on PropertableEnum {
                   },
                 ),
                 _BooleanFiledWithTitle(
-                  title: "is Inside Master Plan",
+                  title: "Inside master plan?".tr(context),
                   value: state.formData.isInsideMasterPlan,
                   onChanged: (newValue) {
                     cubit.updateFormData(
@@ -101,10 +101,10 @@ extension X on PropertableEnum {
                           currentFormData.copyWith(selectedShopType: newValue),
                     );
                   },
-                  enumToName: (enu) => enu.name,
+                  enumToName: (enu) => enu.name.tr(context),
                 ),
                 _BooleanFiledWithTitle(
-                  title: "Has Warehouse".tr(context),
+                  title: "Has warehouse?".tr(context),
                   value: state.formData.hasWarehouse,
                   onChanged: (newValue) {
                     cubit.updateFormData(
@@ -114,7 +114,7 @@ extension X on PropertableEnum {
                   },
                 ),
                 _BooleanFiledWithTitle(
-                  title: "Has Bathroom".tr(context),
+                  title: "Has bathroom?".tr(context),
                   value: state.formData.hasBathroom,
                   onChanged: (newValue) {
                     cubit.updateFormData(
@@ -124,7 +124,7 @@ extension X on PropertableEnum {
                   },
                 ),
                 _BooleanFiledWithTitle(
-                  title: "Has AC".tr(context),
+                  title: "Has electrical source?".tr(context),
                   value: state.formData.hasAc,
                   onChanged: (newValue) {
                     cubit.updateFormData(
