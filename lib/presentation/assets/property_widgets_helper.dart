@@ -15,10 +15,10 @@ extension X on PropertableEnum {
         return Assets.svgs.land;
       case PropertableEnum.shop:
         return Assets.svgs.shop;
-      // case PropertableEnum.office:
-      //   return Assets.svgs.office;
-      // case PropertableEnum.apartment:
-      //   return Assets.svgs.apartment;
+      case PropertableEnum.office:
+        return Assets.svgs.office;
+      case PropertableEnum.apartment:
+        return Assets.svgs.apartment;
     }
   }
 
@@ -97,7 +97,7 @@ extension X on PropertableEnum {
                   selectedValue: state.formData.selectedShopType,
                   onSelect: (newValue) {
                     cubit.updateFormData(
-                          (currentFormData) =>
+                      (currentFormData) =>
                           currentFormData.copyWith(selectedShopType: newValue),
                     );
                   },
@@ -108,7 +108,7 @@ extension X on PropertableEnum {
                   value: state.formData.hasWarehouse,
                   onChanged: (newValue) {
                     cubit.updateFormData(
-                          (currentFormData) =>
+                      (currentFormData) =>
                           currentFormData.copyWith(hasWarehouse: newValue),
                     );
                   },
@@ -118,7 +118,7 @@ extension X on PropertableEnum {
                   value: state.formData.hasBathroom,
                   onChanged: (newValue) {
                     cubit.updateFormData(
-                          (currentFormData) =>
+                      (currentFormData) =>
                           currentFormData.copyWith(hasBathroom: newValue),
                     );
                   },
@@ -128,7 +128,7 @@ extension X on PropertableEnum {
                   value: state.formData.hasAc,
                   onChanged: (newValue) {
                     cubit.updateFormData(
-                          (currentFormData) =>
+                      (currentFormData) =>
                           currentFormData.copyWith(hasAc: newValue),
                     );
                   },
@@ -137,10 +137,178 @@ extension X on PropertableEnum {
             );
           },
         );
-      // case PropertableEnum.office:
-      //   return notImplementedYet;
-      // case PropertableEnum.apartment:
-      //   return notImplementedYet;
+      case PropertableEnum.office:
+        return BlocBuilder<CreateUpdatePostCubit, CreateUpdatePostState>(
+          builder: (context, state) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _NumberFieldWithTitle(
+                  title: "Floor".tr(context),
+                  value: state.formData.officeFloor,
+                  onChanged: (newValue) {
+                    cubit.updateFormData(
+                      (currentFormData) =>
+                          currentFormData.copyWith(officeFloor: newValue),
+                    );
+                  },
+                ),
+                _NumberFieldWithTitle(
+                  title: "Rooms".tr(context),
+                  value: state.formData.officeRooms,
+                  onChanged: (newValue) {
+                    cubit.updateFormData(
+                      (currentFormData) =>
+                          currentFormData.copyWith(officeRooms: newValue),
+                    );
+                  },
+                ),
+                _NumberFieldWithTitle(
+                  title: "Bathrooms".tr(context),
+                  value: state.formData.officeBathrooms,
+                  onChanged: (newValue) {
+                    cubit.updateFormData(
+                      (currentFormData) =>
+                          currentFormData.copyWith(officeBathrooms: newValue),
+                    );
+                  },
+                ),
+                _NumberFieldWithTitle(
+                  title: "Meeting Rooms".tr(context),
+                  value: state.formData.meetingRooms,
+                  isNullable: true,
+                  onChanged: (newValue) {
+                    cubit.updateFormData(
+                      (currentFormData) => currentFormData.copyWith(
+                        meetingRooms: newValue,
+                        enforceValue: true,
+                      ),
+                    );
+                  },
+                ),
+                _BooleanFiledWithTitle(
+                  title: "Has Parking?".tr(context),
+                  value: state.formData.hasParking,
+                  onChanged: (newValue) {
+                    cubit.updateFormData(
+                      (currentFormData) =>
+                          currentFormData.copyWith(hasParking: newValue),
+                    );
+                  },
+                ),
+                _BooleanFiledWithTitle(
+                  title: "Furnished?".tr(context),
+                  value: state.formData.officeFurnished,
+                  onChanged: (newValue) {
+                    cubit.updateFormData(
+                      (currentFormData) =>
+                          currentFormData.copyWith(officeFurnished: newValue),
+                    );
+                  },
+                ),
+                // todo: FurnishedType.values
+                _SingleSelectFieldWithTitle(
+                  title: "Furnished Type".tr(context),
+                  values: ["Test1", "Test2", "Test3"],
+                  selectedValue: state.formData.officeFurnishedType,
+                  onSelect: (newValue) {
+                    cubit.updateFormData(
+                      (currentFormData) => currentFormData.copyWith(
+                        officeFurnishedType: newValue,
+                      ),
+                    );
+                  },
+                  enumToName: (enu) => enu,
+                ),
+              ],
+            );
+          },
+        );
+      case PropertableEnum.apartment:
+        return BlocBuilder<CreateUpdatePostCubit, CreateUpdatePostState>(
+          builder: (context, state) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _NumberFieldWithTitle(
+                  title: "Floor".tr(context),
+                  value: state.formData.floor,
+                  onChanged: (newValue) {
+                    cubit.updateFormData(
+                          (currentFormData) => currentFormData.copyWith(floor: newValue),
+                    );
+                  },
+                ),
+                _NumberFieldWithTitle(
+                  title: "Rooms".tr(context),
+                  value: state.formData.apartmentRooms,
+                  onChanged: (newValue) {
+                    cubit.updateFormData(
+                          (currentFormData) => currentFormData.copyWith(apartmentRooms: newValue),
+                    );
+                  },
+                ),
+                _NumberFieldWithTitle(
+                  title: "Bathrooms".tr(context),
+                  value: state.formData.apartmentBathrooms,
+                  onChanged: (newValue) {
+                    cubit.updateFormData(
+                          (currentFormData) => currentFormData.copyWith(apartmentBathrooms: newValue),
+                    );
+                  },
+                ),
+                _NumberFieldWithTitle(
+                  title: "Bedrooms".tr(context),
+                  value: state.formData.apartmentBedrooms,
+                  onChanged: (newValue) {
+                    cubit.updateFormData(
+                          (currentFormData) => currentFormData.copyWith(apartmentBedrooms: newValue),
+                    );
+                  },
+                ),
+                _BooleanFiledWithTitle(
+                  title: "Has Elevator?".tr(context),
+                  value: state.formData.hasElevator,
+                  onChanged: (newValue) {
+                    cubit.updateFormData(
+                          (currentFormData) => currentFormData.copyWith(hasElevator: newValue),
+                    );
+                  },
+                ),
+                _BooleanFiledWithTitle(
+                  title: "Has Alternative Power?".tr(context),
+                  value: state.formData.hasAlternativePower,
+                  onChanged: (newValue) {
+                    cubit.updateFormData(
+                          (currentFormData) => currentFormData.copyWith(hasAlternativePower: newValue),
+                    );
+                  },
+                ),
+                _BooleanFiledWithTitle(
+                  title: "Has Garage?".tr(context),
+                  value: state.formData.hasGarage,
+                  onChanged: (newValue) {
+                    cubit.updateFormData(
+                          (currentFormData) => currentFormData.copyWith(hasGarage: newValue),
+                    );
+                  },
+                ),
+                // todo: FurnishedType.values
+                _SingleSelectFieldWithTitle(
+                  title: "Furnished Type".tr(context),
+                  values: ["Test1", "Test2", "Test3"],
+                  selectedValue: state.formData.apartmentFurnishedType,
+                  onSelect: (newValue) {
+                    cubit.updateFormData(
+                          (currentFormData) => currentFormData.copyWith(apartmentFurnishedType: newValue),
+                    );
+                  },
+                  enumToName: (enu) => enu,
+                ),
+              ],
+            );
+          },
+        );
     }
   }
 }
@@ -305,6 +473,81 @@ class BooleanField extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _NumberFieldWithTitle extends StatelessWidget {
+  final String title;
+  final int? value;
+  final void Function(int? newValue) onChanged;
+  final bool isNullable; // Add this to control whether to show "None" chip
+
+  const _NumberFieldWithTitle({
+    super.key,
+    required this.title,
+    required this.value,
+    required this.onChanged,
+    this.isNullable = false, // Default is false
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    // List of values for the chips (from 0 to 5)
+    final numberChips = List.generate(6, (index) => index);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(title, style: Theme.of(context).textTheme.titleMedium),
+        SizedBox(height: 4),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: [
+              // Conditionally show "None" chip for nullable fields
+              if (isNullable)
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                  child: ChoiceChip(
+                    label: Text("None".tr(context)),
+                    selected: value == null,
+                    onSelected: (_) {
+                      onChanged(null);
+                    },
+                    selectedColor: Theme.of(context).colorScheme.primary,
+                    labelStyle: TextStyle(
+                      color:
+                          value == null
+                              ? Theme.of(context).colorScheme.onPrimary
+                              : Theme.of(context).colorScheme.onSurface,
+                    ),
+                  ),
+                ),
+              // Chips for numbers 0 to 5
+              ...numberChips.map((num) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                  child: ChoiceChip(
+                    label: Text(num.toString()),
+                    selected: value == num,
+                    onSelected: (_) {
+                      onChanged(num);
+                    },
+                    selectedColor: Theme.of(context).colorScheme.primary,
+                    labelStyle: TextStyle(
+                      color:
+                          value == num
+                              ? Theme.of(context).colorScheme.onPrimary
+                              : Theme.of(context).colorScheme.onSurface,
+                    ),
+                  ),
+                );
+              }),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

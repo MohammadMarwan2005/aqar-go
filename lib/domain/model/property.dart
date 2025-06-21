@@ -5,6 +5,8 @@ import 'land/land_type.dart';
 import 'media_file.dart';
 
 part 'land/land.dart';
+part 'office/office.dart';
+part 'apartment/apartment.dart';
 
 part 'shop/shop.dart';
 
@@ -43,9 +45,9 @@ sealed class Propertable {
 
 enum PropertableEnum {
   land("Land"),
-  shop("Shop");
-  // office("Office"),
-  // apartment("Apartment")
+  shop("Shop"),
+  office("Office"),
+  apartment("Apartment");
   // // todo later: add more...
 
   final String labelId;
