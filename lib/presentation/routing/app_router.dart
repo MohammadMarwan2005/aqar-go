@@ -14,8 +14,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../common/di/get_it.dart';
-import '../feature/edit_create_post/cubit/edit_create_post_cubit.dart';
-import '../feature/edit_create_post/edit_create_post_screen.dart';
+import '../feature/create_update_post/cubit/create_update_post_cubit.dart';
+import '../feature/create_update_post/create_update_post_screen.dart';
 import '../feature/my_properties/cubit/my_properties_cubit.dart';
 import '../feature/onboarding/onboarding_screen.dart';
 import '../feature/test/test_screen.dart';
@@ -63,12 +63,12 @@ final appRouter = GoRouter(
                   (context) =>
                       MediaPickerCubit(ImagePicker(), initialImages: property?.images),
             ),
-            BlocProvider<EditCreatePostCubit>(
+            BlocProvider<CreateUpdatePostCubit>(
               create:
-                  (context) => EditCreatePostCubit(getIt(), getIt(), property: property),
+                  (context) => CreateUpdatePostCubit(getIt(), property: property),
             ),
           ],
-          child: EditCreatePostScreen(),
+          child: CreateUpdatePostScreen(),
         );
       },
     ),

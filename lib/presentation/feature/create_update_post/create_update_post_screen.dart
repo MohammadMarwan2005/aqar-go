@@ -1,11 +1,10 @@
-import 'package:aqar_go/common/helpers/logging_helper.dart';
 import 'package:aqar_go/common/helpers/navigation_helper.dart';
 import 'package:aqar_go/common/helpers/ui_helper.dart';
 import 'package:aqar_go/common/helpers/validation_helper.dart';
 import 'package:aqar_go/domain/model/domain_error.dart';
 import 'package:aqar_go/domain/model/property.dart';
 import 'package:aqar_go/presentation/assets/property_widgets_helper.dart';
-import 'package:aqar_go/presentation/feature/edit_create_post/cubit/edit_create_post_cubit.dart';
+import 'package:aqar_go/presentation/feature/create_update_post/cubit/create_update_post_cubit.dart';
 import 'package:aqar_go/presentation/feature/media_picker/image_picker_widget.dart';
 import 'package:aqar_go/presentation/feature/media_picker/media_picker_cubit.dart';
 import 'package:aqar_go/presentation/lang/app_localization.dart';
@@ -15,25 +14,25 @@ import 'package:aqar_go/presentation/widgets/screen_horizontal_padding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class EditCreatePostScreen extends StatelessWidget {
-  const EditCreatePostScreen({super.key});
+class CreateUpdatePostScreen extends StatelessWidget {
+  const CreateUpdatePostScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<EditCreatePostCubit>();
+    final cubit = context.read<CreateUpdatePostCubit>();
     final mediaCubit = context.read<MediaPickerCubit>();
-    return BlocConsumer<EditCreatePostCubit, EditCreatePostState>(
+    return BlocConsumer<CreateUpdatePostCubit, CreateUpdatePostState>(
       listener: (context, state) {
         switch (state) {
-          case EditCreatePostInitial():
+          case CreateUpdatePostInitial():
             return;
-          case EditCreatePostLoading():
+          case CreateUpdatePostLoading():
             return;
-          case EditCreatePostSuccess():
+          case CreateUpdatePostSuccess():
             context.showMySnackBar("Post uploaded successfully!");
             context.popRoute();
             return;
-          case EditCreatePostError(
+          case CreateUpdatePostError(
             error: final error,
             isSnackBar: final isSnackBar,
           ):
@@ -49,7 +48,7 @@ class EditCreatePostScreen extends StatelessWidget {
           bottomNavigationBar: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: AppButton(
-              isLoading: state is EditCreatePostLoading,
+              isLoading: state is CreateUpdatePostLoading,
               onPressed: () {
                 final images = context.read<MediaPickerCubit>().state.files;
                 final toDeleteImagesIds = context.read<MediaPickerCubit>().state.toDeleteImagesIds;
@@ -96,8 +95,8 @@ class EditCreatePostScreen extends StatelessWidget {
 }
 
 class PropertyFields extends StatelessWidget {
-  final EditCreatePostCubit cubit;
-  final EditCreatePostState state;
+  final CreateUpdatePostCubit cubit;
+  final CreateUpdatePostState state;
 
   const PropertyFields({super.key, required this.cubit, required this.state});
 
@@ -261,8 +260,8 @@ class PropertableSelector extends StatelessWidget {
 }
 
 class PropertableFields extends StatelessWidget {
-  final EditCreatePostCubit cubit;
-  final EditCreatePostState state;
+  final CreateUpdatePostCubit cubit;
+  final CreateUpdatePostState state;
 
   const PropertableFields({
     super.key,

@@ -1,17 +1,11 @@
 import 'package:aqar_go/domain/model/land/land_slop.dart';
 import 'package:aqar_go/domain/model/land/land_type.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
-import '../../domain/model/shop/shop_type.dart';
-import '../feature/edit_create_post/cubit/edit_create_post_cubit.dart';
-import '../lang/app_localization.dart';
-import '../widgets/app_text_field.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../domain/model/property.dart';
-
+import '../../domain/model/shop/shop_type.dart';
+import '../feature/create_update_post/cubit/create_update_post_cubit.dart';
+import '../lang/app_localization.dart';
 import 'assets.gen.dart';
 
 extension X on PropertableEnum {
@@ -29,13 +23,13 @@ extension X on PropertableEnum {
   }
 
   Widget getFields(BuildContext context, {Widget? spacer}) {
-    final cubit = context.read<EditCreatePostCubit>();
+    final cubit = context.read<CreateUpdatePostCubit>();
     final notImplementedYet = Column(
       children: [Text("$labelId is not implemented yet!")],
     );
     switch (this) {
       case PropertableEnum.land:
-        return BlocBuilder<EditCreatePostCubit, EditCreatePostState>(
+        return BlocBuilder<CreateUpdatePostCubit, CreateUpdatePostState>(
           builder: (context, state) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,7 +86,7 @@ extension X on PropertableEnum {
           },
         );
       case PropertableEnum.shop:
-        return BlocBuilder<EditCreatePostCubit, EditCreatePostState>(
+        return BlocBuilder<CreateUpdatePostCubit, CreateUpdatePostState>(
           builder: (context, state) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,

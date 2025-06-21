@@ -1,7 +1,6 @@
 import 'package:aqar_go/data/repo/auth_repo.dart';
 import 'package:aqar_go/data/repo/property_repo_impl.dart';
 import 'package:aqar_go/presentation/feature/auth/register/register_cubit.dart';
-import 'package:aqar_go/presentation/feature/edit_create_post/cubit/edit_create_post_cubit.dart';
 import 'package:aqar_go/presentation/feature/media_picker/media_picker_cubit.dart';
 import 'package:aqar_go/presentation/routing/routing_use_case.dart';
 import 'package:image_picker/image_picker.dart';
@@ -12,6 +11,7 @@ import '../../data/repo/local_data_repo.dart';
 import '../../domain/repo/property_repo.dart';
 import '../../domain/usecase/create_property_usecase.dart';
 import '../../presentation/feature/auth/login/login_cubit.dart';
+import '../../presentation/feature/create_update_post/cubit/create_update_post_cubit.dart';
 import '../../presentation/feature/my_properties/cubit/my_properties_cubit.dart';
 import '../../presentation/feature/profile/cubit/profile_cubit.dart';
 import '../../presentation/lang/lang_cubit.dart';
@@ -88,8 +88,8 @@ Future<void> di() async {
   getIt.registerFactory<LoginCubit>(() => LoginCubit(getIt(), getIt()));
   getIt.registerFactory<RegisterCubit>(() => RegisterCubit(getIt(), getIt()));
 
-  getIt.registerFactory<EditCreatePostCubit>(
-    () => EditCreatePostCubit(getIt(), getIt()),
+  getIt.registerFactory<CreateUpdatePostCubit>(
+    () => CreateUpdatePostCubit(getIt()),
   );
   getIt.registerFactory<ProfileCubit>(() => ProfileCubit(getIt(), getIt()));
   getIt.registerFactory<MyPropertiesCubit>(() => MyPropertiesCubit(getIt()));
