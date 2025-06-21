@@ -118,11 +118,6 @@
 // }
 //
 
-
-
-
-
-
 import 'package:aqar_go/domain/model/property.dart';
 import 'package:dio/dio.dart';
 
@@ -130,14 +125,14 @@ import '../../../common/helpers/logging_helper.dart';
 import '../property/property_data.dart';
 
 extension CreatePropertyRequest on Property {
-  Future<FormData> asFormData() async {
+  Future<FormData> asFormData({List<int> toDeleteImagesIds = const []}) async {
     final Map<String, dynamic> formMap = {'type': propertable.toEnum().labelId};
     final propertableMap = PropertyData.fromDomain(this).propertable;
     (propertableMap).forEach((key, value) {
       var finalValue = value.toString();
       // todo: remove those
-      if(finalValue == "true") finalValue = "1";
-      if(finalValue == "false") finalValue = "0";
+      if (finalValue == "true") finalValue = "1";
+      if (finalValue == "false") finalValue = "0";
       debugLog('"data[$key]" : ${finalValue.toString()}');
       formMap['data[$key]'] = finalValue;
     });
@@ -148,13 +143,18 @@ extension CreatePropertyRequest on Property {
     formMap['property[price]'] = price.toString();
     formMap['property[name]'] = title;
 
-
-    for (final imageFile in images) {
-      if(imageFile.path != null) {
+    for (int index = 0; index < images.length; index++) {
+      final imageFile = images[index];
+      if (imageFile.path != null) {
         final path = await MultipartFile.fromFile(imageFile.path!);
-        formMap.putIfAbsent('property[image][]', () => path);
+        formMap.putIfAbsent('property[image][$index]', () => path);
       }
     }
+    for (int index = 0; index < toDeleteImagesIds.length; index++) {
+      final id = toDeleteImagesIds[index];
+      formMap.putIfAbsent('property[image_to_delete][$index]', () => id);
+    }
+
     return FormData.fromMap(formMap);
   }
 

@@ -1,4 +1,5 @@
 import 'package:aqar_go/domain/model/domain_error.dart';
+import 'package:aqar_go/domain/repo/property_repo.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
@@ -34,13 +35,17 @@ class EditCreatePostCubit extends Cubit<EditCreatePostState> {
   final areaController = TextEditingController();
   final priceController = TextEditingController();
   final tempLocationIdController = TextEditingController();
+  final Property? property;
 
-  final CreatePropertyUsecase _createPropertyUsecase;
+  final CreateUpdatePropertyUsecase _createUpdatePropertyUsecase;
+  final PropertyRepo _propertyRepo;
 
-  EditCreatePostCubit(this._createPropertyUsecase)
-    : super(EditCreatePostInitial(formData: PostFormData()));
+  EditCreatePostCubit(this._createUpdatePropertyUsecase, this._propertyRepo, {this.property})
+    : super(
+        EditCreatePostInitial(formData: PostFormData.fromProperty(property)),
+      );
 
-  Future<void> createPost(List<MediaFile> mediaFiles) async {
+  Future<void> createOrUpdatePost(List<MediaFile> mediaFiles, List<int> toDeleteImagesIds) async {
     final validated = formKey.currentState?.validate();
     if (validated == true) {
       emit(EditCreatePostLoading(formData: state.formData));
@@ -53,20 +58,21 @@ class EditCreatePostCubit extends Cubit<EditCreatePostState> {
       final description = formData.description;
       final propertable = formData.getPropertable();
 
-      final response = await _createPropertyUsecase.call(
-        Property(
-          id: 0,
-          userId: 0,
-          locationId: locationId,
-          propertableId: 0,
-          area: area,
-          price: price,
-          title: title,
-          description: description,
-          propertable: propertable,
-          images: mediaFiles,
-        ),
-        mediaFiles,
+      final requestProperty = Property(
+        id: property?.id ?? 0,
+        userId: property?.userId ?? 0,
+        locationId: locationId,
+        propertableId: property?.propertableId ?? 0,
+        area: area,
+        price: price,
+        title: title,
+        description: description,
+        propertable: propertable,
+        images: mediaFiles,
+      );
+
+      final response = (isUpdate)? await _propertyRepo.updateProperty(requestProperty, toDeleteImagesIds) : await _createUpdatePropertyUsecase.call(
+        requestProperty,
       );
 
       response.when(
@@ -82,7 +88,6 @@ class EditCreatePostCubit extends Cubit<EditCreatePostState> {
           emit(EditCreatePostError(formData: state.formData, error: error));
         },
       );
-
     } else {
       emit(
         EditCreatePostError(
@@ -102,4 +107,6 @@ class EditCreatePostCubit extends Cubit<EditCreatePostState> {
   ) {
     emit(state.copyWithFormData(update(state.formData)));
   }
+
+  late bool isUpdate = property != null;
 }

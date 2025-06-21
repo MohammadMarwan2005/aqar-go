@@ -17,6 +17,7 @@ class ImagePickerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FormField<List<MediaFile>>(
+      initialValue: context.read<MediaPickerCubit>().state.files,
       validator: (value) {
         if (value == null || value.isEmpty) {
           return "Images are required!";
@@ -26,21 +27,32 @@ class ImagePickerWidget extends StatelessWidget {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       builder: (field) {
         final titleWidget =
-            (field.hasError)
-                ? Text(
-                  "${titleId.tr(context)} *",
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: Theme.of(context).colorScheme.error,
-                  ),
-                )
-                : Text(
-                  titleId.tr(context),
-                  style: Theme.of(context).textTheme.titleLarge,
-                );
+        (field.hasError)
+            ? Text(
+          "${titleId.tr(context)} *",
+          style: Theme
+              .of(context)
+              .textTheme
+              .titleLarge
+              ?.copyWith(
+            color: Theme
+                .of(context)
+                .colorScheme
+                .error,
+          ),
+        )
+            : Text(
+          titleId.tr(context),
+          style: Theme
+              .of(context)
+              .textTheme
+              .titleLarge,
+        );
 
         return BlocConsumer<MediaPickerCubit, MediaPickerState>(
           listenWhen: (previous, current) => previous.files != current.files,
           listener: (context, state) {
+            debugLog("images = $state");
             field.didChange(state.files);
           },
           builder: (context, state) {
@@ -85,10 +97,7 @@ class ImagePickerWidget extends StatelessWidget {
                               ),
                             );
                           },
-                          child: Image.file(
-                            File(file.path!),
-                            fit: BoxFit.cover,
-                          ),
+                          child: _FileImage(file: file),
                         );
                       }),
                       if (files.length < 10)
@@ -102,7 +111,10 @@ class ImagePickerWidget extends StatelessWidget {
                               child: Icon(
                                 Icons.add,
                                 size: 50,
-                                color: Theme.of(context).iconTheme.color,
+                                color: Theme
+                                    .of(context)
+                                    .iconTheme
+                                    .color,
                               ),
                             ),
                           ),
@@ -131,12 +143,34 @@ class ClickableCard extends StatelessWidget {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: borderRadius,
-        side: BorderSide(color: Theme.of(context).dividerColor, width: 0.5),
+        side: BorderSide(color: Theme
+            .of(context)
+            .dividerColor, width: 0.5),
       ),
       child: ClipRRect(
         borderRadius: borderRadius,
         child: InkWell(borderRadius: borderRadius, onTap: onTap, child: child),
       ),
+    );
+  }
+}
+
+class _FileImage extends StatelessWidget {
+  final MediaFile file;
+
+  const _FileImage({super.key, required this.file});
+
+  @override
+  Widget build(BuildContext context) {
+    if (file.path != null) {
+      return Image.file(File(file.path!), fit: BoxFit.cover);
+    }
+    if (file.imageUrl !=null) {
+      return Image.network(file.imageUrl!, fit: BoxFit.cover);
+    }
+    return Image.asset(
+      "assets/images/profile_image_placeholder.png",
+      fit: BoxFit.cover,
     );
   }
 }

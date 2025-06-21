@@ -79,8 +79,8 @@ Future<void> di() async {
 
   // use cases:
   getIt.registerLazySingleton<RoutingUseCase>(() => RoutingUseCase(getIt()));
-  getIt.registerLazySingleton<CreatePropertyUsecase>(
-    () => CreatePropertyUsecase(getIt()),
+  getIt.registerLazySingleton<CreateUpdatePropertyUsecase>(
+    () => CreateUpdatePropertyUsecase(getIt()),
   );
 
   // cubits:
@@ -89,7 +89,7 @@ Future<void> di() async {
   getIt.registerFactory<RegisterCubit>(() => RegisterCubit(getIt(), getIt()));
 
   getIt.registerFactory<EditCreatePostCubit>(
-    () => EditCreatePostCubit(getIt()),
+    () => EditCreatePostCubit(getIt(), getIt()),
   );
   getIt.registerFactory<ProfileCubit>(() => ProfileCubit(getIt(), getIt()));
   getIt.registerFactory<MyPropertiesCubit>(() => MyPropertiesCubit(getIt()));

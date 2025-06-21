@@ -28,6 +28,22 @@ class PropertyRepoImpl extends PropertyRepo {
   }
 
   @override
+  Future<Resource<Property>> updateProperty(
+    Property property,
+    List<int> toDeleteIds,
+  ) async {
+    final formData = await property.asFormData(toDeleteImagesIds: toDeleteIds);
+    return await _safeAPICaller.call<Property, APIResponse<PropertyData>>(
+      apiCall: () {
+        return _apiService.updateProperty(property.id, formData);
+      },
+      dataToDomain: (data) {
+        return data.data.toDomain();
+      },
+    );
+  }
+
+  @override
   Future<Resource<List<Property>>> getUserProperties() async {
     return await _safeAPICaller
         .call<List<Property>, APIResponse<List<PropertyData>>>(

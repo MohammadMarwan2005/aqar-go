@@ -43,6 +43,62 @@ class PostFormData extends Equatable {
     this.isInsideMasterPlan = false,
   });
 
+  factory PostFormData.fromProperty(Property? property) {
+    if (property == null) return PostFormData();
+
+    final propertable = property.propertable;
+
+    PropertableEnum selectedPropertableEnum = propertable.toEnum();
+    int floor = 0;
+    ShopType selectedShopType = ShopType.retail;
+    bool hasWarehouse = false;
+    bool hasBathroom = false;
+    bool hasAc = false;
+    LandType selectedLandType = LandType.agricultural;
+    LandSlop selectedLandSlop = LandSlop.flat;
+    bool isServiced = false;
+    bool isInsideMasterPlan = false;
+
+    switch (selectedPropertableEnum) {
+      case PropertableEnum.land:
+        {
+          propertable as Land;
+          selectedPropertableEnum = PropertableEnum.land;
+          selectedLandType = propertable.landType;
+          selectedLandSlop = propertable.landSlop;
+          isServiced = propertable.isServiced;
+          isInsideMasterPlan = propertable.isInsideMasterPlan;
+        }
+      case PropertableEnum.shop:
+        {
+          propertable as Shop;
+          floor = propertable.floor;
+          selectedShopType = propertable.shopType;
+          hasWarehouse = propertable.hasWarehouse;
+          hasBathroom = propertable.hasBathroom;
+          hasAc = propertable.hasAc;
+        }
+    }
+
+    return PostFormData(
+      title: property.title,
+      description: property.description,
+      area: property.area.toString(),
+      price: property.price.toString(),
+      locationId: property.locationId,
+      selectedPropertableEnum: selectedPropertableEnum,
+      floor: floor,
+      selectedShopType: selectedShopType,
+      hasWarehouse: hasWarehouse,
+      hasBathroom: hasBathroom,
+      hasAc: hasAc,
+      selectedLandType: selectedLandType,
+      selectedLandSlop: selectedLandSlop,
+      isServiced: isServiced,
+      isInsideMasterPlan: isInsideMasterPlan,
+    );
+  }
+
   PostFormData copyWith({
     String? title,
     String? description,

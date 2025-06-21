@@ -31,10 +31,17 @@ abstract class APIService {
   @POST(APIConstants.createPropertyUrl)
   Future<APIResponse<PropertyData>> createProperty(@Body() FormData formData);
 
+  @POST(
+    "${APIConstants.updatePropertyUrl}/{id}",
+  ) // we should pass the id like this: // APIConstants.updatePropertyUrl /{id}
+  Future<APIResponse<PropertyData>> updateProperty(
+    @Path("id") int id,
+    @Body() FormData formData,
+  );
+
   @GET(APIConstants.getProfileUrl)
   Future<APIResponse<DataUserProfile>> getProfile();
 
   @GET(APIConstants.getUserPropertiesUrl)
   Future<APIResponse<List<PropertyData>>> getUserProperties();
-
 }

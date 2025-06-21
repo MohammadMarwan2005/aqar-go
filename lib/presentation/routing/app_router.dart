@@ -2,7 +2,9 @@ import 'package:aqar_go/presentation/feature/media_picker/media_picker_cubit.dar
 import 'package:aqar_go/presentation/feature/my_properties/my_properties_screen.dart';
 import 'package:aqar_go/presentation/feature/profile/cubit/profile_cubit.dart';
 import 'package:aqar_go/presentation/feature/profile/profile_screen.dart';
+import 'package:image_picker/image_picker.dart';
 
+import '../../domain/model/property.dart';
 import '../../presentation/feature/auth/login/login_cubit.dart';
 import '../../presentation/feature/auth/login/login_screen.dart';
 import '../../presentation/feature/auth/register/register_cubit.dart';
@@ -51,15 +53,24 @@ final appRouter = GoRouter(
     GoRoute(path: Routes.test, builder: (context, state) => TestScreen()),
     GoRoute(path: Routes.home, builder: (context, state) => TestScreen()),
     GoRoute(
-      path: Routes.createPost,
-      builder:
-          (context, state) => MultiBlocProvider(
-            providers: [
-              BlocProvider<MediaPickerCubit>(create: (context) => getIt()),
-              BlocProvider<EditCreatePostCubit>(create: (context) => getIt()),
-            ],
-            child: EditCreatePostScreen(),
-          ),
+      path: Routes.createUpdatePost,
+      builder: (context, state) {
+        final Property? property = state.extra as Property?;
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider<MediaPickerCubit>(
+              create:
+                  (context) =>
+                      MediaPickerCubit(ImagePicker(), initialImages: property?.images),
+            ),
+            BlocProvider<EditCreatePostCubit>(
+              create:
+                  (context) => EditCreatePostCubit(getIt(), getIt(), property: property),
+            ),
+          ],
+          child: EditCreatePostScreen(),
+        );
+      },
     ),
     GoRoute(
       path: Routes.profile,
@@ -67,7 +78,7 @@ final appRouter = GoRouter(
           (context, state) => MultiBlocProvider(
             providers: [
               BlocProvider<MediaPickerCubit>(create: (context) => getIt()),
-              BlocProvider<ProfileCubit>(create: (context) => getIt())
+              BlocProvider<ProfileCubit>(create: (context) => getIt()),
             ],
             child: ProfileScreen(),
           ),
@@ -77,7 +88,7 @@ final appRouter = GoRouter(
       builder:
           (context, state) => MultiBlocProvider(
             providers: [
-              BlocProvider<MyPropertiesCubit>(create: (context) => getIt())
+              BlocProvider<MyPropertiesCubit>(create: (context) => getIt()),
             ],
             child: MyPropertiesScreen(),
           ),

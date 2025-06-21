@@ -1,6 +1,8 @@
+import 'package:aqar_go/common/helpers/navigation_helper.dart';
 import 'package:aqar_go/common/helpers/ui_helper.dart';
 import 'package:aqar_go/presentation/feature/my_properties/cubit/my_properties_cubit.dart';
 import 'package:aqar_go/presentation/lang/app_localization.dart';
+import 'package:aqar_go/presentation/routing/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -45,7 +47,7 @@ class MyPropertiesScreen extends StatelessWidget {
                           child: PropertyCard(
                             property: properties[index],
                             onTap: () {
-                              context.showMySnackBar("Not implemented yet!");
+                              context.pushRoute(Routes.createUpdatePost, extra: properties[index]);
                             },
                           ),
                         );

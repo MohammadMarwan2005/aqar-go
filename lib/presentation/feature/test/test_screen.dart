@@ -30,7 +30,7 @@ class TestScreen extends StatelessWidget {
                 SizedBox(height: 32),
                 AppButton(
                   onPressed: () {
-                    context.pushRoute(Routes.createPost);
+                    context.pushRoute(Routes.createUpdatePost);
                   },
                   text: "Create Post".tr(context),
                 ),

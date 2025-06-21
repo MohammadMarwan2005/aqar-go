@@ -1,3 +1,4 @@
+import 'package:aqar_go/common/helpers/logging_helper.dart';
 import 'package:aqar_go/common/helpers/navigation_helper.dart';
 import 'package:aqar_go/common/helpers/ui_helper.dart';
 import 'package:aqar_go/common/helpers/validation_helper.dart';
@@ -20,6 +21,7 @@ class EditCreatePostScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<EditCreatePostCubit>();
+    final mediaCubit = context.read<MediaPickerCubit>();
     return BlocConsumer<EditCreatePostCubit, EditCreatePostState>(
       listener: (context, state) {
         switch (state) {
@@ -30,7 +32,6 @@ class EditCreatePostScreen extends StatelessWidget {
           case EditCreatePostSuccess():
             context.showMySnackBar("Post uploaded successfully!");
             context.popRoute();
-            // todo: show success toast and navigate back...
             return;
           case EditCreatePostError(
             error: final error,
@@ -51,9 +52,10 @@ class EditCreatePostScreen extends StatelessWidget {
               isLoading: state is EditCreatePostLoading,
               onPressed: () {
                 final images = context.read<MediaPickerCubit>().state.files;
-                cubit.createPost(images);
+                final toDeleteImagesIds = context.read<MediaPickerCubit>().state.toDeleteImagesIds;
+                cubit.createOrUpdatePost(images, toDeleteImagesIds);
               },
-              text: "Post",
+              text: cubit.isUpdate ? "Update".tr(context) : "Post".tr(context),
             ),
           ),
           appBar: AppBar(title: Text("Edit/Add Post")),
