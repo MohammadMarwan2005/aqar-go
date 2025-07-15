@@ -52,7 +52,8 @@ dependencies:
   retrofit_generator: ^9.1.9
   pretty_dio_logger: ^1.4.0
   get_it: ^8.0.3
-  parse_server_sdk_flutter: ^8.0.0
+#  parse_server_sdk_flutter: ^8.0.0
+#  parse_server_sdk_flutter: ^9.0.0
 
   shared_preferences: ^2.5.3
   flutter_secure_storage: ^9.2.4
@@ -63,9 +64,14 @@ dependencies:
   google_fonts: ^4.0.4
   material_design_icons_flutter: ^7.0.7296
   image_picker: ^1.1.2
-#  google_maps_flutter: ^2.12.2
+
+
+  google_maps_flutter: ^2.12.3
+  geolocator: ^14.0.1
+  geocoding: ^4.0.0
+  flutter_dotenv: ^5.2.1
+
 #  geocoding: ^4.0.0
-#  geolocator: ^14.0.1
 #  flutter_google_places_hoc081098: ^2.0.0
 #  google_place: ^0.4.7
 
@@ -97,6 +103,7 @@ flutter:
   assets:
    - assets/svgs/
    - assets/images/
+   - .env
   #   - images/a_dot_ham.jpeg
 flutter_gen:
   output: lib/presentation/assets

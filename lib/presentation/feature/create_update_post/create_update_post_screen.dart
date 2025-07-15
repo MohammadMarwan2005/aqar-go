@@ -5,6 +5,7 @@ import 'package:aqar_go/domain/model/domain_error.dart';
 import 'package:aqar_go/domain/model/property.dart';
 import 'package:aqar_go/presentation/assets/property_widgets_helper.dart';
 import 'package:aqar_go/presentation/feature/create_update_post/cubit/create_update_post_cubit.dart';
+import 'package:aqar_go/presentation/feature/maps/cubit/maps_cubit.dart';
 import 'package:aqar_go/presentation/feature/media_picker/image_picker_widget.dart';
 import 'package:aqar_go/presentation/feature/media_picker/media_picker_cubit.dart';
 import 'package:aqar_go/presentation/lang/app_localization.dart';
@@ -13,6 +14,8 @@ import 'package:aqar_go/presentation/widgets/app_text_field.dart';
 import 'package:aqar_go/presentation/widgets/screen_horizontal_padding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../maps/map_selector.dart';
 
 class CreateUpdatePostScreen extends StatelessWidget {
   const CreateUpdatePostScreen({super.key});
@@ -51,13 +54,24 @@ class CreateUpdatePostScreen extends StatelessWidget {
               isLoading: state is CreateUpdatePostLoading,
               onPressed: () {
                 final images = context.read<MediaPickerCubit>().state.files;
-                final toDeleteImagesIds = context.read<MediaPickerCubit>().state.toDeleteImagesIds;
+                final mapsState = context.read<MapsCubit>().state;
+                final long = mapsState.selectedMarker?.position.longitude;
+                final late = mapsState.selectedMarker?.position.latitude;
+
+                final toDeleteImagesIds =
+                    context.read<MediaPickerCubit>().state.toDeleteImagesIds;
                 cubit.createOrUpdatePost(images, toDeleteImagesIds);
               },
               text: cubit.isUpdate ? "Update".tr(context) : "Post".tr(context),
             ),
           ),
-          appBar: AppBar(title: Text( cubit.isUpdate ? "Update Post".tr(context) : "Create New Post".tr(context))),
+          appBar: AppBar(
+            title: Text(
+              cubit.isUpdate
+                  ? "Update Post".tr(context)
+                  : "Create New Post".tr(context),
+            ),
+          ),
           body: SafeArea(
             child: SingleChildScrollView(
               child: ScreenPadding(
@@ -162,6 +176,8 @@ class PropertyFields extends StatelessWidget {
           validator: (value) => value.validateArea()?.tr(context),
           keyboardType: TextInputType.number,
         ),
+        _LocalSizedBox(),
+        MapSelector(),
         _LocalSizedBox(),
       ],
     );

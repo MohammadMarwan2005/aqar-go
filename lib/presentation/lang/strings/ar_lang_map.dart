@@ -107,4 +107,5 @@ const Map<String, String> _arLangMap = {
   "None": "لا يوجد",
   "Floor": "الطابق",
   "Furnished?": "هل يوجد تأثيث؟",
+  "Location": "الموقع",
 };

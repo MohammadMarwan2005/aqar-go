@@ -1,3 +1,4 @@
+import 'package:aqar_go/presentation/feature/maps/cubit/maps_cubit.dart';
 import 'package:aqar_go/presentation/feature/media_picker/media_picker_cubit.dart';
 import 'package:aqar_go/presentation/feature/my_properties/my_properties_screen.dart';
 import 'package:aqar_go/presentation/feature/profile/cubit/profile_cubit.dart';
@@ -66,6 +67,10 @@ final appRouter = GoRouter(
             BlocProvider<CreateUpdatePostCubit>(
               create:
                   (context) => CreateUpdatePostCubit(getIt(), property: property),
+            ),
+            BlocProvider<MapsCubit>(
+              create:
+                  (context) => getIt(),
             ),
           ],
           child: CreateUpdatePostScreen(),

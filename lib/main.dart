@@ -3,11 +3,13 @@ import 'package:aqar_go/presentation/routing/app_router.dart';
 import 'package:aqar_go/presentation/routing/routing_use_case.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'my_app.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: ".env");
   await di();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
