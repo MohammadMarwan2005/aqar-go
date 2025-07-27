@@ -3,6 +3,7 @@ import 'package:aqar_go/presentation/feature/media_picker/media_picker_cubit.dar
 import 'package:aqar_go/presentation/feature/my_properties/my_properties_screen.dart';
 import 'package:aqar_go/presentation/feature/profile/cubit/profile_cubit.dart';
 import 'package:aqar_go/presentation/feature/profile/profile_screen.dart';
+import 'package:aqar_go/presentation/widgets/app_bottom_nav_bar.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../domain/model/property.dart';
@@ -20,6 +21,7 @@ import '../feature/create_update_post/create_update_post_screen.dart';
 import '../feature/my_properties/cubit/my_properties_cubit.dart';
 import '../feature/onboarding/onboarding_screen.dart';
 import '../feature/test/test_screen.dart';
+import '../feature/user_nav_shell/user_nav_shell.dart';
 import '../routing/routes.dart';
 
 final GlobalKey<NavigatorState> goRouteRootNavigatorKey =
@@ -52,7 +54,6 @@ final appRouter = GoRouter(
           ),
     ),
     GoRoute(path: Routes.test, builder: (context, state) => TestScreen()),
-    GoRoute(path: Routes.home, builder: (context, state) => TestScreen()),
     GoRoute(
       path: Routes.createUpdatePost,
       builder: (context, state) {
@@ -61,32 +62,21 @@ final appRouter = GoRouter(
           providers: [
             BlocProvider<MediaPickerCubit>(
               create:
-                  (context) =>
-                      MediaPickerCubit(ImagePicker(), initialImages: property?.images),
+                  (context) => MediaPickerCubit(
+                    ImagePicker(),
+                    initialImages: property?.images,
+                  ),
             ),
             BlocProvider<CreateUpdatePostCubit>(
               create:
-                  (context) => CreateUpdatePostCubit(getIt(), property: property),
+                  (context) =>
+                      CreateUpdatePostCubit(getIt(), property: property),
             ),
-            BlocProvider<MapsCubit>(
-              create:
-                  (context) => getIt(),
-            ),
+            BlocProvider<MapsCubit>(create: (context) => getIt()),
           ],
           child: CreateUpdatePostScreen(),
         );
       },
-    ),
-    GoRoute(
-      path: Routes.profile,
-      builder:
-          (context, state) => MultiBlocProvider(
-            providers: [
-              BlocProvider<MediaPickerCubit>(create: (context) => getIt()),
-              BlocProvider<ProfileCubit>(create: (context) => getIt()),
-            ],
-            child: ProfileScreen(),
-          ),
     ),
     GoRoute(
       path: Routes.myProperties,
@@ -97,6 +87,10 @@ final appRouter = GoRouter(
             ],
             child: MyPropertiesScreen(),
           ),
+    ),
+    ShellRoute(
+      builder: (context, state, child) => UserNavShell(child: child),
+      routes: UserNavShell.userGoRoutes,
     ),
   ],
 );
