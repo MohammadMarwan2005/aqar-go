@@ -28,7 +28,7 @@ authListener(BuildContext context, AuthState state) {
       context.showMyAlertDialogFromDomainError(domainError);
     },
     success: (_) {
-      context.goRoute(Routes.test);
+      context.goRoute(Routes.home);
     },
   );
 }

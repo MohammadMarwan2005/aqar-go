@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("kotlin-android")
@@ -9,6 +11,14 @@ android {
     namespace = "com.alaishat.mohammad.aqargo.aqar_go"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = "29.0.13113456"
+
+    val props = Properties()
+    // load the .env file from root\aqar_go/.env
+    val dotenvFile = rootProject.file("../.env")
+    if (dotenvFile.exists()) {
+        dotenvFile.inputStream().use { props.load(it) }
+    }
+    val googleMapsApiKey = props.getProperty("GOOGLE_MAPS_API_KEY") ?: "default_dummy_key"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -28,6 +38,8 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+
+        manifestPlaceholders["GOOGLE_MAPS_API_KEY"] = googleMapsApiKey
     }
 
     buildTypes {
