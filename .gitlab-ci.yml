@@ -1,0 +1,46 @@
+image: ghcr.io/cirruslabs/flutter:3.29.3
+
+stages:
+  - build
+  - deploy
+
+variables:
+  NODE_VERSION: "20"
+
+cache:
+  key:
+    files:
+      - pubspec.lock
+  paths:
+    - .pub-cache
+    - build/
+    - .npm/
+
+before_script:
+  - flutter pub get
+  - flutter --version
+  - flutter doctor
+  - node --version || (curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash - && apt-get install -y nodejs)
+  - npm install -g firebase-tools
+
+build_and_package:
+  stage: build
+  script:
+    - echo "$MY_ENV_FILE" > .env
+    - flutter build apk --release
+  artifacts:
+    paths:
+      - build/app/outputs/flutter-apk/app-release.apk
+    expire_in: 1 hour
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
+
+deploy_apk:
+  stage: deploy
+  script:
+    - echo "$FIREBASE_CREDENTIALS" > firebase_credentials.json
+    - export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/firebase_credentials.json"
+    - firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk --app "1:759335379864:android:6bed5dad18690c487401ed" --groups "Team" --release-notes "🚀 New release from GitLab CI/CD"
+
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
