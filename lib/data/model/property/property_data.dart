@@ -95,7 +95,7 @@ class PropertyData {
 
   dynamic _mapPropertable(String type, dynamic data) {
     final en = PropertableEnum.values.firstWhere(
-      (element) => element.labelId == type,
+      (element) => element.labelId.toLowerCase() == type.toLowerCase(),
     );
     switch (en) {
       case PropertableEnum.land:
