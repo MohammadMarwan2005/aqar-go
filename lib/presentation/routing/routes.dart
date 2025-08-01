@@ -6,6 +6,7 @@ sealed class Routes {
   static const verifyPhone = "/phone-verify";
   static const createUpdatePost = "/create-post";
   static const myProperties = "/my-properties";
+  static const myPublishedAds = "/published-ads";
 
   static const home = "/home-user";
   static const search = "/search-user";

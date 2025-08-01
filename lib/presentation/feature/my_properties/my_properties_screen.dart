@@ -1,5 +1,4 @@
 import 'package:aqar_go/common/helpers/navigation_helper.dart';
-import 'package:aqar_go/common/helpers/ui_helper.dart';
 import 'package:aqar_go/presentation/feature/my_properties/cubit/my_properties_cubit.dart';
 import 'package:aqar_go/presentation/lang/app_localization.dart';
 import 'package:aqar_go/presentation/routing/routes.dart';
@@ -39,20 +38,28 @@ class MyPropertiesScreen extends StatelessWidget {
                     onRefresh: () async {
                       context.read<MyPropertiesCubit>().fetchMyProperties();
                     },
-                    child: ListView.builder(
-                      itemCount: properties.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: PropertyCard(
-                            property: properties[index],
-                            onTap: () {
-                              context.pushRoute(Routes.createUpdatePost, extra: properties[index]);
-                            },
-                          ),
-                        );
-                      },
-                    ),
+                    child:
+                        (properties.isEmpty)
+                            ? Center(child: Text("No Properties Found!".tr(context)))
+                            : ListView.builder(
+                              itemCount: properties.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 8.0,
+                                  ),
+                                  child: PropertyCard(
+                                    property: properties[index],
+                                    onTap: () {
+                                      context.pushRoute(
+                                        Routes.createUpdatePost,
+                                        extra: properties[index],
+                                      );
+                                    },
+                                  ),
+                                );
+                              },
+                            ),
                   );
                 },
               );
@@ -132,7 +139,9 @@ class PropertyCard extends StatelessWidget {
                       Text('${property.price}'),
                       Spacer(),
                       Chip(
-                        label: Text(property.propertable.toEnum().labelId.tr(context)),
+                        label: Text(
+                          property.propertable.toEnum().labelId.tr(context),
+                        ),
                         backgroundColor: Colors.blue.shade50,
                         labelStyle: TextStyle(color: Colors.blue.shade800),
                         padding: EdgeInsets.symmetric(horizontal: 8),

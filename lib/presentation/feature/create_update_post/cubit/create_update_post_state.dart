@@ -29,6 +29,15 @@ final class CreateUpdatePostLoading extends CreateUpdatePostState {
   }
 }
 
+final class CreateAdLoading extends CreateUpdatePostState {
+  const CreateAdLoading({required super.formData});
+
+  @override
+  CreateUpdatePostState copyWithFormData(PostFormData formData) {
+    return CreateUpdatePostLoading(formData: formData);
+  }
+}
+
 final class CreateUpdatePostSuccess extends CreateUpdatePostState {
   final Property property;
 
@@ -44,6 +53,21 @@ final class CreateUpdatePostSuccess extends CreateUpdatePostState {
 
   @override
   List<Object?> get props => [...super.props, property];
+}
+
+final class CreateAdSuccess extends CreateUpdatePostState {
+
+  const CreateAdSuccess({
+    required super.formData,
+  });
+
+  @override
+  CreateUpdatePostState copyWithFormData(PostFormData formData) {
+    return CreateAdSuccess(formData: formData);
+  }
+
+  @override
+  List<Object?> get props => [...super.props];
 }
 
 final class CreateUpdatePostError extends CreateUpdatePostState {

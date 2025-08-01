@@ -23,7 +23,6 @@ class CreateUpdatePostScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<CreateUpdatePostCubit>();
-    final mediaCubit = context.read<MediaPickerCubit>();
     return BlocConsumer<CreateUpdatePostCubit, CreateUpdatePostState>(
       listener: (context, state) {
         switch (state) {
@@ -31,10 +30,15 @@ class CreateUpdatePostScreen extends StatelessWidget {
             return;
           case CreateUpdatePostLoading():
             return;
+          case CreateAdLoading():
+            return;
           case CreateUpdatePostSuccess():
-            context.showMySnackBar("Post uploaded successfully!".tr(context));
+            context.showMySnackBar("Property uploaded successfully!".tr(context));
             context.popRoute();
             return;
+          case CreateAdSuccess():
+            context.showMySnackBar("Post created successfully!".tr(context));
+            context.popRoute();
           case CreateUpdatePostError(
             error: final error,
             isSnackBar: final isSnackBar,
@@ -50,26 +54,43 @@ class CreateUpdatePostScreen extends StatelessWidget {
         return Scaffold(
           bottomNavigationBar: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: AppButton(
-              isLoading: state is CreateUpdatePostLoading,
-              onPressed: () {
-                final images = context.read<MediaPickerCubit>().state.files;
-                final mapsState = context.read<MapsCubit>().state;
-                final long = mapsState.selectedMarker?.position.longitude;
-                final late = mapsState.selectedMarker?.position.latitude;
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                AppButton(
+                  isSecondary: cubit.isUpdate ? true : false,
+                  isLoading: state is CreateUpdatePostLoading,
+                  onPressed: () {
+                    final images = context.read<MediaPickerCubit>().state.files;
+                    final mapsState = context.read<MapsCubit>().state;
+                    final long = mapsState.selectedMarker?.position.longitude;
+                    final late = mapsState.selectedMarker?.position.latitude;
+                    debugPrint("$long , $late");
 
-                final toDeleteImagesIds =
-                    context.read<MediaPickerCubit>().state.toDeleteImagesIds;
-                cubit.createOrUpdatePost(images, toDeleteImagesIds);
-              },
-              text: cubit.isUpdate ? "Update".tr(context) : "Post".tr(context),
+                    final toDeleteImagesIds =
+                        context.read<MediaPickerCubit>().state.toDeleteImagesIds;
+                    cubit.createOrUpdatePost(images, toDeleteImagesIds);
+                  },
+                  text: cubit.isUpdate ? "Update".tr(context) : "Create".tr(context),
+                ),
+                if(cubit.isUpdate) ...[
+                  SizedBox(height: 8),
+                  AppButton(
+                    isLoading: state is CreateAdLoading,
+                    onPressed: () {
+                      cubit.createAd();
+                    },
+                    text: "Post Ad".tr(context),
+                  )
+                ]
+              ],
             ),
           ),
           appBar: AppBar(
             title: Text(
               cubit.isUpdate
-                  ? "Update Post".tr(context)
-                  : "Create New Post".tr(context),
+                  ? "Update Property".tr(context)
+                  : "Create New Property".tr(context),
             ),
           ),
           body: SafeArea(
@@ -185,7 +206,7 @@ class PropertyFields extends StatelessWidget {
 }
 
 class _LocalSizedBox extends StatelessWidget {
-  const _LocalSizedBox({super.key});
+  const _LocalSizedBox();
 
   @override
   Widget build(BuildContext context) {
