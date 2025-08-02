@@ -37,7 +37,7 @@ class CreateUpdatePostScreen extends StatelessWidget {
             context.popRoute();
             return;
           case CreateAdSuccess():
-            context.showMySnackBar("Post created successfully!".tr(context));
+            context.showMySnackBar("Ad created successfully!".tr(context));
             context.popRoute();
           case CreateUpdatePostError(
             error: final error,
@@ -71,9 +71,9 @@ class CreateUpdatePostScreen extends StatelessWidget {
                         context.read<MediaPickerCubit>().state.toDeleteImagesIds;
                     cubit.createOrUpdatePost(images, toDeleteImagesIds);
                   },
-                  text: cubit.isUpdate ? "Update".tr(context) : "Create".tr(context),
+                  text: cubit.isUpdate ? "Update Property".tr(context) : "Create Property".tr(context),
                 ),
-                if(cubit.isUpdate) ...[
+                if(cubit.isUpdate && cubit.property?.isAd == false) ...[
                   SizedBox(height: 8),
                   AppButton(
                     isLoading: state is CreateAdLoading,

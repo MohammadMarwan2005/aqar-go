@@ -1,3 +1,5 @@
+import 'package:aqar_go/domain/model/domain_error.dart';
+
 import '../../common/helpers/logging_helper.dart';
 import 'package:flutter/cupertino.dart';
 

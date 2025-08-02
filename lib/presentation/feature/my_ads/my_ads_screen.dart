@@ -7,8 +7,10 @@ import 'package:aqar_go/presentation/widgets/error_message.dart';
 import 'package:aqar_go/presentation/widgets/loading_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../domain/model/ad/ad.dart';
+import '../../routing/routes.dart';
 import '../../widgets/screen_horizontal_padding.dart';
 import 'cubit/my_ads_cubit.dart';
 
@@ -108,7 +110,7 @@ class _MyAdsList extends StatelessWidget {
                         child: MyAdCard(
                           ad: myAds[index],
                           onTap: () {
-                            // onTab
+                            context.push(Routes.getMyAdDetails(myAds[index].id));
                           },
                         ),
                       );
@@ -146,8 +148,8 @@ class _ActivateAllButton extends StatelessWidget {
             context.showMyAlertDialogFromDomainError(error);
           },
           success: () {
-            context.showMyAlertDialog("Ads Activated", [
-              "All ads are activated successfully!",
+            context.showMyAlertDialog("Ads Activated".tr(context), [
+              "All ads are activated successfully!".tr(context),
             ], false);
           },
         );

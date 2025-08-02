@@ -10,5 +10,5 @@ class Ad {
 
   Ad({required this.id, required this.isActive, required this.views, required this.creationDateUTC, required this.expirationDateUTC, required this.property});
 
-  bool get isExpired => DateTime.now().toUtc().isAfter(expirationDateUTC);
+  bool get isExpired => !isActive;
 }

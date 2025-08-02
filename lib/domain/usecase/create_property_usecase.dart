@@ -27,6 +27,7 @@ class CreateUpdatePropertyUsecase {
     final requestProperty = Property(
       id: property?.id ?? 0,
       userId: property?.userId ?? 0,
+      isAd: false,
       locationId: locationId,
       propertableId: property?.propertableId ?? 0,
       area: area,

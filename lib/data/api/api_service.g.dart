@@ -247,6 +247,36 @@ class _APIService implements APIService {
   }
 
   @override
+  Future<APIResponse<AdData>> getAdById(int id) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<APIResponse<AdData>>(
+      Options(method: 'GET', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            'http://116.203.254.150:8001/api/ad/show/${id}',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late APIResponse<AdData> _value;
+    try {
+      _value = APIResponse<AdData>.fromJson(
+        _result.data!,
+        (json) => AdData.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
   Future<APIResponse<List<AdData>>> getUserAds() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -311,6 +341,66 @@ class _APIService implements APIService {
             json is List<dynamic>
                 ? json.map<dynamic>((i) => i as Map<String, dynamic>).toList()
                 : List.empty(),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<APIResponse<dynamic>> deactivateAd(int id) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<APIResponse<dynamic>>(
+      Options(method: 'GET', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            'http://116.203.254.150:8001/api/ad/unactivate/${id}',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late APIResponse<dynamic> _value;
+    try {
+      _value = APIResponse<dynamic>.fromJson(
+        _result.data!,
+        (json) => json as dynamic,
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<APIResponse<dynamic>> deleteAd(int id) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<APIResponse<dynamic>>(
+      Options(method: 'DELETE', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            'http://116.203.254.150:8001/api/ad/delete/${id}',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late APIResponse<dynamic> _value;
+    try {
+      _value = APIResponse<dynamic>.fromJson(
+        _result.data!,
+        (json) => json as dynamic,
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);

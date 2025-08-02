@@ -21,6 +21,7 @@ PropertyData _$PropertyDataFromJson(Map<String, dynamic> json) => PropertyData(
       (json['images'] as List<dynamic>)
           .map((e) => MediaFileData.fromJson(e as Map<String, dynamic>))
           .toList(),
+  isAd: json['is_ad'] as bool,
 );
 
 Map<String, dynamic> _$PropertyDataToJson(PropertyData instance) =>
@@ -35,5 +36,6 @@ Map<String, dynamic> _$PropertyDataToJson(PropertyData instance) =>
       'propertyable_id': instance.propertableId,
       'type': instance.type,
       'propertyable': instance.propertable,
+      'is_ad': instance.isAd,
       'images': instance.images,
     };

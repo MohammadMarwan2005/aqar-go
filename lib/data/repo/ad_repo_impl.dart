@@ -29,9 +29,15 @@ class AdRepoImpl extends AdRepo {
   }
 
   @override
-  Future<Resource<Ad>> getAdById() {
-    // TODO: implement getAdById
-    throw UnimplementedError();
+  Future<Resource<Ad>> getAdById(int adId) {
+    return _safeAPICaller.call<Ad, APIResponse<AdData>>(
+      apiCall: () {
+        return _apiService.getAdById(adId);
+      },
+      dataToDomain: (data) {
+        return data.data.toDomain();
+      },
+    );
   }
 
   @override
@@ -50,7 +56,47 @@ class AdRepoImpl extends AdRepo {
   Future<Resource<void>> activateAllAds() {
     return _safeAPICaller.call<void, APIResponse<dynamic>>(
       apiCall: () {
-        return _apiService.activateSelectedAds(ActivateSelectedAdsRequest(all: 1, ads: []));
+        return _apiService.activateSelectedAds(
+          ActivateSelectedAdsRequest(all: 1, ads: []),
+        );
+      },
+      dataToDomain: (data) {
+        return;
+      },
+    );
+  }
+
+  @override
+  Future<Resource<void>> activateAd(int adId) {
+    return _safeAPICaller.call<void, APIResponse<dynamic>>(
+      apiCall: () {
+        return _apiService.activateSelectedAds(
+          ActivateSelectedAdsRequest(all: 0, ads: [adId]),
+        );
+      },
+      dataToDomain: (data) {
+        return;
+      },
+    );
+  }
+
+  @override
+  Future<Resource<void>> deactivateAd(int adId) {
+    return _safeAPICaller.call<void, APIResponse<dynamic>>(
+      apiCall: () {
+        return _apiService.deactivateAd(adId);
+      },
+      dataToDomain: (data) {
+        return;
+      },
+    );
+  }
+
+  @override
+  Future<Resource<void>> deleteAd(int adId) {
+    return _safeAPICaller.call<void, APIResponse<dynamic>>(
+      apiCall: () {
+        return _apiService.deleteAd(adId);
       },
       dataToDomain: (data) {
         return;

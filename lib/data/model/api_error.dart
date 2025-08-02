@@ -7,7 +7,7 @@ part 'api_error.g.dart';
 class APIError {
   final String message;
   final int status;
-  final Map<String, List<String>>? data;
+  final Map<String, List<dynamic>>? data;
 
   APIError(this.message, this.status, this.data);
 
@@ -20,7 +20,7 @@ class APIError {
 extension X on APIError {
   DomainError toDomainError() {
     final List<String> details =
-        (data?.values ?? {}).expand((element) => element).toList();
+        (data?.values ?? {}).expand((element) => element.map((e) => e.toString())).toList();
     return DomainError(message: message, details: details);
   }
 }

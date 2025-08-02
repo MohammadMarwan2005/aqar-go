@@ -52,6 +52,9 @@ abstract class APIService {
     @Body() CreateAdRequest request,
   );
 
+  @GET("${APIConstants.getAdByIdUrl}/{id}")
+  Future<APIResponse<AdData>> getAdById(@Path("id") int id);
+
   @POST(APIConstants.getUserAdsUrl)
   Future<APIResponse<List<AdData>>> getUserAds();
 
@@ -59,4 +62,10 @@ abstract class APIService {
   Future<APIResponse<List<dynamic>>> activateSelectedAds(
     @Body() ActivateSelectedAdsRequest activateSelectedAdsRequest,
   );
+
+  @GET("${APIConstants.deactivateAdUrl}/{id}")
+  Future<APIResponse<dynamic>> deactivateAd(@Path("id") int id);
+
+  @DELETE("${APIConstants.deleteAdUrl}/{id}")
+  Future<APIResponse<dynamic>> deleteAd(@Path("id") int id);
 }

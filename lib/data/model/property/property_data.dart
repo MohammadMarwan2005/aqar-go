@@ -26,6 +26,10 @@ class PropertyData {
   final String type;
   @JsonKey(name: "propertyable")
   final Map<String, dynamic> propertable;
+
+  @JsonKey(name: 'is_ad')
+  final bool isAd;
+
   final List<MediaFileData> images;
 
   PropertyData({
@@ -40,6 +44,7 @@ class PropertyData {
     required this.type,
     required this.propertable,
     required this.images,
+    required this.isAd,
   });
 
   factory PropertyData.fromJson(Map<String, dynamic> json) =>
@@ -55,21 +60,23 @@ class PropertyData {
     price: price,
     title: title,
     description: description,
+    isAd: isAd,
     propertableId: propertableId,
     propertable: _mapPropertable(type, propertable),
     images: images.map((e) => e.toDomain()).toList(),
   );
 
-  static PropertyData fromDomain(Property p){
-
+  static PropertyData fromDomain(Property p) {
     late Map<String, dynamic> propertableJson;
-    switch(p.propertable) {
+    switch (p.propertable) {
       case Land():
-        propertableJson  = LandData.fromDomain(p.propertable as Land).toJson();
+        propertableJson = LandData.fromDomain(p.propertable as Land).toJson();
       case Office():
-        propertableJson = OfficeData.fromDomain(p.propertable as Office).toJson();
+        propertableJson =
+            OfficeData.fromDomain(p.propertable as Office).toJson();
       case Apartment():
-        propertableJson = ApartmentData.fromDomain(p.propertable as Apartment).toJson();
+        propertableJson =
+            ApartmentData.fromDomain(p.propertable as Apartment).toJson();
       case Shop():
         propertableJson = ShopData.fromDomain(p.propertable as Shop).toJson();
     }
@@ -86,10 +93,11 @@ class PropertyData {
       type: p.propertable.toEnum().labelId,
       propertable: propertableJson,
       images:
-      p.images
-          .where((i) => i.id != null && i.imageUrl != null)
-          .map(MediaFileData.fromDomain)
-          .toList(),
+          p.images
+              .where((i) => i.id != null && i.imageUrl != null)
+              .map(MediaFileData.fromDomain)
+              .toList(),
+      isAd: p.isAd,
     );
   }
 

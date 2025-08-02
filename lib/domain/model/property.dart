@@ -23,6 +23,8 @@ class Property {
   final int userId;
   final int propertableId;
 
+  final bool isAd;
+
   final Propertable propertable;
 
   Property({
@@ -35,7 +37,8 @@ class Property {
     required this.title,
     required this.description,
     required this.propertable,
-    required this.images
+    required this.images,
+    required this.isAd
   });
 }
 

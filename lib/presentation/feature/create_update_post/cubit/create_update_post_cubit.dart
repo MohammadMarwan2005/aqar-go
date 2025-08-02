@@ -73,8 +73,8 @@ class CreateUpdatePostCubit extends Cubit<CreateUpdatePostState> {
           isSnackBar: true,
           formData: state.formData,
           error: DomainError(
-            message: "Enter valid input please!",
-            messageId: "Enter valid input please!",
+            message: "Enter valid values",
+            messageId: "Enter valid values",
           ),
         ),
       );
