@@ -14,8 +14,12 @@ class PropertyData {
   final int id;
   @JsonKey(name: 'user_id')
   final int userId;
-  @JsonKey(name: 'location_id')
-  final int locationId;
+  @JsonKey(name: 'latitude')
+  final double latitude;
+  @JsonKey(name: 'longitude')
+  final double longitude;
+  @JsonKey(name: 'address')
+  final String addressName;
   final int area;
   final int price;
   @JsonKey(name: 'name')
@@ -35,7 +39,9 @@ class PropertyData {
   PropertyData({
     required this.id,
     required this.userId,
-    required this.locationId,
+    required this.latitude,
+    required this.longitude,
+    required this.addressName,
     required this.area,
     required this.price,
     required this.title,
@@ -55,7 +61,9 @@ class PropertyData {
   Property toDomain() => Property(
     id: id,
     userId: userId,
-    locationId: locationId,
+    lat: latitude,
+    long: longitude,
+    addressName: addressName,
     area: area,
     price: price,
     title: title,
@@ -84,7 +92,9 @@ class PropertyData {
     return PropertyData(
       id: p.id,
       userId: p.userId,
-      locationId: p.locationId,
+      latitude: p.lat,
+      longitude: p.long,
+      addressName: p.addressName,
       area: p.area,
       price: p.price,
       title: p.title,

@@ -17,7 +17,9 @@ class Property {
   final int price;
   final int area;
   final List<MediaFile> images;
-  final int locationId;
+  final double lat;
+  final double long;
+  final String addressName;
 
   // you will not use in create
   final int id;
@@ -31,7 +33,9 @@ class Property {
   Property({
     required this.id,
     required this.userId,
-    required this.locationId,
+    required this.long,
+    required this.lat,
+    required this.addressName,
     required this.propertableId,
     required this.area,
     required this.price,

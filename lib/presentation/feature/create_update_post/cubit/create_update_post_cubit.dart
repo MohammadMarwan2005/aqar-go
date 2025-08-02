@@ -39,9 +39,11 @@ class CreateUpdatePostCubit extends Cubit<CreateUpdatePostState> {
   Future<void> createOrUpdatePost(
     List<MediaFile> mediaFiles,
     List<int> toDeleteImagesIds,
+      double? long,
+      double? lat,
   ) async {
     final validated = formKey.currentState?.validate();
-    if (validated == true) {
+    if (validated == true && long != null && lat != null) {
       emit(CreateUpdatePostLoading(formData: state.formData));
 
       final formData = state.formData;
@@ -50,6 +52,8 @@ class CreateUpdatePostCubit extends Cubit<CreateUpdatePostState> {
         formData,
         mediaFiles,
         toDeleteImagesIds,
+        long,
+        lat,
         isUpdate,
         property,
       );

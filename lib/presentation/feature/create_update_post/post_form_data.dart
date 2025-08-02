@@ -10,7 +10,7 @@ class PostFormData extends Equatable {
   final String description;
   final String area;
   final String price;
-  final int? locationId;
+  final String addressName;
   final PropertableEnum selectedPropertableEnum;
 
   // Shop
@@ -50,7 +50,7 @@ class PostFormData extends Equatable {
     this.description = 'some desc',
     this.area = '22',
     this.price = '22',
-    this.locationId = 1,
+    this.addressName = "",
     this.selectedPropertableEnum = PropertableEnum.land,
     this.floor = 0,
     this.selectedShopType = ShopType.retail,
@@ -165,7 +165,7 @@ class PostFormData extends Equatable {
       description: property.description,
       area: property.area.toString(),
       price: property.price.toString(),
-      locationId: property.locationId,
+      addressName: property.addressName,
       selectedPropertableEnum: selectedPropertableEnum,
       floor: floor,
       selectedShopType: selectedShopType,
@@ -201,7 +201,7 @@ class PostFormData extends Equatable {
     String? description,
     String? area,
     String? price,
-    int? locationId,
+    String? addressName,
     PropertableEnum? selectedPropertableEnum,
     int? floor,
     ShopType? selectedShopType,
@@ -234,7 +234,7 @@ class PostFormData extends Equatable {
       description: description ?? this.description,
       area: area ?? this.area,
       price: price ?? this.price,
-      locationId: locationId ?? this.locationId,
+      addressName: addressName ?? this.addressName,
       selectedPropertableEnum: selectedPropertableEnum ?? this.selectedPropertableEnum,
       floor: floor ?? this.floor,
       selectedShopType: selectedShopType ?? this.selectedShopType,
@@ -271,7 +271,7 @@ class PostFormData extends Equatable {
     description,
     area,
     price,
-    locationId,
+    addressName,
     selectedPropertableEnum,
     floor,
     selectedShopType,

@@ -33,7 +33,9 @@ class CreateUpdatePostScreen extends StatelessWidget {
           case CreateAdLoading():
             return;
           case CreateUpdatePostSuccess():
-            context.showMySnackBar("Property uploaded successfully!".tr(context));
+            context.showMySnackBar(
+              "Property uploaded successfully!".tr(context),
+            );
             context.popRoute();
             return;
           case CreateAdSuccess():
@@ -68,12 +70,23 @@ class CreateUpdatePostScreen extends StatelessWidget {
                     debugPrint("$long , $late");
 
                     final toDeleteImagesIds =
-                        context.read<MediaPickerCubit>().state.toDeleteImagesIds;
-                    cubit.createOrUpdatePost(images, toDeleteImagesIds);
+                        context
+                            .read<MediaPickerCubit>()
+                            .state
+                            .toDeleteImagesIds;
+                    cubit.createOrUpdatePost(
+                      images,
+                      toDeleteImagesIds,
+                      long,
+                      late,
+                    );
                   },
-                  text: cubit.isUpdate ? "Update Property".tr(context) : "Create Property".tr(context),
+                  text:
+                      cubit.isUpdate
+                          ? "Update Property".tr(context)
+                          : "Create Property".tr(context),
                 ),
-                if(cubit.isUpdate && cubit.property?.isAd == false) ...[
+                if (cubit.isUpdate && cubit.property?.isAd == false) ...[
                   SizedBox(height: 8),
                   AppButton(
                     isLoading: state is CreateAdLoading,
@@ -81,8 +94,8 @@ class CreateUpdatePostScreen extends StatelessWidget {
                       cubit.createAd();
                     },
                     text: "Post Ad".tr(context),
-                  )
-                ]
+                  ),
+                ],
               ],
             ),
           ),
@@ -186,19 +199,20 @@ class PropertyFields extends StatelessWidget {
         _LocalSizedBox(),
 
         AppTextField(
-          initialValue: state.formData.locationId.toString(),
+          initialValue: state.formData.addressName.toString(),
           onChanged: (value) {
             cubit.updateFormData(
-              (current) =>
-                  current.copyWith(locationId: int.tryParse(value ?? "-1")),
+              (current) => current.copyWith(addressName: value),
             );
           },
-          labelText: "LocationId (Temp)".tr(context),
-          validator: (value) => value.validateArea()?.tr(context),
-          keyboardType: TextInputType.number,
+          labelText: "Address".tr(context),
+          validator: (value) => value.validateNotEmpty()?.tr(context),
         ),
         _LocalSizedBox(),
-        MapSelector(),
+        MapSelector(
+          initialLong: cubit.property?.long,
+          initialLat: cubit.property?.lat,
+        ),
         _LocalSizedBox(),
       ],
     );

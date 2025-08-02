@@ -14,21 +14,25 @@ class CreateUpdatePropertyUsecase {
     // the data in the ui form
     List<MediaFile> mediaFiles,
     List<int> toDeleteImagesIds,
+    double long,
+    double lat,
     bool isUpdate,
     Property? property, // when the property is not null => update...
   ) async {
     final area = int.parse(formData.area);
-    final locationId = formData.locationId ?? -1;
     final price = int.parse(formData.price);
     final title = formData.title;
     final description = formData.description;
+    final addressName = formData.addressName;
     final propertable = formData.getPropertable();
 
     final requestProperty = Property(
       id: property?.id ?? 0,
       userId: property?.userId ?? 0,
       isAd: false,
-      locationId: locationId,
+      lat: lat,
+      long: long,
+      addressName: addressName,
       propertableId: property?.propertableId ?? 0,
       area: area,
       price: price,

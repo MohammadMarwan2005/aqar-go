@@ -148,4 +148,5 @@ const Map<String, String> _arLangMap = {
   "deluxe": "فاخر",
   "superDeluxe": "سوبر فاخر",
   "luxury": "فاخر جدًا",
+  "Address": "العنوان",
 };
