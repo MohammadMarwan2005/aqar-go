@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:aqar_go/domain/model/property.dart';
+import '../../../domain/model/apartment/furnished_type.dart';
 import '../../../domain/model/land/land_slop.dart';
 import '../../../domain/model/land/land_type.dart';
 import '../../../domain/model/shop/shop_type.dart';
@@ -29,10 +30,9 @@ class PostFormData extends Equatable {
   final int officeFloor;
   final int officeRooms;
   final int officeBathrooms;
-  final int? meetingRooms;
+  final int meetingRooms;
   final bool hasParking;
   final bool officeFurnished;
-  final String officeFurnishedType;
 
   // Apartment
   final int apartmentFloor;
@@ -43,7 +43,7 @@ class PostFormData extends Equatable {
   final bool hasAlternativePower;
   final bool hasGarage;
   final bool apartmentFurnished;
-  final String apartmentFurnishedType;
+  final FurnishedType apartmentFurnishedType;
 
   const PostFormData({
     this.title = 'some title',
@@ -66,10 +66,9 @@ class PostFormData extends Equatable {
     this.officeFloor = 0,
     this.officeRooms = 0,
     this.officeBathrooms = 0,
-    this.meetingRooms,
+    this.meetingRooms = 0,
     this.hasParking = false,
     this.officeFurnished = false,
-    this.officeFurnishedType = '',
     // Apartment fields
     this.apartmentFloor = 0,
     this.apartmentRooms = 0,
@@ -79,7 +78,7 @@ class PostFormData extends Equatable {
     this.hasAlternativePower = false,
     this.hasGarage = false,
     this.apartmentFurnished = false,
-    this.apartmentFurnishedType = '',
+    this.apartmentFurnishedType = FurnishedType.standard,
   });
 
   factory PostFormData.fromProperty(Property? property) {
@@ -100,10 +99,9 @@ class PostFormData extends Equatable {
     int officeFloor = 0;
     int officeRooms = 0;
     int officeBathrooms = 0;
-    int? meetingRooms;
+    int meetingRooms = 0;
     bool hasParking = false;
     bool officeFurnished = false;
-    String officeFurnishedType = '';
     int apartmentFloor = 0;
     int apartmentRooms = 0;
     int apartmentBathrooms = 0;
@@ -112,7 +110,7 @@ class PostFormData extends Equatable {
     bool hasAlternativePower = false;
     bool hasGarage = false;
     bool apartmentFurnished = false;
-    String apartmentFurnishedType = '';
+    FurnishedType apartmentFurnishedType = FurnishedType.standard;
 
     switch (selectedPropertableEnum) {
       case PropertableEnum.land:
@@ -144,7 +142,6 @@ class PostFormData extends Equatable {
           meetingRooms = propertable.meetingRooms;
           hasParking = propertable.hasParking;
           officeFurnished = propertable.furnished;
-          officeFurnishedType = propertable.furnishedType;
         }
         break;
       case PropertableEnum.apartment:
@@ -186,7 +183,6 @@ class PostFormData extends Equatable {
       meetingRooms: meetingRooms,
       hasParking: hasParking,
       officeFurnished: officeFurnished,
-      officeFurnishedType: officeFurnishedType,
       // Apartment fields
       apartmentFloor: apartmentFloor,
       apartmentRooms: apartmentRooms,
@@ -222,7 +218,6 @@ class PostFormData extends Equatable {
     int? meetingRooms,
     bool? hasParking,
     bool? officeFurnished,
-    String? officeFurnishedType,
     int? apartmentFloor,
     int? apartmentRooms,
     int? apartmentBathrooms,
@@ -231,7 +226,7 @@ class PostFormData extends Equatable {
     bool? hasAlternativePower,
     bool? hasGarage,
     bool? apartmentFurnished,
-    String? apartmentFurnishedType,
+    FurnishedType? apartmentFurnishedType,
     bool enforceValue = false,
   }) {
     return PostFormData(
@@ -256,8 +251,7 @@ class PostFormData extends Equatable {
       officeBathrooms: officeBathrooms ?? this.officeBathrooms,
       hasParking: hasParking ?? this.hasParking,
       officeFurnished: officeFurnished ?? this.officeFurnished,
-      officeFurnishedType: officeFurnishedType ?? this.officeFurnishedType,
-      meetingRooms: (enforceValue) ? meetingRooms : meetingRooms ?? this.meetingRooms,
+      meetingRooms: meetingRooms ?? this.meetingRooms,
       // Apartment fields
       apartmentFloor: apartmentFloor ?? this.apartmentFloor,
       apartmentRooms: apartmentRooms ?? this.apartmentRooms,
@@ -294,7 +288,6 @@ class PostFormData extends Equatable {
     meetingRooms,
     hasParking,
     officeFurnished,
-    officeFurnishedType,
     apartmentFloor,
     apartmentRooms,
     apartmentBathrooms,
@@ -331,7 +324,6 @@ class PostFormData extends Equatable {
           meetingRooms: meetingRooms,
           hasParking: hasParking,
           furnished: officeFurnished,
-          furnishedType: officeFurnishedType,
         );
       case PropertableEnum.apartment:
         return Apartment(

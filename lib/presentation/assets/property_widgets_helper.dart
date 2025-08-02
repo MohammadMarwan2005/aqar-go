@@ -2,6 +2,7 @@ import 'package:aqar_go/domain/model/land/land_slop.dart';
 import 'package:aqar_go/domain/model/land/land_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../domain/model/apartment/furnished_type.dart';
 import '../../domain/model/property.dart';
 import '../../domain/model/shop/shop_type.dart';
 import '../feature/create_update_post/cubit/create_update_post_cubit.dart';
@@ -176,12 +177,10 @@ extension X on PropertableEnum {
                 _NumberFieldWithTitle(
                   title: "Meeting Rooms".tr(context),
                   value: state.formData.meetingRooms,
-                  isNullable: true,
                   onChanged: (newValue) {
                     cubit.updateFormData(
                       (currentFormData) => currentFormData.copyWith(
                         meetingRooms: newValue,
-                        enforceValue: true,
                       ),
                     );
                   },
@@ -205,20 +204,6 @@ extension X on PropertableEnum {
                           currentFormData.copyWith(officeFurnished: newValue),
                     );
                   },
-                ),
-                // todo: FurnishedType.values
-                _SingleSelectFieldWithTitle(
-                  title: "Furnished Type".tr(context),
-                  values: ["Test1", "Test2", "Test3"],
-                  selectedValue: state.formData.officeFurnishedType,
-                  onSelect: (newValue) {
-                    cubit.updateFormData(
-                      (currentFormData) => currentFormData.copyWith(
-                        officeFurnishedType: newValue,
-                      ),
-                    );
-                  },
-                  enumToName: (enu) => enu,
                 ),
               ],
             );
@@ -296,14 +281,14 @@ extension X on PropertableEnum {
                 // todo: FurnishedType.values
                 _SingleSelectFieldWithTitle(
                   title: "Furnished Type".tr(context),
-                  values: ["Test1", "Test2", "Test3"],
+                  values: FurnishedType.values,
                   selectedValue: state.formData.apartmentFurnishedType,
                   onSelect: (newValue) {
                     cubit.updateFormData(
                           (currentFormData) => currentFormData.copyWith(apartmentFurnishedType: newValue),
                     );
                   },
-                  enumToName: (enu) => enu,
+                  enumToName: (enu) => enu.name,
                 ),
               ],
             );

@@ -204,7 +204,6 @@ class PropertableContent extends StatelessWidget {
             _item("Rooms", o.rooms),
             _item("Bathrooms", o.bathrooms),
             _item("Meeting Rooms", o.meetingRooms ?? "-"),
-            _item("Furnished", o.furnished ? o.furnishedType : "No"),
             _item("Parking", o.hasParking),
           ],
         );

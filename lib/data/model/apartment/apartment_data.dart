@@ -1,6 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../../domain/model/property.dart';
+import 'data_furnished_type.dart';
 
 part 'apartment_data.g.dart';
 
@@ -46,7 +47,7 @@ class ApartmentData {
     hasAlternativePower: apartment.hasAlternativePower,
     hasGarage: apartment.hasGarage,
     furnished: apartment.furnished,
-    furnishedType: apartment.furnishedType,
+    furnishedType: DataFurnishedType.fromDomain(apartment.furnishedType).backendValue,
   );
 
   Apartment toDomain() => Apartment(
@@ -58,6 +59,6 @@ class ApartmentData {
     hasAlternativePower: hasAlternativePower,
     hasGarage: hasGarage,
     furnished: furnished,
-    furnishedType: furnishedType,
+    furnishedType: DataFurnishedType.fromString(furnishedType).toDomain(),
   );
 }

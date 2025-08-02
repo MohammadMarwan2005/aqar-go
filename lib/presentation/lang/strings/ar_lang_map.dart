@@ -143,5 +143,9 @@ const Map<String, String> _arLangMap = {
   "Bad SSL certificate.": "شهادة SSL غير صالحة.",
   "Unexpected response from server.": "استجابة غير متوقعة من الخادم.",
   "Unexpected response from server: {response}": "استجابة غير متوقعة من الخادم: {response}",
-
+  "economic": "اقتصادي",
+  "standard": "قياسي",
+  "deluxe": "فاخر",
+  "superDeluxe": "سوبر فاخر",
+  "luxury": "فاخر جدًا",
 };

@@ -1,5 +1,6 @@
 import 'package:aqar_go/domain/model/shop/shop_type.dart';
 
+import 'apartment/furnished_type.dart';
 import 'land/land_slop.dart';
 import 'land/land_type.dart';
 import 'media_file.dart';
