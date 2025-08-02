@@ -11,12 +11,26 @@ import 'cubit/maps_cubit.dart';
 
 class MapSelector extends StatelessWidget {
   final String titleId;
+  final double? initialLat;
+  final double? initialLong;
 
-  const MapSelector({super.key, this.titleId = "Location"});
+  const MapSelector({
+    super.key,
+    this.titleId = "Location",
+    this.initialLat,
+    this.initialLong,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final initialLocation =
+        (initialLat != null && initialLong != null)
+            ? LatLng(initialLat!, initialLong!)
+            : null;
     final mapsCubit = context.read<MapsCubit>();
+    if (initialLocation != null && mapsCubit.state.selectedMarker == null) {
+      mapsCubit.setMarker(initialLocation);
+    }
     return FormField<Marker>(
       initialValue: context.read<MapsCubit>().state.selectedMarker,
       validator: (value) {
@@ -59,7 +73,7 @@ class MapSelector extends StatelessWidget {
                       ),
                     },
                     initialCameraPosition: CameraPosition(
-                      target: state.mapLocation,
+                      target: initialLocation ?? state.mapLocation,
                       zoom: 14,
                     ),
                     mapType: MapType.satellite,

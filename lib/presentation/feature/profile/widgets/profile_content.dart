@@ -1,12 +1,9 @@
 import 'package:aqar_go/common/helpers/navigation_helper.dart';
 import 'package:aqar_go/common/helpers/ui_helper.dart';
-import 'package:aqar_go/presentation/feature/profile/cubit/profile_cubit.dart';
 import 'package:aqar_go/presentation/feature/profile/widgets/settings_list_item.dart';
 import 'package:aqar_go/presentation/lang/app_localization.dart';
 import 'package:aqar_go/presentation/routing/routes.dart';
-import 'package:aqar_go/presentation/widgets/app_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../domain/model/profile/user_profile.dart';
 import '../../../assets/assets.gen.dart';
@@ -70,6 +67,13 @@ class ProfileContent extends StatelessWidget {
           title: "My Properties".tr(context),
           onTap: () {
             context.pushRoute(Routes.myProperties);
+          },
+        ),
+        SettingsListItem(
+          iconAsset: Assets.svgs.land.path,
+          title: "My Published Ads".tr(context),
+          onTap: () {
+            context.pushRoute(Routes.myPublishedAds);
           },
         ),
       ],

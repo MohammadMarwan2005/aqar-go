@@ -14,8 +14,12 @@ class PropertyData {
   final int id;
   @JsonKey(name: 'user_id')
   final int userId;
-  @JsonKey(name: 'location_id')
-  final int locationId;
+  @JsonKey(name: 'latitude')
+  final double latitude;
+  @JsonKey(name: 'longitude')
+  final double longitude;
+  @JsonKey(name: 'address')
+  final String addressName;
   final int area;
   final int price;
   @JsonKey(name: 'name')
@@ -26,12 +30,18 @@ class PropertyData {
   final String type;
   @JsonKey(name: "propertyable")
   final Map<String, dynamic> propertable;
+
+  @JsonKey(name: 'is_ad')
+  final bool isAd;
+
   final List<MediaFileData> images;
 
   PropertyData({
     required this.id,
     required this.userId,
-    required this.locationId,
+    required this.latitude,
+    required this.longitude,
+    required this.addressName,
     required this.area,
     required this.price,
     required this.title,
@@ -40,6 +50,7 @@ class PropertyData {
     required this.type,
     required this.propertable,
     required this.images,
+    required this.isAd,
   });
 
   factory PropertyData.fromJson(Map<String, dynamic> json) =>
@@ -50,26 +61,30 @@ class PropertyData {
   Property toDomain() => Property(
     id: id,
     userId: userId,
-    locationId: locationId,
+    lat: latitude,
+    long: longitude,
+    addressName: addressName,
     area: area,
     price: price,
     title: title,
     description: description,
+    isAd: isAd,
     propertableId: propertableId,
     propertable: _mapPropertable(type, propertable),
     images: images.map((e) => e.toDomain()).toList(),
   );
 
-  static PropertyData fromDomain(Property p){
-
+  static PropertyData fromDomain(Property p) {
     late Map<String, dynamic> propertableJson;
-    switch(p.propertable) {
+    switch (p.propertable) {
       case Land():
-        propertableJson  = LandData.fromDomain(p.propertable as Land).toJson();
+        propertableJson = LandData.fromDomain(p.propertable as Land).toJson();
       case Office():
-        propertableJson = OfficeData.fromDomain(p.propertable as Office).toJson();
+        propertableJson =
+            OfficeData.fromDomain(p.propertable as Office).toJson();
       case Apartment():
-        propertableJson = ApartmentData.fromDomain(p.propertable as Apartment).toJson();
+        propertableJson =
+            ApartmentData.fromDomain(p.propertable as Apartment).toJson();
       case Shop():
         propertableJson = ShopData.fromDomain(p.propertable as Shop).toJson();
     }
@@ -77,7 +92,9 @@ class PropertyData {
     return PropertyData(
       id: p.id,
       userId: p.userId,
-      locationId: p.locationId,
+      latitude: p.lat,
+      longitude: p.long,
+      addressName: p.addressName,
       area: p.area,
       price: p.price,
       title: p.title,
@@ -86,16 +103,17 @@ class PropertyData {
       type: p.propertable.toEnum().labelId,
       propertable: propertableJson,
       images:
-      p.images
-          .where((i) => i.id != null && i.imageUrl != null)
-          .map(MediaFileData.fromDomain)
-          .toList(),
+          p.images
+              .where((i) => i.id != null && i.imageUrl != null)
+              .map(MediaFileData.fromDomain)
+              .toList(),
+      isAd: p.isAd,
     );
   }
 
   dynamic _mapPropertable(String type, dynamic data) {
     final en = PropertableEnum.values.firstWhere(
-      (element) => element.labelId == type,
+      (element) => element.labelId.toLowerCase() == type.toLowerCase(),
     );
     switch (en) {
       case PropertableEnum.land:

@@ -9,7 +9,7 @@ class Apartment extends Propertable {
   final bool hasAlternativePower;
   final bool hasGarage;
   final bool furnished;
-  final String furnishedType;
+  final FurnishedType furnishedType;
 
   Apartment({
     required this.floor,

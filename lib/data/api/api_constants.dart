@@ -7,4 +7,10 @@ class APIConstants {
   static const String updatePropertyUrl = "$baseUrl/property/update";
   static const String getProfileUrl = "$baseUrl/profile/show";
   static const String getUserPropertiesUrl = "$baseUrl/property/getUserProperties";
+  static const String createAdUrl = "$baseUrl/ad/create";
+  static const String getAdByIdUrl = "$baseUrl/ad/show";
+  static const String getUserAdsUrl = "$baseUrl/ad/getUserAds";
+  static const String activateSelectedAdsUrl = "$baseUrl/ad/activateSelectedAds";
+  static const String deactivateAdUrl = "$baseUrl/ad/unactivate";
+  static const String deleteAdUrl = "$baseUrl/ad/delete";
 }

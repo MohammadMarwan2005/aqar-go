@@ -1,6 +1,7 @@
 import 'package:aqar_go/common/helpers/navigation_helper.dart';
 import 'package:aqar_go/common/helpers/ui_helper.dart';
 import 'package:aqar_go/presentation/lang/app_localization.dart';
+import 'package:aqar_go/presentation/lang/switch_lang_label.dart';
 import 'package:aqar_go/presentation/widgets/error_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,14 +47,16 @@ class ProfileScreen extends StatelessWidget {
                   },
                 ),
                 SizedBox(height: 32),
+                SwitchLangLabel(),
+                SizedBox(height: 32),
                 AppButton(
                   isSecondary: true,
                   onPressed: () {
                     context.showMyAlertDialog(
-                      "Logout?".tr(context),
+                      "Logout".tr(context),
                       ["Are you sure you want to logout?".tr(context)],
                       true,
-                      gotItPlaceholder: "Cancel",
+                      gotItPlaceholder: "Cancel".tr(context),
                       firstAction: TextButton(
                         onPressed: () {
                           context.read<ProfileCubit>().deleteToken();

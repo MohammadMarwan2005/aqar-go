@@ -1,6 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../../domain/model/property.dart';
+import '../apartment/data_furnished_type.dart';
 
 part 'office_data.g.dart';
 
@@ -10,21 +11,21 @@ class OfficeData {
   final int rooms;
   final int bathrooms;
   @JsonKey(name: 'meeting_rooms')
-  final int? meetingRooms;
+  final int meetingRooms;
   @JsonKey(name: 'has_parking')
   final bool hasParking;
   final bool furnished;
-  @JsonKey(name: 'furnished_type')
-  final String furnishedType;
+  // @JsonKey(name: 'furnished_type')
+  // final String furnishedType;
 
   OfficeData({
     required this.floor,
     required this.rooms,
     required this.bathrooms,
-    this.meetingRooms,
+    required this.meetingRooms,
     required this.hasParking,
     required this.furnished,
-    required this.furnishedType,
+    // required this.furnishedType,
   });
 
   factory OfficeData.fromJson(Map<String, dynamic> json) =>
@@ -39,7 +40,6 @@ class OfficeData {
     meetingRooms: office.meetingRooms,
     hasParking: office.hasParking,
     furnished: office.furnished,
-    furnishedType: office.furnishedType,
   );
 
   Office toDomain() => Office(
@@ -49,6 +49,5 @@ class OfficeData {
     meetingRooms: meetingRooms,
     hasParking: hasParking,
     furnished: furnished,
-    furnishedType: furnishedType,
   );
 }

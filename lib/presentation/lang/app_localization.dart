@@ -1,3 +1,5 @@
+import 'package:aqar_go/domain/model/domain_error.dart';
+
 import '../../common/helpers/logging_helper.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -36,8 +38,18 @@ class AppLocalizations {
     _localizedStrings = langMap;
     debugLog(_localizedStrings.toString());
   }
+  String translate(String key, {Map<String, String>? params}) {
+    String? template = _localizedStrings[key];
+    if (template == null) return key;
 
-  String translate(String key) => _localizedStrings[key] ?? key;
+    if (params != null) {
+      params.forEach((paramKey, value) {
+        template = template!.replaceAll('{$paramKey}', value);
+      });
+    }
+
+    return template!;
+  }
 }
 
 class _AppLocalizationsDelegate
@@ -62,7 +74,7 @@ class _AppLocalizationsDelegate
 }
 
 extension TranslateX on String {
-  String tr(BuildContext context) {
-    return AppLocalizations.of(context)?.translate(this) ?? this;
+  String tr(BuildContext context, {Map<String, String>? params}) {
+    return AppLocalizations.of(context)?.translate(this, params: params) ?? this;
   }
 }

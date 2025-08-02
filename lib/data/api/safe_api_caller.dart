@@ -19,6 +19,8 @@ class SafeAPICaller {
     } on DioException catch (dioError) {
       final error = mapDioExceptionToDomainError(dioError);
       return Error(error);
+    } on TypeError catch (typeError) {
+      return Error(DomainError.getUnexpectedError(typeError.toString()));
     } catch (e) {
       return Error(DomainError(message: 'Unexpected error: $e'));
     }
@@ -39,10 +41,10 @@ class SafeAPICaller {
           try {
             return APIError.fromJson(responseData).toDomainError();
           } catch (_) {
-            return DomainError.unexpectedResponseError;
+            return DomainError.getUnexpectedError(responseData.toString());
           }
         } else {
-          return DomainError.unexpectedResponseError;
+          return DomainError.getUnexpectedError(responseData.toString());
         }
 
       case DioExceptionType.cancel:

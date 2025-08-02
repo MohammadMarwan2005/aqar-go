@@ -10,8 +10,7 @@ APIError _$APIErrorFromJson(Map<String, dynamic> json) => APIError(
   json['message'] as String,
   (json['status'] as num).toInt(),
   (json['data'] as Map<String, dynamic>?)?.map(
-    (k, e) =>
-        MapEntry(k, (e as List<dynamic>).map((e) => e as String).toList()),
+    (k, e) => MapEntry(k, e as List<dynamic>),
   ),
 );
 

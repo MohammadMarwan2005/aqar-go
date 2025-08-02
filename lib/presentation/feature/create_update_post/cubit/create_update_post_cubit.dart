@@ -1,10 +1,11 @@
 import 'package:aqar_go/domain/model/domain_error.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../domain/model/media_file.dart';
 import '../../../../domain/model/property.dart';
+import '../../../../domain/repo/ad_repo.dart';
 import '../../../../domain/usecase/create_property_usecase.dart';
 import '../post_form_data.dart';
 
@@ -25,18 +26,24 @@ class CreateUpdatePostCubit extends Cubit<CreateUpdatePostState> {
   late bool isUpdate = property != null;
 
   final CreateUpdatePropertyUsecase _createUpdatePropertyUsecase;
+  final AdRepo _adRepo;
 
-  CreateUpdatePostCubit(this._createUpdatePropertyUsecase, {this.property})
-    : super(
-        CreateUpdatePostInitial(formData: PostFormData.fromProperty(property)),
-      );
+  CreateUpdatePostCubit(
+    this._createUpdatePropertyUsecase,
+    this._adRepo, {
+    this.property,
+  }) : super(
+         CreateUpdatePostInitial(formData: PostFormData.fromProperty(property)),
+       );
 
   Future<void> createOrUpdatePost(
     List<MediaFile> mediaFiles,
     List<int> toDeleteImagesIds,
+      double? long,
+      double? lat,
   ) async {
     final validated = formKey.currentState?.validate();
-    if (validated == true) {
+    if (validated == true && long != null && lat != null) {
       emit(CreateUpdatePostLoading(formData: state.formData));
 
       final formData = state.formData;
@@ -45,6 +52,8 @@ class CreateUpdatePostCubit extends Cubit<CreateUpdatePostState> {
         formData,
         mediaFiles,
         toDeleteImagesIds,
+        long,
+        lat,
         isUpdate,
         property,
       );
@@ -68,12 +77,40 @@ class CreateUpdatePostCubit extends Cubit<CreateUpdatePostState> {
           isSnackBar: true,
           formData: state.formData,
           error: DomainError(
-            message: "Enter valid input please!",
-            messageId: "Enter valid input please!",
+            message: "Enter valid values",
+            messageId: "Enter valid values",
           ),
         ),
       );
     }
+  }
+
+  Future<void> createAd() async {
+    emit(CreateAdLoading(formData: state.formData));
+    if (property == null) {
+      emit(
+        CreateUpdatePostError(
+          isSnackBar: true,
+          formData: state.formData,
+          error: DomainError(
+            message: "This property is not valid!",
+            messageId: "This property is not valid!",
+          ),
+        ),
+      );
+      return;
+    }
+
+    final response = await _adRepo.createAd(property!.id);
+
+    response.when(
+      onSuccess: (successData) {
+        emit(CreateAdSuccess(formData: state.formData));
+      },
+      onError: (error) {
+        emit(CreateUpdatePostError(formData: state.formData, error: error));
+      },
+    );
   }
 
   void updateFormData(

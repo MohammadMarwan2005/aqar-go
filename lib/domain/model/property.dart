@@ -1,5 +1,6 @@
 import 'package:aqar_go/domain/model/shop/shop_type.dart';
 
+import 'apartment/furnished_type.dart';
 import 'land/land_slop.dart';
 import 'land/land_type.dart';
 import 'media_file.dart';
@@ -16,26 +17,33 @@ class Property {
   final int price;
   final int area;
   final List<MediaFile> images;
-  final int locationId;
+  final double lat;
+  final double long;
+  final String addressName;
 
   // you will not use in create
   final int id;
   final int userId;
   final int propertableId;
 
+  final bool isAd;
+
   final Propertable propertable;
 
   Property({
     required this.id,
     required this.userId,
-    required this.locationId,
+    required this.long,
+    required this.lat,
+    required this.addressName,
     required this.propertableId,
     required this.area,
     required this.price,
     required this.title,
     required this.description,
     required this.propertable,
-    required this.images
+    required this.images,
+    required this.isAd
   });
 }
 

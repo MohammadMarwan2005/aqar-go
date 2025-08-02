@@ -137,7 +137,10 @@ extension CreatePropertyRequest on Property {
       formMap['data[$key]'] = finalValue;
     });
 
-    formMap['property[location_id]'] = locationId.toString();
+    formMap['property[longitude]'] = long.toString();
+    formMap['property[latitude]'] = lat.toString();
+    formMap['property[address]'] = addressName.toString();
+
     formMap['property[area]'] = area.toString();
     formMap['property[description]'] = description;
     formMap['property[price]'] = price.toString();
