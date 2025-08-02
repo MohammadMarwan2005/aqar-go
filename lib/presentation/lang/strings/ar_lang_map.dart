@@ -136,4 +136,12 @@ const Map<String, String> _arLangMap = {
   "Ad deleted successfully!": "تم حذف الإعلان بنجاح!",
   "Done": "تم",
   "Ad created successfully!": "تم انشاء الإعلان بنجاح!",
+  "Request timed out. Please try again.": "انتهت مهلة الطلب. يرجى المحاولة مرة أخرى.",
+  "Connection error!": "خطأ في الاتصال!",
+  "Something went wrong. Please try again.": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
+  "Request was cancelled.": "تم إلغاء الطلب.",
+  "Bad SSL certificate.": "شهادة SSL غير صالحة.",
+  "Unexpected response from server.": "استجابة غير متوقعة من الخادم.",
+  "Unexpected response from server: {response}": "استجابة غير متوقعة من الخادم: {response}",
+
 };
