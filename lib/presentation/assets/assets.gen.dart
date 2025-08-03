@@ -41,6 +41,9 @@ class $AssetsSvgsGen {
   /// File path: assets/svgs/language.svg
   SvgGenImage get language => const SvgGenImage('assets/svgs/language.svg');
 
+  /// File path: assets/svgs/light_mode.svg
+  SvgGenImage get lightMode => const SvgGenImage('assets/svgs/light_mode.svg');
+
   /// File path: assets/svgs/mark_email_read.svg
   SvgGenImage get markEmailRead =>
       const SvgGenImage('assets/svgs/mark_email_read.svg');
@@ -69,6 +72,7 @@ class $AssetsSvgsGen {
     diamond,
     land,
     language,
+    lightMode,
     markEmailRead,
     notificationSettings,
     office,

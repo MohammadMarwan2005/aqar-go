@@ -8,6 +8,7 @@ sealed class Routes {
   static const myPublishedAds = "/published-ads";
   static const myAdDetails = "/my-ad-details/:id";
   static const viewAd = "/view-ad/:id";
+  static const theme = "/theme";
 
   static const home = "/home-user";
   static const search = "/search-user";

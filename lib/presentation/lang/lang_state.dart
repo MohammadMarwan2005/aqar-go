@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'lang_state.freezed.dart';
 
 @freezed
-class LangState with _$LangState {
+sealed class LangState with _$LangState {
   const factory LangState.initial() = LangInitial;
   const factory LangState.loaded({required String lang}) = LangLoaded;
 }
@@ -24,5 +24,17 @@ extension LangLoadedX on LangLoaded {
       case LangLoaded():
         return loaded();
     }
+  }
+}
+
+extension LangStateX on LangState {
+  R when<R>({
+    required R Function() initial,
+    required R Function(String lang) success,
+  }) {
+    return switch (this) {
+      LangInitial() => initial(),
+      LangLoaded(:final lang) => success(lang),
+    };
   }
 }

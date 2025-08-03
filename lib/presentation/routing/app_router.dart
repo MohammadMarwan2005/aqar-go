@@ -26,6 +26,7 @@ import '../feature/onboarding/onboarding_screen.dart';
 import '../feature/test/test_screen.dart';
 import '../feature/user_nav_shell/user_nav_shell.dart';
 import '../routing/routes.dart';
+import '../theme/ui/theme_screen.dart';
 import 'guest_mode/post_login_instruction.dart';
 
 final GlobalKey<NavigatorState> goRouteRootNavigatorKey =
@@ -62,6 +63,7 @@ final appRouter = GoRouter(
       },
     ),
     GoRoute(path: Routes.test, builder: (context, state) => TestScreen()),
+    GoRoute(path: Routes.theme, builder: (context, state) => ThemeScreen()),
     GoRoute(
       path: Routes.myAdDetails,
       builder: (context, state) {

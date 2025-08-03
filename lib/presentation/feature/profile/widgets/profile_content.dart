@@ -3,7 +3,9 @@ import 'package:aqar_go/presentation/helper/ui_helper.dart';
 import 'package:aqar_go/presentation/feature/profile/widgets/settings_list_item.dart';
 import 'package:aqar_go/presentation/lang/app_localization.dart';
 import 'package:aqar_go/presentation/routing/routes.dart';
+import 'package:aqar_go/presentation/theme/cubit/theme_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../domain/model/profile/user_profile.dart';
 import '../../../assets/assets.gen.dart';
@@ -89,6 +91,13 @@ class ProfileContent extends StatelessWidget {
           },
         ),
         SettingsListItem(
+          iconAsset: Assets.svgs.diamond.path,
+          title: "Our Plans".tr(context),
+          onTap: () {
+
+          },
+        ),
+        SettingsListItem(
           iconAsset: Assets.svgs.language.path,
           title: "App Language".tr(context),
           onTap: () {
@@ -99,6 +108,14 @@ class ProfileContent extends StatelessWidget {
           iconAsset: Assets.svgs.themeContrast.path,
           title: "App Theme".tr(context),
           onTap: () {
+            context.pushRoute(Routes.theme);
+          },
+        ),
+        SettingsListItem(
+          iconAsset: Assets.svgs.policy.path,
+          title: "Privacy Policy".tr(context),
+          onTap: () {
+
           },
         ),
       ],

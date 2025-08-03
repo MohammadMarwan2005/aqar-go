@@ -153,4 +153,9 @@ const Map<String, String> _arLangMap = {
   "Email Verification": "تأكيد الإيميل",
   "App Language": "لغة التطبيق",
   "App Theme": "ثيم التطبيق",
+  "Privacy Policy": "سياسة الخصوصية",
+  "Our Plans": "الخطط لدينا",
+  "light": "الوضع الفاتح",
+  "dark": "الوضع الداكن",
+  "System Default": "الوضع الافتراضي للنظام",
 };

@@ -10,11 +10,17 @@ class LocalDataRepo {
     required SharedPreferences sharedPrefs,
     required FlutterSecureStorage storage,
   }) : _storage = storage,
-        _sharedPrefs = sharedPrefs;
+       _sharedPrefs = sharedPrefs {
+    _loadHasTokenVar();
+  }
 
   bool _hasTokenVar = false;
 
   bool isGuest() => !_hasTokenVar;
+
+  _loadHasTokenVar() async {
+    _hasTokenVar = await hasToken();
+  }
 
   Future<bool> hasToken() async {
     final value = await _storage.read(key: DataAccessKeys.tokenKey);
@@ -72,4 +78,5 @@ class DataAccessKeys {
   static String tokenKey = "tokenKey";
   static String langCodeKey = "langCodeKey";
   static String hasOnboardedKey = "hasOnboardedKey";
+  static String themeKey = "themeKey";
 }
