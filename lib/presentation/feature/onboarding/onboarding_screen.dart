@@ -1,4 +1,4 @@
-import 'package:aqar_go/common/helpers/navigation_helper.dart';
+import 'package:aqar_go/presentation/helper/navigation_helper.dart';
 import 'package:aqar_go/presentation/routing/routes.dart';
 import 'package:aqar_go/presentation/widgets/app_button.dart';
 import 'package:aqar_go/presentation/widgets/screen_horizontal_padding.dart';
@@ -21,6 +21,13 @@ class OnboardingScreen extends StatelessWidget {
                 context.goRoute(Routes.login);
               },
               text: "Go to Login",
+            ),
+            SizedBox(height: 32),
+            AppButton(
+              onPressed: () {
+                context.goRoute(Routes.home);
+              },
+              text: "Continue as Guest",
             ),
           ],
         ),

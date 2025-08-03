@@ -1,4 +1,4 @@
-import 'package:aqar_go/common/helpers/navigation_helper.dart';
+import 'package:aqar_go/presentation/helper/navigation_helper.dart';
 import 'package:aqar_go/presentation/feature/my_properties/cubit/my_properties_cubit.dart';
 import 'package:aqar_go/presentation/lang/app_localization.dart';
 import 'package:aqar_go/presentation/routing/routes.dart';

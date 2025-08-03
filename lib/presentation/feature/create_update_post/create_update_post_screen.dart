@@ -1,5 +1,5 @@
-import 'package:aqar_go/common/helpers/navigation_helper.dart';
-import 'package:aqar_go/common/helpers/ui_helper.dart';
+import 'package:aqar_go/presentation/helper/navigation_helper.dart';
+import 'package:aqar_go/presentation/helper/ui_helper.dart';
 import 'package:aqar_go/common/helpers/validation_helper.dart';
 import 'package:aqar_go/domain/model/domain_error.dart';
 import 'package:aqar_go/domain/model/property.dart';

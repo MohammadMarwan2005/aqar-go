@@ -1,4 +1,4 @@
-import 'package:aqar_go/common/helpers/navigation_helper.dart';
+import 'package:aqar_go/presentation/helper/navigation_helper.dart';
 import 'package:aqar_go/common/helpers/validation_helper.dart';
 import 'package:aqar_go/presentation/feature/auth/login/login_cubit.dart';
 import 'package:aqar_go/presentation/feature/auth/login_state_listerner.dart';
@@ -11,11 +11,13 @@ import 'package:aqar_go/presentation/widgets/app_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../routing/guest_mode/post_login_instruction.dart';
 import '../../../widgets/app_button.dart';
 import '../auth_state.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  final PostLoginInstruction? postLoginInstruction;
+  const LoginScreen({super.key, this.postLoginInstruction});
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +71,7 @@ class LoginScreen extends StatelessWidget {
                   isLoading: isLoading,
                 );
               },
-              listener: authListener,
+              listener: (context, state) => authListener(context, state, postLoginInstruction),
             ),
           ],
         ),
@@ -78,7 +80,7 @@ class LoginScreen extends StatelessWidget {
         suggestionText: "Don't have an account?".tr(context),
         buttonLabel: "Sign Up".tr(context),
         onClick: () {
-          context.goRoute(Routes.register);
+          context.popThenPushRoute(Routes.register, extra: postLoginInstruction);
         },
       ),
     );

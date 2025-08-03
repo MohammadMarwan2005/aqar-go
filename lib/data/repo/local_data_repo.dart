@@ -12,18 +12,20 @@ class LocalDataRepo {
   }) : _storage = storage,
         _sharedPrefs = sharedPrefs;
 
-  bool hasTokenVar = false;
+  bool _hasTokenVar = false;
+
+  bool isGuest() => !_hasTokenVar;
 
   Future<bool> hasToken() async {
     final value = await _storage.read(key: DataAccessKeys.tokenKey);
     final boolValue = value != null;
-    hasTokenVar = boolValue;
+    _hasTokenVar = boolValue;
     return boolValue;
   }
 
   setToken(String value) async {
     await _storage.write(key: DataAccessKeys.tokenKey, value: value);
-    hasTokenVar = true;
+    _hasTokenVar = true;
   }
 
   Future<String?> getToken() async {
@@ -34,7 +36,7 @@ class LocalDataRepo {
 
   deleteToken() async {
     await _storage.delete(key: DataAccessKeys.tokenKey);
-    hasTokenVar = false;
+    _hasTokenVar = false;
   }
 
   setInt(int value, String key) async {
@@ -68,7 +70,6 @@ class LocalDataRepo {
 
 class DataAccessKeys {
   static String tokenKey = "tokenKey";
-  static String roleIdKey = "roleKey";
   static String langCodeKey = "langCodeKey";
   static String hasOnboardedKey = "hasOnboardedKey";
 }

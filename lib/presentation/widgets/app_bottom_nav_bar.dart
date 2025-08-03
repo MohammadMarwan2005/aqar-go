@@ -1,4 +1,4 @@
-import 'package:aqar_go/common/helpers/navigation_helper.dart';
+import 'package:aqar_go/presentation/helper/navigation_helper.dart';
 import 'package:aqar_go/presentation/lang/app_localization.dart';
 import 'package:aqar_go/presentation/theme/app_static_colors.dart';
 import 'package:flutter/material.dart';

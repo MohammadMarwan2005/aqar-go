@@ -26,6 +26,7 @@ import '../feature/onboarding/onboarding_screen.dart';
 import '../feature/test/test_screen.dart';
 import '../feature/user_nav_shell/user_nav_shell.dart';
 import '../routing/routes.dart';
+import 'guest_mode/post_login_instruction.dart';
 
 final GlobalKey<NavigatorState> goRouteRootNavigatorKey =
     GlobalKey<NavigatorState>();
@@ -42,19 +43,23 @@ final appRouter = GoRouter(
     ),
     GoRoute(
       path: Routes.login,
-      builder:
-          (context, state) => BlocProvider(
-            create: (context) => getIt<LoginCubit>(),
-            child: LoginScreen(),
-          ),
+      builder: (context, state) {
+        final postLoginInstructions = state.extra as PostLoginInstruction?;
+        return BlocProvider(
+          create: (context) => getIt<LoginCubit>(),
+          child: LoginScreen(postLoginInstruction: postLoginInstructions),
+        );
+      },
     ),
     GoRoute(
       path: Routes.register,
-      builder:
-          (context, state) => BlocProvider(
-            create: (context) => getIt<RegisterCubit>(),
-            child: RegisterScreen(),
-          ),
+      builder: (context, state) {
+        final postLoginInstructions = state.extra as PostLoginInstruction?;
+        return BlocProvider(
+          create: (context) => getIt<RegisterCubit>(),
+          child: RegisterScreen(postLoginInstruction: postLoginInstructions),
+        );
+      },
     ),
     GoRoute(path: Routes.test, builder: (context, state) => TestScreen()),
     GoRoute(

@@ -3,18 +3,26 @@ sealed class Routes {
   static const test = "/test";
   static const login = "/login";
   static const register = "/register";
-  static const verifyPhone = "/phone-verify";
   static const createUpdatePost = "/create-post";
   static const myProperties = "/my-properties";
   static const myPublishedAds = "/published-ads";
   static const myAdDetails = "/my-ad-details/:id";
+  static const viewAd = "/view-ad/:id";
 
   static const home = "/home-user";
   static const search = "/search-user";
   static const profile = "/profile";
 
+  static const _allowedRoutesForGuest = [onboarding, home, search, viewAd, login, register];
+
   static bool isAllowed(String route) {
-    return true;
+    return _allowedRoutesForGuest.any((allowedRoute) {
+      if (allowedRoute.contains('/:')) {
+        final baseAllowed = allowedRoute.split('/:').first;
+        return route.startsWith(baseAllowed);
+      }
+      return route == allowedRoute;
+    });
   }
 
   static String getMyAdDetails(int id) => _getRouteWithId(myAdDetails, id.toString());

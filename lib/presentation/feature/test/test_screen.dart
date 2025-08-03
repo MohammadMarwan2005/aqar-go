@@ -1,5 +1,5 @@
 import 'package:aqar_go/common/di/get_it.dart';
-import 'package:aqar_go/common/helpers/navigation_helper.dart';
+import 'package:aqar_go/presentation/helper/navigation_helper.dart';
 import 'package:aqar_go/data/repo/local_data_repo.dart';
 import 'package:aqar_go/presentation/lang/app_localization.dart';
 import 'package:aqar_go/presentation/lang/switch_lang_label.dart';

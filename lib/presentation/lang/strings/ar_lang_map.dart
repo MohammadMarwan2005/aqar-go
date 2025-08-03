@@ -16,7 +16,7 @@ const Map<String, String> _arLangMap = {
   "Logout": "تسجيل الخروج",
   "Please log in to continue and access all features.":
       "يرجى تسجيل الدخول للمتابعة والوصول إلى جميع الميزات.",
-  "Login First": "سجل الدخول أولاً",
+  "Log in First": "سجل الدخول أولاً",
   "Enter valid values": "أدخل قيمًا صالحة",
   "Proceed": "موافقة",
   "Phone Number": "رقم الهاتف",
@@ -119,7 +119,7 @@ const Map<String, String> _arLangMap = {
   "Are you sure you want to logout?": "هل أنت متأكد من تسجيل الخروج؟",
   "Expired on": "منتهي الصلاحية في:",
   "Expires on": "نشط لغاية:",
-  "Cancel": "إالغاء",
+  "Cancel": "إلغاء",
   "No Ads Found!": "لم يتم العثور على اعلانات!",
   "No Properties Found!": "لم يتم العثور على عقارات!",
   "Delete Ad": "حذف الإعلان",
