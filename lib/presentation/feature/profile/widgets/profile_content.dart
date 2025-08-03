@@ -76,6 +76,31 @@ class ProfileContent extends StatelessWidget {
             context.pushRoute(Routes.myPublishedAds);
           },
         ),
+        SettingsListItem(
+          iconAsset: Assets.svgs.notificationSettings.path,
+          title: "Notification Preferences".tr(context),
+          onTap: () {
+          },
+        ),
+        SettingsListItem(
+          iconAsset: Assets.svgs.markEmailRead.path,
+          title: "Email Verification".tr(context),
+          onTap: () {
+          },
+        ),
+        SettingsListItem(
+          iconAsset: Assets.svgs.language.path,
+          title: "App Language".tr(context),
+          onTap: () {
+
+          },
+        ),
+        SettingsListItem(
+          iconAsset: Assets.svgs.themeContrast.path,
+          title: "App Theme".tr(context),
+          onTap: () {
+          },
+        ),
       ],
     );
   }

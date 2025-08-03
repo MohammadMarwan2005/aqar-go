@@ -47,8 +47,6 @@ class ProfileScreen extends StatelessWidget {
                   },
                 ),
                 SizedBox(height: 32),
-                SwitchLangLabel(),
-                SizedBox(height: 32),
                 AppButton(
                   isSecondary: true,
                   onPressed: () {

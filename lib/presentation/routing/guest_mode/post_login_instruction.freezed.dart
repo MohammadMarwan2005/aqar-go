@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,152 +10,134 @@ part of 'post_login_instruction.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
 /// @nodoc
 mixin _$PostLoginInstruction {
-  String get redirectionRoute => throw _privateConstructorUsedError;
-  Object? get itsExtras => throw _privateConstructorUsedError;
 
-  /// Create a copy of PostLoginInstruction
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $PostLoginInstructionCopyWith<PostLoginInstruction> get copyWith =>
-      throw _privateConstructorUsedError;
+ String get redirectionRoute; Object? get itsExtras;
+/// Create a copy of PostLoginInstruction
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$PostLoginInstructionCopyWith<PostLoginInstruction> get copyWith => _$PostLoginInstructionCopyWithImpl<PostLoginInstruction>(this as PostLoginInstruction, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PostLoginInstruction&&(identical(other.redirectionRoute, redirectionRoute) || other.redirectionRoute == redirectionRoute)&&const DeepCollectionEquality().equals(other.itsExtras, itsExtras));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,redirectionRoute,const DeepCollectionEquality().hash(itsExtras));
+
+@override
+String toString() {
+  return 'PostLoginInstruction(redirectionRoute: $redirectionRoute, itsExtras: $itsExtras)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $PostLoginInstructionCopyWith<$Res> {
-  factory $PostLoginInstructionCopyWith(PostLoginInstruction value,
-          $Res Function(PostLoginInstruction) then) =
-      _$PostLoginInstructionCopyWithImpl<$Res, PostLoginInstruction>;
-  @useResult
-  $Res call({String redirectionRoute, Object? itsExtras});
-}
+abstract mixin class $PostLoginInstructionCopyWith<$Res>  {
+  factory $PostLoginInstructionCopyWith(PostLoginInstruction value, $Res Function(PostLoginInstruction) _then) = _$PostLoginInstructionCopyWithImpl;
+@useResult
+$Res call({
+ String redirectionRoute, Object? itsExtras
+});
 
+
+
+
+}
 /// @nodoc
-class _$PostLoginInstructionCopyWithImpl<$Res,
-        $Val extends PostLoginInstruction>
+class _$PostLoginInstructionCopyWithImpl<$Res>
     implements $PostLoginInstructionCopyWith<$Res> {
-  _$PostLoginInstructionCopyWithImpl(this._value, this._then);
+  _$PostLoginInstructionCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final PostLoginInstruction _self;
+  final $Res Function(PostLoginInstruction) _then;
 
-  /// Create a copy of PostLoginInstruction
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? redirectionRoute = null,
-    Object? itsExtras = freezed,
-  }) {
-    return _then(_value.copyWith(
-      redirectionRoute: null == redirectionRoute
-          ? _value.redirectionRoute
-          : redirectionRoute // ignore: cast_nullable_to_non_nullable
-              as String,
-      itsExtras: freezed == itsExtras ? _value.itsExtras : itsExtras,
-    ) as $Val);
-  }
+/// Create a copy of PostLoginInstruction
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? redirectionRoute = null,Object? itsExtras = freezed,}) {
+  return _then(_self.copyWith(
+redirectionRoute: null == redirectionRoute ? _self.redirectionRoute : redirectionRoute // ignore: cast_nullable_to_non_nullable
+as String,itsExtras: freezed == itsExtras ? _self.itsExtras : itsExtras ,
+  ));
 }
 
-/// @nodoc
-abstract class _$$PostLoginInstructionImplCopyWith<$Res>
-    implements $PostLoginInstructionCopyWith<$Res> {
-  factory _$$PostLoginInstructionImplCopyWith(_$PostLoginInstructionImpl value,
-          $Res Function(_$PostLoginInstructionImpl) then) =
-      __$$PostLoginInstructionImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({String redirectionRoute, Object? itsExtras});
 }
 
-/// @nodoc
-class __$$PostLoginInstructionImplCopyWithImpl<$Res>
-    extends _$PostLoginInstructionCopyWithImpl<$Res, _$PostLoginInstructionImpl>
-    implements _$$PostLoginInstructionImplCopyWith<$Res> {
-  __$$PostLoginInstructionImplCopyWithImpl(_$PostLoginInstructionImpl _value,
-      $Res Function(_$PostLoginInstructionImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of PostLoginInstruction
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? redirectionRoute = null,
-    Object? itsExtras = freezed,
-  }) {
-    return _then(_$PostLoginInstructionImpl(
-      redirectionRoute: null == redirectionRoute
-          ? _value.redirectionRoute
-          : redirectionRoute // ignore: cast_nullable_to_non_nullable
-              as String,
-      itsExtras: freezed == itsExtras ? _value.itsExtras : itsExtras,
-    ));
-  }
-}
 
 /// @nodoc
 
-class _$PostLoginInstructionImpl implements _PostLoginInstruction {
-  _$PostLoginInstructionImpl({required this.redirectionRoute, this.itsExtras});
 
-  @override
-  final String redirectionRoute;
-  @override
-  final Object? itsExtras;
+class _PostLoginInstruction implements PostLoginInstruction {
+   _PostLoginInstruction({required this.redirectionRoute, this.itsExtras});
+  
 
-  @override
-  String toString() {
-    return 'PostLoginInstruction(redirectionRoute: $redirectionRoute, itsExtras: $itsExtras)';
-  }
+@override final  String redirectionRoute;
+@override final  Object? itsExtras;
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$PostLoginInstructionImpl &&
-            (identical(other.redirectionRoute, redirectionRoute) ||
-                other.redirectionRoute == redirectionRoute) &&
-            const DeepCollectionEquality().equals(other.itsExtras, itsExtras));
-  }
+/// Create a copy of PostLoginInstruction
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$PostLoginInstructionCopyWith<_PostLoginInstruction> get copyWith => __$PostLoginInstructionCopyWithImpl<_PostLoginInstruction>(this, _$identity);
 
-  @override
-  int get hashCode => Object.hash(runtimeType, redirectionRoute,
-      const DeepCollectionEquality().hash(itsExtras));
 
-  /// Create a copy of PostLoginInstruction
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$PostLoginInstructionImplCopyWith<_$PostLoginInstructionImpl>
-      get copyWith =>
-          __$$PostLoginInstructionImplCopyWithImpl<_$PostLoginInstructionImpl>(
-              this, _$identity);
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PostLoginInstruction&&(identical(other.redirectionRoute, redirectionRoute) || other.redirectionRoute == redirectionRoute)&&const DeepCollectionEquality().equals(other.itsExtras, itsExtras));
 }
 
-abstract class _PostLoginInstruction implements PostLoginInstruction {
-  factory _PostLoginInstruction(
-      {required final String redirectionRoute,
-      final Object? itsExtras}) = _$PostLoginInstructionImpl;
 
-  @override
-  String get redirectionRoute;
-  @override
-  Object? get itsExtras;
+@override
+int get hashCode => Object.hash(runtimeType,redirectionRoute,const DeepCollectionEquality().hash(itsExtras));
 
-  /// Create a copy of PostLoginInstruction
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PostLoginInstructionImplCopyWith<_$PostLoginInstructionImpl>
-      get copyWith => throw _privateConstructorUsedError;
+@override
+String toString() {
+  return 'PostLoginInstruction(redirectionRoute: $redirectionRoute, itsExtras: $itsExtras)';
 }
+
+
+}
+
+/// @nodoc
+abstract mixin class _$PostLoginInstructionCopyWith<$Res> implements $PostLoginInstructionCopyWith<$Res> {
+  factory _$PostLoginInstructionCopyWith(_PostLoginInstruction value, $Res Function(_PostLoginInstruction) _then) = __$PostLoginInstructionCopyWithImpl;
+@override @useResult
+$Res call({
+ String redirectionRoute, Object? itsExtras
+});
+
+
+
+
+}
+/// @nodoc
+class __$PostLoginInstructionCopyWithImpl<$Res>
+    implements _$PostLoginInstructionCopyWith<$Res> {
+  __$PostLoginInstructionCopyWithImpl(this._self, this._then);
+
+  final _PostLoginInstruction _self;
+  final $Res Function(_PostLoginInstruction) _then;
+
+/// Create a copy of PostLoginInstruction
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? redirectionRoute = null,Object? itsExtras = freezed,}) {
+  return _then(_PostLoginInstruction(
+redirectionRoute: null == redirectionRoute ? _self.redirectionRoute : redirectionRoute // ignore: cast_nullable_to_non_nullable
+as String,itsExtras: freezed == itsExtras ? _self.itsExtras : itsExtras ,
+  ));
+}
+
+
+}
+
+// dart format on
