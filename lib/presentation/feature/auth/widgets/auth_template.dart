@@ -1,4 +1,4 @@
-import 'package:aqar_go/presentation/lang/switch_lang_label.dart';
+import 'package:aqar_go/presentation/lang/ui/switch_lang_label.dart';
 import 'package:flutter/material.dart';
 
 class AuthTemplate extends StatelessWidget {

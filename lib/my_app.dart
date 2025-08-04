@@ -1,6 +1,5 @@
 import 'package:aqar_go/presentation/lang/app_localization.dart';
-import 'package:aqar_go/presentation/lang/lang_cubit.dart';
-import 'package:aqar_go/presentation/lang/lang_state.dart';
+import 'package:aqar_go/presentation/lang/cubit/lang_cubit.dart';
 import 'package:aqar_go/presentation/routing/app_router.dart';
 import 'package:aqar_go/presentation/theme/cubit/theme_cubit.dart';
 import 'package:aqar_go/presentation/theme/dark_blue_theme.dart';
@@ -31,7 +30,7 @@ class MyApp extends StatelessWidget {
                     initial: () => _LoadingApp(),
                     success: (theme) {
                       return MaterialApp.router(
-                        locale: Locale(lang),
+                        locale: (lang != null) ? Locale(lang) : null,
                         supportedLocales: const [Locale('en'), Locale('ar')],
                         localizationsDelegates: const [
                           AppLocalizations.delegate,

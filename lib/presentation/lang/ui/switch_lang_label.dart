@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'lang_cubit.dart';
-import 'lang_state.dart';
+import '../cubit/lang_cubit.dart';
 
 class SwitchLangLabel extends StatelessWidget {
   const SwitchLangLabel({super.key});

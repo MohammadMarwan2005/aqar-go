@@ -19,7 +19,7 @@ import '../../presentation/feature/my_ads/activate_ads_cubit/activate_ads_cubit.
 import '../../presentation/feature/my_ads/cubit/my_ads_cubit.dart';
 import '../../presentation/feature/my_properties/cubit/my_properties_cubit.dart';
 import '../../presentation/feature/profile/cubit/profile_cubit.dart';
-import '../../presentation/lang/lang_cubit.dart';
+import '../../presentation/lang/cubit/lang_cubit.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';

@@ -101,7 +101,7 @@ class ProfileContent extends StatelessWidget {
           iconAsset: Assets.svgs.language.path,
           title: "App Language".tr(context),
           onTap: () {
-
+            context.pushRoute(Routes.language);
           },
         ),
         SettingsListItem(

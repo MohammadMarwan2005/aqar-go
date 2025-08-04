@@ -158,4 +158,9 @@ const Map<String, String> _arLangMap = {
   "light": "الوضع الفاتح",
   "dark": "الوضع الداكن",
   "System Default": "الوضع الافتراضي للنظام",
+  "Welcome to AqarGo": "مرحبا بكم في عقار جو",
+  "Continue as Guest": "تابع كزائر",
+  "Arabic": "العربية",
+  "English": "الإنجليزية",
+  "Current Language": "اللغة الحالية"
 };

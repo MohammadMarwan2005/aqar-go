@@ -57,6 +57,10 @@ class LocalDataRepo {
     await _sharedPrefs.setString(key, value);
   }
 
+  removeString(String key) async {
+    await _sharedPrefs.remove(key);
+  }
+
   String? getString(String key) {
     return _sharedPrefs.getString(key);
   }
@@ -71,6 +75,11 @@ class LocalDataRepo {
 
   Future<void> clearAllData() async {
     await _sharedPrefs.clear();
+  }
+
+  void deleteEverything() async {
+    await _storage.deleteAll();
+    await clearAllData();
   }
 }
 
