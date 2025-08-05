@@ -5,13 +5,14 @@ import 'package:aqar_go/presentation/widgets/error_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../routing/routes.dart';
-import '../../theme/ui/switch_theme_widget.dart';
-import '../../widgets/app_button.dart';
-import '../../widgets/loading_screen.dart';
-import '../../widgets/screen_horizontal_padding.dart';
-import 'cubit/profile_cubit.dart';
-import 'widgets/profile_content.dart';
+import '../../../routing/routes.dart';
+import '../../../theme/ui/switch_theme_widget.dart';
+import '../../../widgets/app_button.dart';
+import '../../../widgets/loading_screen.dart';
+import '../../../widgets/screen_horizontal_padding.dart';
+import '../profile_state/profile_state.dart';
+import 'profile_cubit.dart';
+import '../widgets/profile_content.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});

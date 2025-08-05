@@ -6,11 +6,13 @@ import 'package:flutter/material.dart';
 class ErrorMessage extends StatelessWidget {
   final DomainError error;
   final Function() onTryAgain;
+  final Widget Function(List<String> details)? detailsWidget;
 
   const ErrorMessage({
     super.key,
     required this.error,
     required this.onTryAgain,
+    this.detailsWidget,
   });
 
   @override
@@ -21,6 +23,11 @@ class ErrorMessage extends StatelessWidget {
         child: Column(
           children: [
             Text(error.getMessage(context)),
+            _LocalizedSizedBox(),
+            if (error.details != null && detailsWidget != null) ...[
+              detailsWidget!(error.details!),
+            ],
+            _LocalizedSizedBox(),
             ElevatedButton(
               onPressed: onTryAgain,
               child: Text("Try Again".tr(context)),
@@ -31,3 +38,13 @@ class ErrorMessage extends StatelessWidget {
     );
   }
 }
+
+class _LocalizedSizedBox extends StatelessWidget {
+  const _LocalizedSizedBox({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(height: 8);
+  }
+}
+

@@ -169,4 +169,6 @@ const Map<String, String> _arLangMap = {
   "A verification link has been sent to your email address.": "تم ارسال رابط التحقق الى عنوان البريد الالكتروني الخاص بك",
   "Continue": "تابع",
   "Resend Email": "ارسل مرة اخرى",
+  "Update Profile": "تحديث الملف الشخصي",
+
 };

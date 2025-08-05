@@ -7,8 +7,8 @@ import 'package:go_router/go_router.dart';
 import '../../../common/di/get_it.dart';
 import '../../routing/routes.dart';
 import '../media_picker/media_picker_cubit.dart';
-import '../profile/cubit/profile_cubit.dart';
-import '../profile/profile_screen.dart';
+import '../profile/show/profile_cubit.dart';
+import '../profile/show/profile_screen.dart';
 import '../test/test_screen.dart';
 
 class UserNavShell extends StatelessWidget {

@@ -73,4 +73,8 @@ abstract class APIService {
 
   @POST(APIConstants.verifyEmailUrl)
   Future<APIResponse<dynamic>> sendVerificationEmail();
+
+
+  @POST(APIConstants.updateProfileUrl)
+  Future<APIResponse<DataUser>> updateProfile(@Body() FormData formData);
 }

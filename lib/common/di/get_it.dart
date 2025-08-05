@@ -6,7 +6,12 @@ import 'package:aqar_go/presentation/feature/maps/cubit/maps_cubit.dart';
 import 'package:aqar_go/presentation/feature/media_picker/media_picker_cubit.dart';
 import 'package:aqar_go/presentation/feature/verify_email/cubit/verify_email_cubit.dart';
 import 'package:aqar_go/presentation/routing/routing_use_case.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../data/api/api_service.dart';
 import '../../data/api/safe_api_caller.dart';
@@ -19,13 +24,9 @@ import '../../presentation/feature/create_update_post/cubit/create_update_post_c
 import '../../presentation/feature/my_ads/activate_ads_cubit/activate_ads_cubit.dart';
 import '../../presentation/feature/my_ads/cubit/my_ads_cubit.dart';
 import '../../presentation/feature/my_properties/cubit/my_properties_cubit.dart';
-import '../../presentation/feature/profile/cubit/profile_cubit.dart';
+import '../../presentation/feature/profile/show/profile_cubit.dart';
+import '../../presentation/feature/profile/update/update_profile_cubit.dart';
 import '../../presentation/lang/cubit/lang_cubit.dart';
-import 'package:dio/dio.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:get_it/get_it.dart';
-import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 final getIt = GetIt.instance;
 
@@ -82,9 +83,7 @@ Future<void> di() async {
   getIt.registerLazySingleton<PropertyRepo>(
     () => PropertyRepoImpl(getIt(), getIt()),
   );
-  getIt.registerLazySingleton<AdRepo>(
-    () => AdRepoImpl(getIt(), getIt()),
-  );
+  getIt.registerLazySingleton<AdRepo>(() => AdRepoImpl(getIt(), getIt()));
 
   // use cases:
   getIt.registerLazySingleton<RoutingUseCase>(() => RoutingUseCase(getIt()));
@@ -101,6 +100,7 @@ Future<void> di() async {
     () => CreateUpdatePostCubit(getIt(), getIt()),
   );
   getIt.registerFactory<ProfileCubit>(() => ProfileCubit(getIt(), getIt()));
+  getIt.registerFactory<UpdateProfileCubit>(() => UpdateProfileCubit(getIt()));
   getIt.registerFactory<MyPropertiesCubit>(() => MyPropertiesCubit(getIt()));
   getIt.registerFactory<MyAdsCubit>(() => MyAdsCubit(getIt()));
   getIt.registerFactory<ActivateAdsCubit>(() => ActivateAdsCubit(getIt()));
@@ -109,7 +109,5 @@ Future<void> di() async {
   getIt.registerFactory<MediaPickerCubit>(
     () => MediaPickerCubit(ImagePicker()),
   );
-  getIt.registerFactory<MapsCubit>(
-    () => MapsCubit(),
-  );
+  getIt.registerFactory<MapsCubit>(() => MapsCubit());
 }

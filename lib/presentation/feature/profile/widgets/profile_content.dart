@@ -1,3 +1,4 @@
+import 'package:aqar_go/presentation/feature/profile/widgets/profile_avatar.dart';
 import 'package:aqar_go/presentation/feature/profile/widgets/settings_list_item.dart';
 import 'package:aqar_go/presentation/helper/navigation_helper.dart';
 import 'package:aqar_go/presentation/helper/ui_helper.dart';
@@ -16,66 +17,15 @@ class ProfileContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double doubleRadius = 120;
     return Column(
       children: [
-        Center(
-          child: Stack(
-            alignment: Alignment.bottomRight,
-            children: [
-              CircleAvatar(
-                backgroundColor: Colors.transparent,
-                radius: doubleRadius / 2 + 10,
-                child: ClipOval(
-                  clipBehavior: Clip.antiAlias,
-                  child:
-                      (userProfile.imageUrl != null)
-                          ? Image.network(
-                            userProfile.imageUrl!,
-                            width: doubleRadius,
-                            height: doubleRadius,
-                            fit: BoxFit.cover,
-                          )
-                          // todo: use flutter gen
-                          : Image.asset(
-                            "assets/images/profile_image_placeholder.png",
-                            width: doubleRadius,
-                            height: doubleRadius,
-                            fit: BoxFit.cover,
-                          ),
-                ),
-              ),
-              IconButton(
-                onPressed: () {
-                  _showNotImplementedYet(context);
-                },
-                icon: Icon(
-                  Icons.edit,
-                  color: Theme.of(context).colorScheme.secondary,
-                ),
-              ),
-
-              if (userProfile.isPremium || true) ...[
-                Positioned(
-                  top: 16,
-                  left: 16,
-                  child: Container(
-                    padding: const EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                      color: Colors.amber,
-                      shape: BoxShape.circle,
-                    ),
-                    child: SvgPicture.asset(
-                      Assets.svgs.diamond.path, // or Icons.workspace_premium
-                      height: 20,
-                      width: 20,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
-            ],
-          ),
+        ProfileAvatar(
+          onEditPressed: () {
+            context.pushRoute(Routes.updateProfile);
+          },
+          isPremium: userProfile.isPremium,
+          imageUrl: userProfile.imageUrl,
+          pickedImagePath: null,
         ),
         Text(
           userProfile.firstName,
@@ -104,13 +54,14 @@ class ProfileContent extends StatelessWidget {
           title: "Notification Preferences".tr(context),
           onTap: () {},
         ),
-        if (!userProfile.isVerified) SettingsListItem(
-          iconAsset: Assets.svgs.markEmailRead.path,
-          title: "Email Verification".tr(context),
-          onTap: () {
-            context.pushRoute(Routes.verifyEmail);
-          },
-        ),
+        if (!userProfile.isVerified)
+          SettingsListItem(
+            iconAsset: Assets.svgs.markEmailRead.path,
+            title: "Email Verification".tr(context),
+            onTap: () {
+              context.pushRoute(Routes.verifyEmail);
+            },
+          ),
         SettingsListItem(
           iconAsset: Assets.svgs.diamond.path,
           title: "Our Plans".tr(context),

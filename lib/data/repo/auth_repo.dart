@@ -1,9 +1,11 @@
+import 'package:aqar_go/common/helpers/logging_helper.dart';
 import 'package:aqar_go/data/api/api_service.dart';
 import 'package:aqar_go/data/api/safe_api_caller.dart';
 import 'package:aqar_go/data/model/api_response.dart';
 import 'package:aqar_go/data/model/auth/auth_response_data.dart';
 import 'package:aqar_go/data/model/auth/login_request.dart';
 import 'package:aqar_go/data/model/auth/register_request.dart';
+import 'package:aqar_go/domain/model/media_file.dart';
 import 'package:aqar_go/domain/model/profile/user_profile.dart';
 import 'package:aqar_go/domain/model/resource.dart';
 
@@ -41,6 +43,19 @@ class AuthRepo {
     return _safeAPICaller.call<UserProfile, APIResponse<DataUser>>(
       apiCall: () {
         return _apiService.getProfile();
+      },
+      dataToDomain: (data) {
+        return data.data.toDomain();
+      },
+    );
+  }
+
+  Future<Resource<UserProfile>> updateProfile(UserProfile profile, MediaFile? toUploadImage) async {
+    final formData = DataUser.fromDomain(profile).profile.toFormData(toUploadImage: toUploadImage);
+    debugLog("FormData = ${formData.fields}");
+    return _safeAPICaller.call<UserProfile, APIResponse<DataUser>>(
+      apiCall: () {
+        return _apiService.updateProfile(formData);
       },
       dataToDomain: (data) {
         return data.data.toDomain();

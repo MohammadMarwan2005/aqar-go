@@ -23,6 +23,8 @@ import '../feature/my_ads/cubit/my_ads_cubit.dart';
 import '../feature/my_ads/my_ads_screen.dart';
 import '../feature/my_properties/cubit/my_properties_cubit.dart';
 import '../feature/onboarding/onboarding_screen.dart';
+import '../feature/profile/update/update_profile_cubit.dart';
+import '../feature/profile/update/update_profile_screen.dart';
 import '../feature/test/test_screen.dart';
 import '../feature/user_nav_shell/user_nav_shell.dart';
 import '../feature/verify_email/cubit/verify_email_cubit.dart';
@@ -78,6 +80,17 @@ final appRouter = GoRouter(
             create: (context) => getIt(),
             child: VerifyEmailScreen(),
           ),
+    ),
+    GoRoute(
+      path: Routes.updateProfile,
+      builder:
+          (context, state) => MultiBlocProvider(
+        providers: [
+          BlocProvider<MediaPickerCubit>(create: (context) => getIt()),
+          BlocProvider<UpdateProfileCubit>(create: (context) => getIt()),
+        ],
+        child: UpdateProfileScreen(),
+      ),
     ),
     GoRoute(
       path: Routes.myAdDetails,
