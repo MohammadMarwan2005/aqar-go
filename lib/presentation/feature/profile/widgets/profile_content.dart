@@ -1,11 +1,10 @@
+import 'package:aqar_go/presentation/feature/profile/widgets/settings_list_item.dart';
 import 'package:aqar_go/presentation/helper/navigation_helper.dart';
 import 'package:aqar_go/presentation/helper/ui_helper.dart';
-import 'package:aqar_go/presentation/feature/profile/widgets/settings_list_item.dart';
 import 'package:aqar_go/presentation/lang/app_localization.dart';
 import 'package:aqar_go/presentation/routing/routes.dart';
-import 'package:aqar_go/presentation/theme/cubit/theme_cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../../../domain/model/profile/user_profile.dart';
 import '../../../assets/assets.gen.dart';
@@ -18,7 +17,6 @@ class ProfileContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double doubleRadius = 120;
-
     return Column(
       children: [
         Center(
@@ -56,12 +54,35 @@ class ProfileContent extends StatelessWidget {
                   color: Theme.of(context).colorScheme.secondary,
                 ),
               ),
+
+              if (userProfile.isPremium || true) ...[
+                Positioned(
+                  top: 16,
+                  left: 16,
+                  child: Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color: Colors.amber,
+                      shape: BoxShape.circle,
+                    ),
+                    child: SvgPicture.asset(
+                      Assets.svgs.diamond.path, // or Icons.workspace_premium
+                      height: 20,
+                      width: 20,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
             ],
           ),
         ),
         Text(
           userProfile.firstName,
           style: Theme.of(context).textTheme.titleLarge,
+        ),
+        Center(
+          child: _buildEmailVerificationStatus(userProfile.isVerified, context),
         ),
         SizedBox(height: 32),
         SettingsListItem(
@@ -81,21 +102,19 @@ class ProfileContent extends StatelessWidget {
         SettingsListItem(
           iconAsset: Assets.svgs.notificationSettings.path,
           title: "Notification Preferences".tr(context),
-          onTap: () {
-          },
+          onTap: () {},
         ),
-        SettingsListItem(
+        if (!userProfile.isVerified) SettingsListItem(
           iconAsset: Assets.svgs.markEmailRead.path,
           title: "Email Verification".tr(context),
           onTap: () {
+            context.pushRoute(Routes.verifyEmail);
           },
         ),
         SettingsListItem(
           iconAsset: Assets.svgs.diamond.path,
           title: "Our Plans".tr(context),
-          onTap: () {
-
-          },
+          onTap: () {},
         ),
         SettingsListItem(
           iconAsset: Assets.svgs.language.path,
@@ -114,9 +133,7 @@ class ProfileContent extends StatelessWidget {
         SettingsListItem(
           iconAsset: Assets.svgs.policy.path,
           title: "Privacy Policy".tr(context),
-          onTap: () {
-
-          },
+          onTap: () {},
         ),
       ],
     );
@@ -124,5 +141,40 @@ class ProfileContent extends StatelessWidget {
 
   void _showNotImplementedYet(BuildContext context) {
     context.showMySnackBar("Not implemented yet!".tr(context));
+  }
+
+  Widget _buildEmailVerificationStatus(
+    bool isEmailVerified,
+    BuildContext context,
+  ) {
+    if (isEmailVerified) {
+      return _buildIconWithText(
+        Icon(Icons.check, color: Colors.green, size: 16),
+        "Email Verified".tr(context),
+      );
+    } else {
+      return _buildIconWithText(
+        Icon(Icons.close, color: Colors.red, size: 16),
+        "Email not verified yet".tr(context),
+        action: TextButton(
+          onPressed: () {
+            context.pushRoute(Routes.verifyEmail);
+          },
+          child: Text("Verify".tr(context)),
+        ),
+      );
+    }
+  }
+
+  Widget _buildIconWithText(Widget icon, String text, {Widget? action}) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        icon,
+        SizedBox(width: 8),
+        Text(text),
+        if (action != null) ...[SizedBox(width: 8), action],
+      ],
+    );
   }
 }

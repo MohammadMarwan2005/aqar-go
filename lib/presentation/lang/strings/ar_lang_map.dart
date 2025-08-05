@@ -162,5 +162,11 @@ const Map<String, String> _arLangMap = {
   "Continue as Guest": "تابع كزائر",
   "Arabic": "العربية",
   "English": "الإنجليزية",
-  "Current Language": "اللغة الحالية"
+  "Current Language": "اللغة الحالية",
+  "Email not verified yet": "لم يتم تأكيد الإيميل بعد",
+  "Email Verified": "تم تأكيد الإيميل",
+  "Verify": "تأكيد",
+  "A verification link has been sent to your email address.": "تم ارسال رابط التحقق الى عنوان البريد الالكتروني الخاص بك",
+  "Continue": "تابع",
+  "Resend Email": "ارسل مرة اخرى",
 };

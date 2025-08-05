@@ -25,6 +25,8 @@ import '../feature/my_properties/cubit/my_properties_cubit.dart';
 import '../feature/onboarding/onboarding_screen.dart';
 import '../feature/test/test_screen.dart';
 import '../feature/user_nav_shell/user_nav_shell.dart';
+import '../feature/verify_email/cubit/verify_email_cubit.dart';
+import '../feature/verify_email/verify_email_screen.dart';
 import '../lang/ui/language_screen.dart';
 import '../routing/routes.dart';
 import '../theme/ui/theme_screen.dart';
@@ -65,7 +67,18 @@ final appRouter = GoRouter(
     ),
     GoRoute(path: Routes.test, builder: (context, state) => TestScreen()),
     GoRoute(path: Routes.theme, builder: (context, state) => ThemeScreen()),
-    GoRoute(path: Routes.language, builder: (context, state) => LanguageScreen()),
+    GoRoute(
+      path: Routes.language,
+      builder: (context, state) => LanguageScreen(),
+    ),
+    GoRoute(
+      path: Routes.verifyEmail,
+      builder:
+          (context, state) => BlocProvider<VerifyEmailCubit>(
+            create: (context) => getIt(),
+            child: VerifyEmailScreen(),
+          ),
+    ),
     GoRoute(
       path: Routes.myAdDetails,
       builder: (context, state) {

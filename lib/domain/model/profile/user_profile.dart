@@ -4,6 +4,8 @@ class UserProfile {
   final String lastName;
   final String phoneNumber;
   final String? imageUrl;
+  final bool isVerified;
+  final bool isPremium;
 
   UserProfile({
     required this.userId,
@@ -11,5 +13,7 @@ class UserProfile {
     required this.lastName,
     required this.phoneNumber,
     required this.imageUrl,
+    required this.isVerified,
+    required this.isPremium,
   });
 }

@@ -4,6 +4,7 @@ import 'package:aqar_go/domain/repo/ad_repo.dart';
 import 'package:aqar_go/presentation/feature/auth/register/register_cubit.dart';
 import 'package:aqar_go/presentation/feature/maps/cubit/maps_cubit.dart';
 import 'package:aqar_go/presentation/feature/media_picker/media_picker_cubit.dart';
+import 'package:aqar_go/presentation/feature/verify_email/cubit/verify_email_cubit.dart';
 import 'package:aqar_go/presentation/routing/routing_use_case.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -103,6 +104,7 @@ Future<void> di() async {
   getIt.registerFactory<MyPropertiesCubit>(() => MyPropertiesCubit(getIt()));
   getIt.registerFactory<MyAdsCubit>(() => MyAdsCubit(getIt()));
   getIt.registerFactory<ActivateAdsCubit>(() => ActivateAdsCubit(getIt()));
+  getIt.registerFactory<VerifyEmailCubit>(() => VerifyEmailCubit(getIt()));
 
   getIt.registerFactory<MediaPickerCubit>(
     () => MediaPickerCubit(ImagePicker()),

@@ -147,12 +147,12 @@ class _APIService implements APIService {
   }
 
   @override
-  Future<APIResponse<DataUserProfile>> getProfile() async {
+  Future<APIResponse<DataUser>> getProfile() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<APIResponse<DataUserProfile>>(
+    final _options = _setStreamType<APIResponse<DataUser>>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -163,11 +163,11 @@ class _APIService implements APIService {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late APIResponse<DataUserProfile> _value;
+    late APIResponse<DataUser> _value;
     try {
-      _value = APIResponse<DataUserProfile>.fromJson(
+      _value = APIResponse<DataUser>.fromJson(
         _result.data!,
-        (json) => DataUserProfile.fromJson(json as Map<String, dynamic>),
+        (json) => DataUser.fromJson(json as Map<String, dynamic>),
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
@@ -390,6 +390,36 @@ class _APIService implements APIService {
           .compose(
             _dio.options,
             'http://116.203.254.150:8001/api/ad/delete/${id}',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late APIResponse<dynamic> _value;
+    try {
+      _value = APIResponse<dynamic>.fromJson(
+        _result.data!,
+        (json) => json as dynamic,
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<APIResponse<dynamic>> sendVerificationEmail() async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<APIResponse<dynamic>>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            'http://116.203.254.150:8001/api/email/verification-notification',
             queryParameters: queryParameters,
             data: _data,
           )
