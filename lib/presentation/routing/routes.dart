@@ -3,6 +3,8 @@ sealed class Routes {
   static const test = "/test";
   static const login = "/login";
   static const register = "/register";
+  static const forgotPassword = "/forget-password";
+  static const checkPasswordOTP = "/check-password-otp";
   static const createUpdatePost = "/create-post";
   static const myProperties = "/my-properties";
   static const myPublishedAds = "/published-ads";
@@ -17,7 +19,7 @@ sealed class Routes {
   static const search = "/search-user";
   static const profile = "/profile";
 
-  static const _allowedRoutesForGuest = [onboarding, home, search, viewAd, login, register];
+  static const _allowedRoutesForGuest = [onboarding, home, search, viewAd, login, register, forgotPassword, checkPasswordOTP];
 
   static bool isAllowed(String route) {
     return _allowedRoutesForGuest.any((allowedRoute) {

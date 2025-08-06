@@ -13,6 +13,8 @@ import '../model/ad/response/create_ad_response.dart';
 import '../model/auth/login_request.dart';
 import '../model/auth/register_request.dart';
 import '../model/profile/user/data_user.dart';
+import '../model/reset_password/reset/reset_password_request.dart';
+import '../model/reset_password/send_email/send_reset_password_email_request.dart';
 import 'api_constants.dart';
 
 part 'api_service.g.dart';
@@ -73,6 +75,14 @@ abstract class APIService {
 
   @POST(APIConstants.verifyEmailUrl)
   Future<APIResponse<dynamic>> sendVerificationEmail();
+
+  @POST(APIConstants.sendResetPasswordUrl)
+  Future<APIResponse<dynamic>> sendResetPasswordEmail(@Body() SendResetPasswordEmailRequest request);
+
+  @POST(APIConstants.resetPasswordUrl)
+  Future<APIResponse<AuthResponseData>> resetPassword(
+      @Body() ResetPasswordRequest resetPasswordRequest
+      );
 
 
   @POST(APIConstants.updateProfileUrl)

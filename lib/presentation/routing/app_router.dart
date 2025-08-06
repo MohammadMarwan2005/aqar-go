@@ -1,3 +1,5 @@
+import 'package:aqar_go/presentation/feature/check_password_otp/check_password_otp_screen.dart';
+import 'package:aqar_go/presentation/feature/reset_password/reset_password_screen.dart';
 import 'package:aqar_go/presentation/feature/maps/cubit/maps_cubit.dart';
 import 'package:aqar_go/presentation/feature/media_picker/media_picker_cubit.dart';
 import 'package:aqar_go/presentation/feature/my_ad_details/my_ad_actions_cubit/my_ad_actions_cubit.dart';
@@ -16,6 +18,8 @@ import '../../presentation/feature/auth/login/login_cubit.dart';
 import '../../presentation/feature/auth/login/login_screen.dart';
 import '../../presentation/feature/auth/register/register_cubit.dart';
 import '../../presentation/feature/auth/register/register_screen.dart';
+import '../feature/check_password_otp/check_password_otp_args.dart';
+import '../feature/check_password_otp/cubit/check_password_otp_cubit.dart';
 import '../feature/create_update_post/create_update_post_screen.dart';
 import '../feature/create_update_post/cubit/create_update_post_cubit.dart';
 import '../feature/my_ad_details/my_ad_details_screen.dart';
@@ -25,6 +29,7 @@ import '../feature/my_properties/cubit/my_properties_cubit.dart';
 import '../feature/onboarding/onboarding_screen.dart';
 import '../feature/profile/update/update_profile_cubit.dart';
 import '../feature/profile/update/update_profile_screen.dart';
+import '../feature/reset_password/cubit/reset_password_cubit.dart';
 import '../feature/test/test_screen.dart';
 import '../feature/user_nav_shell/user_nav_shell.dart';
 import '../feature/verify_email/cubit/verify_email_cubit.dart';
@@ -82,15 +87,43 @@ final appRouter = GoRouter(
           ),
     ),
     GoRoute(
+      path: Routes.forgotPassword,
+      builder:
+          (context, state) => BlocProvider<ResetPasswordCubit>(
+            create: (context) => getIt(),
+            child: ResetPasswordScreen(),
+          ),
+    ),
+    GoRoute(
+      path: Routes.checkPasswordOTP,
+      builder: (context, state) {
+        final checkPasswordOtpArgs = state.extra as CheckPasswordOtpArgs;
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create:
+                  (context) => CheckPasswordOtpCubit(
+                    getIt(),
+                    getIt(),
+                    checkPasswordOtpArgs: checkPasswordOtpArgs,
+                  ),
+            ),
+            BlocProvider<ResetPasswordCubit>(create: (context) => getIt()),
+          ],
+          child: CheckPasswordOtpScreen(),
+        );
+      },
+    ),
+    GoRoute(
       path: Routes.updateProfile,
       builder:
           (context, state) => MultiBlocProvider(
-        providers: [
-          BlocProvider<MediaPickerCubit>(create: (context) => getIt()),
-          BlocProvider<UpdateProfileCubit>(create: (context) => getIt()),
-        ],
-        child: UpdateProfileScreen(),
-      ),
+            providers: [
+              BlocProvider<MediaPickerCubit>(create: (context) => getIt()),
+              BlocProvider<UpdateProfileCubit>(create: (context) => getIt()),
+            ],
+            child: UpdateProfileScreen(),
+          ),
     ),
     GoRoute(
       path: Routes.myAdDetails,

@@ -26,6 +26,7 @@ import '../../presentation/feature/my_ads/cubit/my_ads_cubit.dart';
 import '../../presentation/feature/my_properties/cubit/my_properties_cubit.dart';
 import '../../presentation/feature/profile/show/profile_cubit.dart';
 import '../../presentation/feature/profile/update/update_profile_cubit.dart';
+import '../../presentation/feature/reset_password/cubit/reset_password_cubit.dart';
 import '../../presentation/lang/cubit/lang_cubit.dart';
 
 final getIt = GetIt.instance;
@@ -105,6 +106,7 @@ Future<void> di() async {
   getIt.registerFactory<MyAdsCubit>(() => MyAdsCubit(getIt()));
   getIt.registerFactory<ActivateAdsCubit>(() => ActivateAdsCubit(getIt()));
   getIt.registerFactory<VerifyEmailCubit>(() => VerifyEmailCubit(getIt()));
+  getIt.registerFactory<ResetPasswordCubit>(() => ResetPasswordCubit(getIt()));
 
   getIt.registerFactory<MediaPickerCubit>(
     () => MediaPickerCubit(ImagePicker()),

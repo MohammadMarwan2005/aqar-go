@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class AuthSuggestion extends StatelessWidget {
   final String suggestionText;
   final String buttonLabel;
-  final Function() onClick;
+  final Function()? onClick;
 
   const AuthSuggestion({
     super.key,

@@ -10,6 +10,8 @@ import 'package:aqar_go/domain/model/profile/user_profile.dart';
 import 'package:aqar_go/domain/model/resource.dart';
 
 import '../model/profile/user/data_user.dart';
+import '../model/reset_password/reset/reset_password_request.dart';
+import '../model/reset_password/send_email/send_reset_password_email_request.dart';
 
 class AuthRepo {
   final APIService _apiService;
@@ -50,8 +52,13 @@ class AuthRepo {
     );
   }
 
-  Future<Resource<UserProfile>> updateProfile(UserProfile profile, MediaFile? toUploadImage) async {
-    final formData = DataUser.fromDomain(profile).profile.toFormData(toUploadImage: toUploadImage);
+  Future<Resource<UserProfile>> updateProfile(
+    UserProfile profile,
+    MediaFile? toUploadImage,
+  ) async {
+    final formData = DataUser.fromDomain(
+      profile,
+    ).profile.toFormData(toUploadImage: toUploadImage);
     debugLog("FormData = ${formData.fields}");
     return _safeAPICaller.call<UserProfile, APIResponse<DataUser>>(
       apiCall: () {
@@ -67,6 +74,39 @@ class AuthRepo {
     return _safeAPICaller.call<dynamic, APIResponse<dynamic>>(
       apiCall: () {
         return _apiService.sendVerificationEmail();
+      },
+      dataToDomain: (data) {
+        return data.data;
+      },
+    );
+  }
+
+  Future<Resource<dynamic>> sendResetPasswordEmail(String email) async {
+    final sendResetPasswordEmailRequest = SendResetPasswordEmailRequest(email);
+    return _safeAPICaller.call<dynamic, APIResponse<dynamic>>(
+      apiCall: () {
+        return _apiService.sendResetPasswordEmail(
+          sendResetPasswordEmailRequest,
+        );
+      },
+      dataToDomain: (data) {
+        return data.data;
+      },
+    );
+  }
+
+  Future<Resource<AuthResponseData>> resetPassword(
+    String password,
+    String code,
+  ) async {
+    final resetPasswordRequest = ResetPasswordRequest(
+      password: password,
+      passwordConfirmation: password,
+      code: code,
+    );
+    return _safeAPICaller.call<AuthResponseData, APIResponse<AuthResponseData>>(
+      apiCall: () {
+        return _apiService.resetPassword(resetPasswordRequest);
       },
       dataToDomain: (data) {
         return data.data;
