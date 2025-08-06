@@ -15,6 +15,7 @@ sealed class Routes {
   static const verifyEmail = "/verify-email";
   static const updateProfile = "/update-profile";
   static const privacyPolicy = "/privacy-policy";
+  static const plans = "/plans";
 
   static const home = "/home-user";
   static const search = "/search-user";
