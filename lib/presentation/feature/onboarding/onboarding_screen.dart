@@ -5,8 +5,11 @@ import 'package:aqar_go/presentation/widgets/app_button.dart';
 import 'package:aqar_go/presentation/widgets/screen_horizontal_padding.dart';
 import 'package:flutter/material.dart';
 
+import '../../../data/repo/local_data_repo.dart';
+
 class OnboardingScreen extends StatelessWidget {
-  const OnboardingScreen({super.key});
+  final LocalDataRepo localDataRepo;
+  const OnboardingScreen({super.key, required this.localDataRepo});
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +22,7 @@ class OnboardingScreen extends StatelessWidget {
             SizedBox(height: 32),
             AppButton(
               onPressed: () {
+                localDataRepo.setOnboarded();
                 context.goRoute(Routes.login);
               },
               text: "Login".tr(context),
@@ -26,6 +30,7 @@ class OnboardingScreen extends StatelessWidget {
             SizedBox(height: 32),
             AppButton(
               onPressed: () {
+                localDataRepo.setOnboarded();
                 context.goRoute(Routes.home);
               },
               text: "Continue as Guest".tr(context),

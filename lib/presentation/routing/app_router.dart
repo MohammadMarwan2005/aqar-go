@@ -51,7 +51,7 @@ final appRouter = GoRouter(
   routes: [
     GoRoute(
       path: Routes.onboarding,
-      builder: (context, state) => OnboardingScreen(),
+      builder: (context, state) => OnboardingScreen(localDataRepo: getIt()),
     ),
     GoRoute(
       path: Routes.login,
