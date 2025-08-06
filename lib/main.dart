@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-import 'data/repo/local_data_repo.dart';
 import 'my_app.dart';
 
 void main() async {
@@ -16,8 +15,6 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-  final LocalDataRepo localDataRepo = getIt<LocalDataRepo>();
-  localDataRepo.deleteEverything();
   final routingUseCase = getIt<RoutingUseCase>();
   firstRoute = await routingUseCase.getFirstRoute();
   // usePathUrlStrategy();
