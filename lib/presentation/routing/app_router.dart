@@ -28,6 +28,7 @@ import '../feature/my_ads/cubit/my_ads_cubit.dart';
 import '../feature/my_ads/my_ads_screen.dart';
 import '../feature/my_properties/cubit/my_properties_cubit.dart';
 import '../feature/onboarding/onboarding_screen.dart';
+import '../feature/privacy_plicy/privacy_policy_screen.dart';
 import '../feature/profile/update/update_profile_cubit.dart';
 import '../feature/profile/update/update_profile_screen.dart';
 import '../feature/reset_password/cubit/reset_password_cubit.dart';
@@ -52,6 +53,10 @@ final appRouter = GoRouter(
     GoRoute(
       path: Routes.onboarding,
       builder: (context, state) => OnboardingScreen(localDataRepo: getIt()),
+    ),
+    GoRoute(
+      path: Routes.privacyPolicy,
+      builder: (context, state) => PrivacyPolicyScreen(),
     ),
     GoRoute(
       path: Routes.login,

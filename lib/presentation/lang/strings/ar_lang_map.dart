@@ -128,21 +128,26 @@ const Map<String, String> _arLangMap = {
   "My Ad Details": "تفاصيل الإعلان الخاص بي",
   "Ads Activated": "تم تنشيط الإعلانات",
   "All ads are activated successfully!": "تم تنشيط كل الإعلانات بنجاح!",
-  "Are you sure you want to remove this image?": "هل أنت متأكد من حذف هذا الصورة؟",
-  "Are you sure you want to delete this ad?": "هل أنت متأكد من حذف هذا الإعلان؟",
+  "Are you sure you want to remove this image?":
+      "هل أنت متأكد من حذف هذا الصورة؟",
+  "Are you sure you want to delete this ad?":
+      "هل أنت متأكد من حذف هذا الإعلان؟",
   "Ad Deleted": "تم حذف الإعلان",
   "Ad Activated": "تم تنشيط الإعلان",
   "Ad Deactivated": "تم الغاء تنشيط الإعلان",
   "Ad deleted successfully!": "تم حذف الإعلان بنجاح!",
   "Done": "تم",
   "Ad created successfully!": "تم انشاء الإعلان بنجاح!",
-  "Request timed out. Please try again.": "انتهت مهلة الطلب. يرجى المحاولة مرة أخرى.",
+  "Request timed out. Please try again.":
+      "انتهت مهلة الطلب. يرجى المحاولة مرة أخرى.",
   "Connection error!": "خطأ في الاتصال!",
-  "Something went wrong. Please try again.": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
+  "Something went wrong. Please try again.":
+      "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
   "Request was cancelled.": "تم إلغاء الطلب.",
   "Bad SSL certificate.": "شهادة SSL غير صالحة.",
   "Unexpected response from server.": "استجابة غير متوقعة من الخادم.",
-  "Unexpected response from server: {response}": "استجابة غير متوقعة من الخادم: {response}",
+  "Unexpected response from server: {response}":
+      "استجابة غير متوقعة من الخادم: {response}",
   "economic": "اقتصادي",
   "standard": "قياسي",
   "deluxe": "فاخر",
@@ -166,26 +171,58 @@ const Map<String, String> _arLangMap = {
   "Email not verified yet": "لم يتم تأكيد الإيميل بعد",
   "Email Verified": "تم تأكيد الإيميل",
   "Verify": "تأكيد",
-  "A verification link has been sent to your email address.": "تم ارسال رابط التحقق الى عنوان البريد الالكتروني الخاص بك",
+  "A verification link has been sent to your email address.":
+      "تم ارسال رابط التحقق الى عنوان البريد الالكتروني الخاص بك",
   "Continue": "تابع",
   "Resend Email": "ارسل مرة اخرى",
   "Update Profile": "تحديث الملف الشخصي",
   "Forgot Password?": "هل نسيت كلمة المرور؟",
   "Reset Password": "إعادة تعيين كلمة المرور",
-  "We've sent a verification code to your email address.": "لقد قمنا بارسال رمز التحقق الى عنوان البريد الالكتروني الخاص بك",
+  "We've sent a verification code to your email address.":
+      "لقد قمنا بارسال رمز التحقق الى عنوان البريد الالكتروني الخاص بك",
   "Check Password OTP": "تحقق من كلمة المرور",
   "Didn't get the code?": "لم يصلك الرمز؟",
   "Resend": "ارسل مرة اخرى",
-  "We've sent a verification code to the email {email}": "لقد قمنا بارسال رمز التحقق الى عنوان البريد الالكتروني\n{email}",
+  "We've sent a verification code to the email {email}":
+      "لقد قمنا بارسال رمز التحقق الى عنوان البريد الالكتروني\n{email}",
   "Email cannot be empty": "لا يمكن ان يكون البريد الالكتروني فارغ",
   "Enter a valid email address": "يرجى ادخال عنوان بريد الكتروني صالح",
   "This field cannot be empty": "لا يمكن ان يكون هذا الحقل فارغ",
   "Enter a valid number": "يرجى ادخال رقم صالح",
   "Password cannot be empty": "لا يمكن ان يكون كلمة المرور فارغة",
-  "Password must have at least one uppercase letter": "يجب ان تحتوي كلمة المرور على حرف كبير على الاقل",
-  "Password must have at least one lowercase letter": "يجب ان تحتوي كلمة المرور على حرف صغير على الاقل",
-  "Password must have at least one special character": "يجب ان تحتوي كلمة المرور على حرف خاص على الاقل",
-  "Password must have at least one number": "يجب ان تحتوي كلمة المرور على رقم على الاقل",
-  "Password should be at least 8 characters": "يجب ان تكون كلمة المرور على الاقل 8 حروف",
+  "Password must have at least one uppercase letter":
+      "يجب ان تحتوي كلمة المرور على حرف كبير على الاقل",
+  "Password must have at least one lowercase letter":
+      "يجب ان تحتوي كلمة المرور على حرف صغير على الاقل",
+  "Password must have at least one special character":
+      "يجب ان تحتوي كلمة المرور على حرف خاص على الاقل",
+  "Password must have at least one number":
+      "يجب ان تحتوي كلمة المرور على رقم على الاقل",
+  "Password should be at least 8 characters":
+      "يجب ان تكون كلمة المرور على الاقل 8 حروف",
   "Another OTP code has been sent!": "تم ارسال رمز تحقق اخر! ",
+  "Introduction": "مقدمة",
+  "At Aqar Go, we value your privacy and are committed to protecting your personal data. This Privacy Policy outlines how we collect, use, and protect your information.":
+      "في عقار جو، نقدر خصوصيتك ونلتزم بحماية بياناتك الشخصية. توضح سياسة الخصوصية هذه كيفية جمعنا واستخدامنا وحمايتنا لمعلوماتك.",
+  "Data Collection": "جمع البيانات",
+  "We collect personal data such as your name, email, phone number, and other details when you register or interact with the platform.":
+      "نقوم بجمع البيانات الشخصية مثل اسمك، بريدك الإلكتروني، رقم هاتفك، وغيرها من التفاصيل عند تسجيلك أو تفاعلك مع المنصة.",
+  "Usage of Data": "استخدام البيانات",
+  "We use your data to improve your experience, communicate with you, and provide personalized recommendations, as well as notifications about posts and promotions.":
+      "نستخدم بياناتك لتحسين تجربتك، والتواصل معك، وتقديم توصيات مخصصة، بالإضافة إلى إشعارات حول المنشورات والعروض الترويجية.",
+  "Third-Party Sharing": "مشاركة البيانات مع أطراف ثالثة",
+  "We do not sell your personal information to third parties. We may share your data with trusted service providers to help improve our platform, but we ensure that these parties comply with privacy standards.":
+      "نحن لا نبيع معلوماتك الشخصية لأطراف ثالثة. قد نشارك بياناتك مع مزودي الخدمة الموثوقين للمساعدة في تحسين منصتنا، ولكننا نضمن أن هذه الأطراف تلتزم بمعايير الخصوصية.",
+  "Your Rights": "حقوقك",
+  "You have the right to access, update, or delete your personal information at any time. If you have any concerns about your data, please contact us.":
+      "لديك الحق في الوصول إلى معلوماتك الشخصية وتحديثها أو حذفها في أي وقت. إذا كانت لديك أي مخاوف بشأن بياناتك، يرجى الاتصال بنا.",
+  "Security": "الأمان",
+  "We implement industry-standard security measures to protect your personal data. However, no method of data transmission over the internet is 100% secure.":
+      "نحن نطبق تدابير الأمان القياسية لحماية بياناتك الشخصية. ومع ذلك، لا توجد طريقة لنقل البيانات عبر الإنترنت تكون آمنة بنسبة 100%.",
+  "Changes to This Policy": "التعديلات على هذه السياسة",
+  "We may update this Privacy Policy from time to time. Any changes will be communicated via notifications or posted on this page.":
+      "قد نقوم بتحديث سياسة الخصوصية هذه من وقت لآخر. سيتم إبلاغك بأي تغييرات عبر الإشعارات أو نشرها على هذه الصفحة.",
+  "Contact Us": "اتصل بنا",
+  "If you have any questions or concerns about this Privacy Policy or how we handle your personal data, please contact us at support@aqar_go.com.":
+      "إذا كان لديك أي أسئلة أو استفسارات بشأن سياسة الخصوصية هذه أو كيفية التعامل مع بياناتك الشخصية، يرجى الاتصال بنا على support@aqar_go.com.",
 };

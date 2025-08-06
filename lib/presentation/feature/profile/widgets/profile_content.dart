@@ -85,7 +85,9 @@ class ProfileContent extends StatelessWidget {
         SettingsListItem(
           iconAsset: Assets.svgs.policy.path,
           title: "Privacy Policy".tr(context),
-          onTap: () {},
+          onTap: () {
+            context.pushRoute(Routes.privacyPolicy);
+          },
         ),
       ],
     );
