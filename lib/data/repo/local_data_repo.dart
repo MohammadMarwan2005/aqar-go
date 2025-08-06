@@ -10,20 +10,28 @@ class LocalDataRepo {
     required SharedPreferences sharedPrefs,
     required FlutterSecureStorage storage,
   }) : _storage = storage,
-        _sharedPrefs = sharedPrefs;
+       _sharedPrefs = sharedPrefs {
+    _loadHasTokenVar();
+  }
 
-  bool hasTokenVar = false;
+  bool _hasTokenVar = false;
+
+  bool isGuest() => !_hasTokenVar;
+
+  _loadHasTokenVar() async {
+    _hasTokenVar = await hasToken();
+  }
 
   Future<bool> hasToken() async {
     final value = await _storage.read(key: DataAccessKeys.tokenKey);
     final boolValue = value != null;
-    hasTokenVar = boolValue;
+    _hasTokenVar = boolValue;
     return boolValue;
   }
 
   setToken(String value) async {
     await _storage.write(key: DataAccessKeys.tokenKey, value: value);
-    hasTokenVar = true;
+    _hasTokenVar = true;
   }
 
   Future<String?> getToken() async {
@@ -34,7 +42,7 @@ class LocalDataRepo {
 
   deleteToken() async {
     await _storage.delete(key: DataAccessKeys.tokenKey);
-    hasTokenVar = false;
+    _hasTokenVar = false;
   }
 
   setInt(int value, String key) async {
@@ -47,6 +55,10 @@ class LocalDataRepo {
 
   setString(String value, String key) async {
     await _sharedPrefs.setString(key, value);
+  }
+
+  removeString(String key) async {
+    await _sharedPrefs.remove(key);
   }
 
   String? getString(String key) {
@@ -64,11 +76,16 @@ class LocalDataRepo {
   Future<void> clearAllData() async {
     await _sharedPrefs.clear();
   }
+
+  void deleteEverything() async {
+    await _storage.deleteAll();
+    await clearAllData();
+  }
 }
 
 class DataAccessKeys {
   static String tokenKey = "tokenKey";
-  static String roleIdKey = "roleKey";
   static String langCodeKey = "langCodeKey";
   static String hasOnboardedKey = "hasOnboardedKey";
+  static String themeKey = "themeKey";
 }

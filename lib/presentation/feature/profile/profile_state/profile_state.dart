@@ -1,4 +1,9 @@
-part of 'profile_cubit.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+import '../../../../domain/model/domain_error.dart';
+import '../../../../domain/model/profile/user_profile.dart';
+
+part 'profile_state.freezed.dart';
 
 @freezed
 sealed class ProfileState with _$ProfileState {

@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:aqar_go/common/helpers/logging_helper.dart';
-import 'package:aqar_go/common/helpers/ui_helper.dart';
+import 'package:aqar_go/presentation/helper/ui_helper.dart';
 import 'package:aqar_go/domain/model/media_file.dart';
 import 'package:aqar_go/presentation/feature/media_picker/media_picker_cubit.dart';
 import 'package:aqar_go/presentation/lang/app_localization.dart';

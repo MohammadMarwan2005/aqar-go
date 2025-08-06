@@ -1,6 +1,7 @@
+import 'package:dio/dio.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import '../../../domain/model/profile/user_profile.dart';
+import '../../../domain/model/media_file.dart';
 
 part 'data_user_profile.g.dart';
 
@@ -24,23 +25,20 @@ class DataUserProfile {
     required this.imageUrl,
   });
 
-  factory DataUserProfile.fromJson(Map<String, dynamic> json) => _$DataUserProfileFromJson(json);
+  factory DataUserProfile.fromJson(Map<String, dynamic> json) =>
+      _$DataUserProfileFromJson(json);
 
   Map<String, dynamic> toJson() => _$DataUserProfileToJson(this);
 
-  UserProfile toDomain() => UserProfile(
-    userId: id,
-    firstName: firstName,
-    lastName: lastName,
-    phoneNumber: phoneNumber,
-    imageUrl: imageUrl,
-  );
-
-  factory DataUserProfile.fromDomain(UserProfile profile) => DataUserProfile(
-    id: profile.userId,
-    firstName: profile.firstName,
-    lastName: profile.lastName,
-    phoneNumber: profile.phoneNumber,
-    imageUrl: profile.imageUrl,
-  );
+  FormData toFormData({MediaFile? toUploadImage}) {
+    final jsonData = toJson()..remove('image_url');
+    final formData = FormData.fromMap(jsonData);
+    if (toUploadImage != null) {
+      formData.files.add(MapEntry(
+        'image_url',
+        MultipartFile.fromFileSync(toUploadImage.path.toString()),
+      ));
+    }
+    return formData;
+  }
 }

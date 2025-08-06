@@ -7,10 +7,14 @@ import 'package:aqar_go/data/model/property/property_data.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
+
 import '../model/activate_selected_ads/activate_selected_ads_request.dart';
 import '../model/ad/response/create_ad_response.dart';
 import '../model/auth/login_request.dart';
 import '../model/auth/register_request.dart';
+import '../model/profile/user/data_user.dart';
+import '../model/reset_password/reset/reset_password_request.dart';
+import '../model/reset_password/send_email/send_reset_password_email_request.dart';
 import 'api_constants.dart';
 
 part 'api_service.g.dart';
@@ -42,7 +46,7 @@ abstract class APIService {
   );
 
   @GET(APIConstants.getProfileUrl)
-  Future<APIResponse<DataUserProfile>> getProfile();
+  Future<APIResponse<DataUser>> getProfile();
 
   @GET(APIConstants.getUserPropertiesUrl)
   Future<APIResponse<List<PropertyData>>> getUserProperties();
@@ -68,4 +72,19 @@ abstract class APIService {
 
   @DELETE("${APIConstants.deleteAdUrl}/{id}")
   Future<APIResponse<dynamic>> deleteAd(@Path("id") int id);
+
+  @POST(APIConstants.verifyEmailUrl)
+  Future<APIResponse<dynamic>> sendVerificationEmail();
+
+  @POST(APIConstants.sendResetPasswordUrl)
+  Future<APIResponse<dynamic>> sendResetPasswordEmail(@Body() SendResetPasswordEmailRequest request);
+
+  @POST(APIConstants.resetPasswordUrl)
+  Future<APIResponse<AuthResponseData>> resetPassword(
+      @Body() ResetPasswordRequest resetPasswordRequest
+      );
+
+
+  @POST(APIConstants.updateProfileUrl)
+  Future<APIResponse<DataUser>> updateProfile(@Body() FormData formData);
 }

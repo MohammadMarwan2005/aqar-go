@@ -1,4 +1,5 @@
-import 'package:aqar_go/common/helpers/navigation_helper.dart';
+import 'package:aqar_go/data/model/auth/forgot_password_button.dart';
+import 'package:aqar_go/presentation/helper/navigation_helper.dart';
 import 'package:aqar_go/common/helpers/validation_helper.dart';
 import 'package:aqar_go/presentation/feature/auth/login/login_cubit.dart';
 import 'package:aqar_go/presentation/feature/auth/login_state_listerner.dart';
@@ -11,20 +12,22 @@ import 'package:aqar_go/presentation/widgets/app_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../routing/guest_mode/post_login_instruction.dart';
 import '../../../widgets/app_button.dart';
 import '../auth_state.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  final PostLoginInstruction? postLoginInstruction;
+
+  const LoginScreen({super.key, this.postLoginInstruction});
 
   @override
   Widget build(BuildContext context) {
     final loginCubit = context.read<LoginCubit>();
     return AuthTemplate(
       title: "Welcome Back".tr(context),
-      desc:
-          "We’re thrilled to have you return and hope you've been doing well."
-              .tr(context),
+      desc: "We’re thrilled to have you return and hope you've been doing well."
+          .tr(context),
       formAndButton: Form(
         key: loginCubit.formKey,
         child: Column(
@@ -44,7 +47,9 @@ class LoginScreen extends StatelessWidget {
               validator: (value) => value.validatePassword()?.tr(context),
               maxLines: 1,
             ),
-            SizedBox(height: 16),
+            SizedBox(height: 8),
+            ForgotPasswordButton(),
+            SizedBox(height: 8),
             ValueListenableBuilder(
               valueListenable: loginCubit.passwordNotifier,
               builder:
@@ -69,7 +74,9 @@ class LoginScreen extends StatelessWidget {
                   isLoading: isLoading,
                 );
               },
-              listener: authListener,
+              listener:
+                  (context, state) =>
+                      authListener(context, state, postLoginInstruction),
             ),
           ],
         ),
@@ -78,7 +85,10 @@ class LoginScreen extends StatelessWidget {
         suggestionText: "Don't have an account?".tr(context),
         buttonLabel: "Sign Up".tr(context),
         onClick: () {
-          context.goRoute(Routes.register);
+          context.popThenPushRoute(
+            Routes.register,
+            extra: postLoginInstruction,
+          );
         },
       ),
     );

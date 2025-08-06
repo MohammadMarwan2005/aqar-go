@@ -29,17 +29,57 @@ class $AssetsSvgsGen {
   /// File path: assets/svgs/apartment.svg
   SvgGenImage get apartment => const SvgGenImage('assets/svgs/apartment.svg');
 
+  /// File path: assets/svgs/dark_mode.svg
+  SvgGenImage get darkMode => const SvgGenImage('assets/svgs/dark_mode.svg');
+
+  /// File path: assets/svgs/diamond.svg
+  SvgGenImage get diamond => const SvgGenImage('assets/svgs/diamond.svg');
+
   /// File path: assets/svgs/land.svg
   SvgGenImage get land => const SvgGenImage('assets/svgs/land.svg');
+
+  /// File path: assets/svgs/language.svg
+  SvgGenImage get language => const SvgGenImage('assets/svgs/language.svg');
+
+  /// File path: assets/svgs/light_mode.svg
+  SvgGenImage get lightMode => const SvgGenImage('assets/svgs/light_mode.svg');
+
+  /// File path: assets/svgs/mark_email_read.svg
+  SvgGenImage get markEmailRead =>
+      const SvgGenImage('assets/svgs/mark_email_read.svg');
+
+  /// File path: assets/svgs/notification_settings.svg
+  SvgGenImage get notificationSettings =>
+      const SvgGenImage('assets/svgs/notification_settings.svg');
 
   /// File path: assets/svgs/office.svg
   SvgGenImage get office => const SvgGenImage('assets/svgs/office.svg');
 
+  /// File path: assets/svgs/policy.svg
+  SvgGenImage get policy => const SvgGenImage('assets/svgs/policy.svg');
+
   /// File path: assets/svgs/shop.svg
   SvgGenImage get shop => const SvgGenImage('assets/svgs/shop.svg');
 
+  /// File path: assets/svgs/theme_contrast.svg
+  SvgGenImage get themeContrast =>
+      const SvgGenImage('assets/svgs/theme_contrast.svg');
+
   /// List of all assets
-  List<SvgGenImage> get values => [apartment, land, office, shop];
+  List<SvgGenImage> get values => [
+    apartment,
+    darkMode,
+    diamond,
+    land,
+    language,
+    lightMode,
+    markEmailRead,
+    notificationSettings,
+    office,
+    policy,
+    shop,
+    themeContrast,
+  ];
 }
 
 class Assets {

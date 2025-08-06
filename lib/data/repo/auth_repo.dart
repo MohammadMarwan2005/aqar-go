@@ -1,12 +1,17 @@
+import 'package:aqar_go/common/helpers/logging_helper.dart';
 import 'package:aqar_go/data/api/api_service.dart';
 import 'package:aqar_go/data/api/safe_api_caller.dart';
 import 'package:aqar_go/data/model/api_response.dart';
 import 'package:aqar_go/data/model/auth/auth_response_data.dart';
 import 'package:aqar_go/data/model/auth/login_request.dart';
 import 'package:aqar_go/data/model/auth/register_request.dart';
-import 'package:aqar_go/data/model/profile/data_user_profile.dart';
+import 'package:aqar_go/domain/model/media_file.dart';
 import 'package:aqar_go/domain/model/profile/user_profile.dart';
 import 'package:aqar_go/domain/model/resource.dart';
+
+import '../model/profile/user/data_user.dart';
+import '../model/reset_password/reset/reset_password_request.dart';
+import '../model/reset_password/send_email/send_reset_password_email_request.dart';
 
 class AuthRepo {
   final APIService _apiService;
@@ -37,12 +42,74 @@ class AuthRepo {
   }
 
   Future<Resource<UserProfile>> getProfile() async {
-    return _safeAPICaller.call<UserProfile, APIResponse<DataUserProfile>>(
+    return _safeAPICaller.call<UserProfile, APIResponse<DataUser>>(
       apiCall: () {
         return _apiService.getProfile();
       },
       dataToDomain: (data) {
         return data.data.toDomain();
+      },
+    );
+  }
+
+  Future<Resource<UserProfile>> updateProfile(
+    UserProfile profile,
+    MediaFile? toUploadImage,
+  ) async {
+    final formData = DataUser.fromDomain(
+      profile,
+    ).profile.toFormData(toUploadImage: toUploadImage);
+    debugLog("FormData = ${formData.fields}");
+    return _safeAPICaller.call<UserProfile, APIResponse<DataUser>>(
+      apiCall: () {
+        return _apiService.updateProfile(formData);
+      },
+      dataToDomain: (data) {
+        return data.data.toDomain();
+      },
+    );
+  }
+
+  Future<Resource<dynamic>> sendVerificationEmail() async {
+    return _safeAPICaller.call<dynamic, APIResponse<dynamic>>(
+      apiCall: () {
+        return _apiService.sendVerificationEmail();
+      },
+      dataToDomain: (data) {
+        return data.data;
+      },
+    );
+  }
+
+  Future<Resource<dynamic>> sendResetPasswordEmail(String email) async {
+    final sendResetPasswordEmailRequest = SendResetPasswordEmailRequest(email);
+    return _safeAPICaller.call<dynamic, APIResponse<dynamic>>(
+      apiCall: () {
+        return _apiService.sendResetPasswordEmail(
+          sendResetPasswordEmailRequest,
+        );
+      },
+      dataToDomain: (data) {
+        return data.data;
+      },
+    );
+  }
+
+  Future<Resource<AuthResponseData>> resetPassword(
+    String password,
+    String code,
+  ) async {
+    final resetPasswordRequest = ResetPasswordRequest(
+      password: password,
+      passwordConfirmation: password,
+      code: code,
+    );
+    return _safeAPICaller.call<AuthResponseData, APIResponse<AuthResponseData>>(
+      apiCall: () {
+        return _apiService.resetPassword(resetPasswordRequest);
+      },
+      dataToDomain: (data) {
+        return data.data;
       },
     );
   }

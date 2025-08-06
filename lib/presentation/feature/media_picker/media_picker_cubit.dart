@@ -11,18 +11,20 @@ part 'media_picker_state.dart';
 class MediaPickerCubit extends Cubit<MediaPickerState> {
   final ImagePicker _imagePicker;
 
-  MediaPickerCubit(
-    this._imagePicker, {
-    List<MediaFile>? initialImages,
-  }) : super(MediaPickerState(files: initialImages ?? []));
+  MediaPickerCubit(this._imagePicker, {List<MediaFile>? initialImages})
+    : super(MediaPickerState(files: initialImages ?? []));
 
-  Future<void> pickImage() async {
+  Future<void> pickImage({bool keepOld = true}) async {
     final pickedFile = await _imagePicker.pickImage(
       source: ImageSource.gallery,
     );
     if (pickedFile != null) {
       final mediaFile = MediaFile(path: pickedFile.path);
-      emit(state.copyWithFile(mediaFile));
+      if (keepOld) {
+        emit(state.copyWithFile(mediaFile));
+      } else {
+        emit(state.copyWith([mediaFile]));
+      }
     }
   }
 

@@ -1,9 +1,12 @@
+import 'package:aqar_go/presentation/feature/check_password_otp/check_password_otp_screen.dart';
+import 'package:aqar_go/presentation/feature/reset_password/reset_password_screen.dart';
 import 'package:aqar_go/presentation/feature/maps/cubit/maps_cubit.dart';
 import 'package:aqar_go/presentation/feature/media_picker/media_picker_cubit.dart';
 import 'package:aqar_go/presentation/feature/my_ad_details/my_ad_actions_cubit/my_ad_actions_cubit.dart';
 import 'package:aqar_go/presentation/feature/my_ad_details/my_ad_details_cubit/my_ad_details_cubit.dart';
 import 'package:aqar_go/presentation/feature/my_ads/activate_ads_cubit/activate_ads_cubit.dart';
 import 'package:aqar_go/presentation/feature/my_properties/my_properties_screen.dart';
+import 'package:aqar_go/presentation/feature/verify_email/verify_instruction.dart';
 import 'package:aqar_go/presentation/helper/navigation_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,6 +19,8 @@ import '../../presentation/feature/auth/login/login_cubit.dart';
 import '../../presentation/feature/auth/login/login_screen.dart';
 import '../../presentation/feature/auth/register/register_cubit.dart';
 import '../../presentation/feature/auth/register/register_screen.dart';
+import '../feature/check_password_otp/check_password_otp_args.dart';
+import '../feature/check_password_otp/cubit/check_password_otp_cubit.dart';
 import '../feature/create_update_post/create_update_post_screen.dart';
 import '../feature/create_update_post/cubit/create_update_post_cubit.dart';
 import '../feature/my_ad_details/my_ad_details_screen.dart';
@@ -23,9 +28,17 @@ import '../feature/my_ads/cubit/my_ads_cubit.dart';
 import '../feature/my_ads/my_ads_screen.dart';
 import '../feature/my_properties/cubit/my_properties_cubit.dart';
 import '../feature/onboarding/onboarding_screen.dart';
+import '../feature/profile/update/update_profile_cubit.dart';
+import '../feature/profile/update/update_profile_screen.dart';
+import '../feature/reset_password/cubit/reset_password_cubit.dart';
 import '../feature/test/test_screen.dart';
 import '../feature/user_nav_shell/user_nav_shell.dart';
+import '../feature/verify_email/cubit/verify_email_cubit.dart';
+import '../feature/verify_email/verify_email_screen.dart';
+import '../lang/ui/language_screen.dart';
 import '../routing/routes.dart';
+import '../theme/ui/theme_screen.dart';
+import 'guest_mode/post_login_instruction.dart';
 
 final GlobalKey<NavigatorState> goRouteRootNavigatorKey =
     GlobalKey<NavigatorState>();
@@ -42,21 +55,83 @@ final appRouter = GoRouter(
     ),
     GoRoute(
       path: Routes.login,
-      builder:
-          (context, state) => BlocProvider(
-            create: (context) => getIt<LoginCubit>(),
-            child: LoginScreen(),
-          ),
+      builder: (context, state) {
+        final postLoginInstructions = state.extra as PostLoginInstruction?;
+        return BlocProvider(
+          create: (context) => getIt<LoginCubit>(),
+          child: LoginScreen(postLoginInstruction: postLoginInstructions),
+        );
+      },
     ),
     GoRoute(
       path: Routes.register,
-      builder:
-          (context, state) => BlocProvider(
-            create: (context) => getIt<RegisterCubit>(),
-            child: RegisterScreen(),
-          ),
+      builder: (context, state) {
+        final postLoginInstructions = state.extra as PostLoginInstruction?;
+        return BlocProvider(
+          create: (context) => getIt<RegisterCubit>(),
+          child: RegisterScreen(postLoginInstruction: postLoginInstructions),
+        );
+      },
     ),
     GoRoute(path: Routes.test, builder: (context, state) => TestScreen()),
+    GoRoute(path: Routes.theme, builder: (context, state) => ThemeScreen()),
+    GoRoute(
+      path: Routes.language,
+      builder: (context, state) => LanguageScreen(),
+    ),
+    GoRoute(
+      path: Routes.verifyEmail,
+      builder: (context, state) {
+        final verifyInstruction = state.extra as VerifyInstruction;
+        return BlocProvider<VerifyEmailCubit>(
+          create:
+              (context) => VerifyEmailCubit(
+                getIt(),
+                verifyInstruction: verifyInstruction,
+              ),
+          child: VerifyEmailScreen(),
+        );
+      },
+    ),
+    GoRoute(
+      path: Routes.forgotPassword,
+      builder:
+          (context, state) => BlocProvider<ResetPasswordCubit>(
+            create: (context) => getIt(),
+            child: ResetPasswordScreen(),
+          ),
+    ),
+    GoRoute(
+      path: Routes.checkPasswordOTP,
+      builder: (context, state) {
+        final checkPasswordOtpArgs = state.extra as CheckPasswordOtpArgs;
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create:
+                  (context) => CheckPasswordOtpCubit(
+                    getIt(),
+                    getIt(),
+                    checkPasswordOtpArgs: checkPasswordOtpArgs,
+                  ),
+            ),
+            BlocProvider<ResetPasswordCubit>(create: (context) => getIt()),
+          ],
+          child: CheckPasswordOtpScreen(),
+        );
+      },
+    ),
+    GoRoute(
+      path: Routes.updateProfile,
+      builder:
+          (context, state) => MultiBlocProvider(
+            providers: [
+              BlocProvider<MediaPickerCubit>(create: (context) => getIt()),
+              BlocProvider<UpdateProfileCubit>(create: (context) => getIt()),
+            ],
+            child: UpdateProfileScreen(),
+          ),
+    ),
     GoRoute(
       path: Routes.myAdDetails,
       builder: (context, state) {

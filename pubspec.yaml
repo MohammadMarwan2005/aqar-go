@@ -65,6 +65,7 @@ dependencies:
   google_fonts: ^4.0.4
   material_design_icons_flutter: ^7.0.7296
   image_picker: ^1.1.2
+  pin_code_fields: ^8.0.1
 
 
   google_maps_flutter: ^2.12.3

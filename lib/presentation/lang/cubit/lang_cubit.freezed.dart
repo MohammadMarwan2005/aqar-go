@@ -4,7 +4,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'lang_state.dart';
+part of 'lang_cubit.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -81,7 +81,7 @@ class LangLoaded implements LangState {
   const LangLoaded({required this.lang});
   
 
- final  String lang;
+ final  String? lang;
 
 /// Create a copy of LangState
 /// with the given fields replaced by the non-null parameter values.
@@ -113,7 +113,7 @@ abstract mixin class $LangLoadedCopyWith<$Res> implements $LangStateCopyWith<$Re
   factory $LangLoadedCopyWith(LangLoaded value, $Res Function(LangLoaded) _then) = _$LangLoadedCopyWithImpl;
 @useResult
 $Res call({
- String lang
+ String? lang
 });
 
 
@@ -130,10 +130,10 @@ class _$LangLoadedCopyWithImpl<$Res>
 
 /// Create a copy of LangState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? lang = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? lang = freezed,}) {
   return _then(LangLoaded(
-lang: null == lang ? _self.lang : lang // ignore: cast_nullable_to_non_nullable
-as String,
+lang: freezed == lang ? _self.lang : lang // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

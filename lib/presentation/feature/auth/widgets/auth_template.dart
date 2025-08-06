@@ -1,4 +1,5 @@
-import 'package:aqar_go/presentation/lang/switch_lang_label.dart';
+import 'package:aqar_go/presentation/lang/ui/switch_lang_label.dart';
+import 'package:aqar_go/presentation/widgets/title_and_desc.dart';
 import 'package:flutter/material.dart';
 
 class AuthTemplate extends StatelessWidget {
@@ -29,21 +30,7 @@ class AuthTemplate extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     SizedBox(height: 50),
-                    Text(
-                      title,
-                      style: Theme.of(
-                        context,
-                      ).textTheme.headlineMedium?.copyWith(
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                    ),
-                    SizedBox(height: 8),
-                    Text(
-                      desc,
-                      style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                    ),
+                    TitleAndDesc(title: title, desc: desc),
                     SizedBox(height: 32),
                     formAndButton,
                     SizedBox(height: 32),

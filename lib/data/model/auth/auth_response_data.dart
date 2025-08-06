@@ -14,6 +14,8 @@ class AuthResponseData {
   final String token;
   @JsonKey(name: 'token_type')
   final String tokenType;
+  @JsonKey(name: "email_verified_at")
+  final String? emailVerifiedAt;
 
   AuthResponseData({
     this.firstName,
@@ -22,10 +24,13 @@ class AuthResponseData {
     required this.phoneNumber,
     required this.token,
     required this.tokenType,
+    required this.emailVerifiedAt,
   });
 
   factory AuthResponseData.fromJson(Map<String, dynamic> json) =>
       _$AuthResponseDataFromJson(json);
 
   Map<String, dynamic> toJson() => _$AuthResponseDataToJson(this);
+
+  bool isVerified() => emailVerifiedAt != null;
 }

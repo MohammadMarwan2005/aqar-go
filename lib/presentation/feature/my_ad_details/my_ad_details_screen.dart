@@ -1,4 +1,4 @@
-import 'package:aqar_go/common/helpers/ui_helper.dart';
+import 'package:aqar_go/presentation/helper/ui_helper.dart';
 import 'package:aqar_go/presentation/feature/my_ad_details/my_ad_actions_cubit/my_ad_actions_cubit.dart';
 import 'package:aqar_go/presentation/feature/my_ad_details/my_ad_details_cubit/my_ad_details_cubit.dart';
 import 'package:aqar_go/presentation/helper/date_time_helper.dart';
@@ -7,6 +7,7 @@ import 'package:aqar_go/presentation/lang/app_localization.dart';
 import 'package:aqar_go/presentation/widgets/screen_horizontal_padding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../domain/model/ad/ad.dart';
 import '../../../domain/model/media_file.dart';

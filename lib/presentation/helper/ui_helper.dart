@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-import '../../presentation/widgets/error_details.dart';
+import '../widgets/error_details.dart';
 
 extension UiHelper on BuildContext {
   void showMySnackBar(

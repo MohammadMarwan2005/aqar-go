@@ -1,12 +1,18 @@
-import 'package:aqar_go/common/helpers/navigation_helper.dart';
-import 'package:aqar_go/common/helpers/ui_helper.dart';
+import 'package:aqar_go/presentation/helper/navigation_helper.dart';
+import 'package:aqar_go/presentation/helper/ui_helper.dart';
 import 'package:aqar_go/domain/model/domain_error.dart';
 import 'package:aqar_go/presentation/lang/app_localization.dart';
+import 'package:aqar_go/presentation/routing/guest_mode/post_login_instruction.dart';
 import 'package:aqar_go/presentation/routing/routes.dart';
 import 'package:flutter/material.dart';
+import '../verify_email/verify_instruction.dart';
 import 'auth_state.dart';
 
-authListener(BuildContext context, AuthState state) {
+authListener(
+  BuildContext context,
+  AuthState state,
+  PostLoginInstruction? postLoginInstruction,
+) {
   state.when(
     initial: () {},
     loading: () {},
@@ -18,17 +24,27 @@ authListener(BuildContext context, AuthState state) {
       );
     },
     error: (domainError) {
-      // var details = domainError.details;
-      // var title = domainError.getMessage(context);
-      // if(details == null || details.isEmpty) {
-      //   details = [title];
-      //   title = "Something went wrong!".tr(context);
-      // }
-      // context.showMyAlertDialog(title, details, true);
       context.showMyAlertDialogFromDomainError(domainError);
     },
-    success: (_) {
-      context.goRoute(Routes.home);
+    success: (successData) {
+      if (successData.isVerified()) {
+        if (postLoginInstruction != null) {
+          context.popThenPushRoute(
+            postLoginInstruction.redirectionRoute,
+            extra: postLoginInstruction.itsExtras,
+          );
+        } else {
+          context.goRoute(Routes.home);
+        }
+      } else {
+        context.popThenPushRoute(
+          Routes.verifyEmail,
+          extra: VerifyInstruction(
+            afterLogin: true,
+            postLoginInstruction: postLoginInstruction,
+          ),
+        );
+      }
     },
   );
 }

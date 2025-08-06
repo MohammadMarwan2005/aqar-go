@@ -1,7 +1,6 @@
-import 'package:aqar_go/domain/model/domain_error.dart';
+import 'package:flutter/cupertino.dart';
 
 import '../../common/helpers/logging_helper.dart';
-import 'package:flutter/cupertino.dart';
 
 part 'strings/ar_lang_map.dart';
 part 'strings/en_lang_map.dart';
@@ -24,7 +23,7 @@ class AppLocalizations {
 
   Future loadLanguage() async {
     Map<String, String> langMap = {};
-    switch(locale!.languageCode) {
+    switch(locale?.languageCode) {
       case "en":
         langMap = _enLangMap;
         break;

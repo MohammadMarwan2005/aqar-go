@@ -1,4 +1,4 @@
-import 'package:aqar_go/common/helpers/ui_helper.dart';
+import 'package:aqar_go/presentation/helper/ui_helper.dart';
 import 'package:aqar_go/presentation/feature/my_ads/activate_ads_cubit/activate_ads_cubit.dart';
 import 'package:aqar_go/presentation/feature/my_ads/my_ad_card.dart';
 import 'package:aqar_go/presentation/lang/app_localization.dart';

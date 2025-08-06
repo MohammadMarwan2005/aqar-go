@@ -14,6 +14,7 @@ AuthResponseData _$AuthResponseDataFromJson(Map<String, dynamic> json) =>
       phoneNumber: json['phone_number'] as String?,
       token: json['token'] as String,
       tokenType: json['token_type'] as String,
+      emailVerifiedAt: json['email_verified_at'] as String?,
     );
 
 Map<String, dynamic> _$AuthResponseDataToJson(AuthResponseData instance) =>
@@ -24,4 +25,5 @@ Map<String, dynamic> _$AuthResponseDataToJson(AuthResponseData instance) =>
       'phone_number': instance.phoneNumber,
       'token': instance.token,
       'token_type': instance.tokenType,
+      'email_verified_at': instance.emailVerifiedAt,
     };

@@ -1,18 +1,18 @@
-import 'package:aqar_go/common/helpers/navigation_helper.dart';
-import 'package:aqar_go/common/helpers/ui_helper.dart';
+import 'package:aqar_go/presentation/helper/navigation_helper.dart';
+import 'package:aqar_go/presentation/helper/ui_helper.dart';
 import 'package:aqar_go/presentation/lang/app_localization.dart';
-import 'package:aqar_go/presentation/lang/switch_lang_label.dart';
 import 'package:aqar_go/presentation/widgets/error_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../domain/model/profile/user_profile.dart';
-import '../../routing/routes.dart';
-import '../../widgets/app_button.dart';
-import '../../widgets/loading_screen.dart';
-import '../../widgets/screen_horizontal_padding.dart';
-import 'cubit/profile_cubit.dart';
-import 'widgets/profile_content.dart';
+import '../../../routing/routes.dart';
+import '../../../theme/ui/switch_theme_widget.dart';
+import '../../../widgets/app_button.dart';
+import '../../../widgets/loading_screen.dart';
+import '../../../widgets/screen_horizontal_padding.dart';
+import '../profile_state/profile_state.dart';
+import 'profile_cubit.dart';
+import '../widgets/profile_content.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -20,7 +20,10 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Profile".tr(context))),
+      appBar: AppBar(
+        title: Text("Profile".tr(context)),
+        actions: [SwitchThemeWidget()],
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: ScreenPadding(
@@ -46,8 +49,6 @@ class ProfileScreen extends StatelessWidget {
                     );
                   },
                 ),
-                SizedBox(height: 32),
-                SwitchLangLabel(),
                 SizedBox(height: 32),
                 AppButton(
                   isSecondary: true,
@@ -76,4 +77,3 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 }
-

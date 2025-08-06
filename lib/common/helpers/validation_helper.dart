@@ -12,6 +12,19 @@ extension ValidationHelper on String? {
     return null;
   }
 
+  String? validateAllDigits() {
+    if (this == null || this!.isEmpty) {
+      return "This field cannot be empty";
+    }
+    final emailRegExp = RegExp(
+      r'^[0-9]+$',
+    );
+    if (!emailRegExp.hasMatch(this!)) {
+      return "Enter a valid number";
+    }
+    return null;
+  }
+
   String? validateNotEmpty() {
     if (this == null || this!.isEmpty) {
       return "This field cannot be empty";

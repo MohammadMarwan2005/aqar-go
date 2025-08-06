@@ -1,6 +1,9 @@
+import 'package:aqar_go/data/model/auth/forgot_password_button.dart';
 import 'package:aqar_go/presentation/feature/auth/register/register_cubit.dart';
+import 'package:aqar_go/presentation/routing/guest_mode/post_login_instruction.dart';
+import 'package:aqar_go/presentation/widgets/password_fields_and_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:aqar_go/common/helpers/navigation_helper.dart';
+import 'package:aqar_go/presentation/helper/navigation_helper.dart';
 import 'package:aqar_go/common/helpers/validation_helper.dart';
 import 'package:aqar_go/presentation/feature/auth/login/login_cubit.dart';
 import 'package:aqar_go/presentation/feature/auth/login_state_listerner.dart';
@@ -16,7 +19,9 @@ import '../../../widgets/app_button.dart';
 import '../auth_state.dart';
 
 class RegisterScreen extends StatelessWidget {
-  const RegisterScreen({super.key});
+  final PostLoginInstruction? postLoginInstruction;
+
+  const RegisterScreen({super.key, this.postLoginInstruction});
 
   @override
   Widget build(BuildContext context) {
@@ -62,29 +67,14 @@ class RegisterScreen extends StatelessWidget {
               keyboardType: TextInputType.emailAddress,
             ),
             SizedBox(height: 16),
-            AppTextField(
-              textEditingController: registerCubit.passwordController,
-              labelText: "Password".tr(context),
-              isPassword: true,
-              validator: (value) => value.validatePassword()?.tr(context),
-              maxLines: 1,
-            ),
-            SizedBox(height: 16),
-            ValueListenableBuilder(
-              valueListenable: registerCubit.passwordNotifier,
-              builder:
-                  (context, value, child) =>
-                  PasswordValidation(password: value),
-            ),
-            SizedBox(height: 16),
-            AppTextField(
-              textEditingController: registerCubit.passwordConfirmationController,
-              labelText: "Password Confirmation".tr(context),
-              isPassword: true,
-              validator: (value) => value.validatePasswordConfirmations(registerCubit.passwordNotifier.value)?.tr(context),
-              maxLines: 1,
-            ),
-            SizedBox(height: 32),
+            PasswordFieldsAndValidator(
+                passwordNotifier: registerCubit.passwordNotifier,
+                passwordController: registerCubit.passwordController,
+                passwordConfirmationController: registerCubit
+                    .passwordConfirmationController),
+            SizedBox(height: 8),
+            ForgotPasswordButton(),
+            SizedBox(height: 24),
             BlocConsumer<RegisterCubit, AuthState>(
               builder: (context, state) {
                 final isLoading = state.when(
@@ -102,7 +92,8 @@ class RegisterScreen extends StatelessWidget {
                   isLoading: isLoading,
                 );
               },
-              listener: authListener,
+              listener: (context, state) =>
+                  authListener(context, state, postLoginInstruction),
             ),
           ],
         ),
@@ -111,7 +102,7 @@ class RegisterScreen extends StatelessWidget {
         suggestionText: "Already have an account?".tr(context),
         buttonLabel: "Login".tr(context),
         onClick: () {
-          context.goRoute(Routes.login);
+          context.popThenPushRoute(Routes.login, extra: postLoginInstruction);
         },
       ),
     );
