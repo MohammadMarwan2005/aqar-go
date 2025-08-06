@@ -1,5 +1,6 @@
 import 'package:aqar_go/presentation/helper/navigation_helper.dart';
 import 'package:aqar_go/presentation/lang/app_localization.dart';
+import 'package:aqar_go/presentation/routing/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,21 +16,22 @@ class VerifyEmailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Email Verification".tr(context)),
-      ),
+      appBar: AppBar(title: Text("Email Verification".tr(context))),
       body: SafeArea(
         child: ScreenPadding(
           child: BlocBuilder<VerifyEmailCubit, VerifyEmailState>(
             builder: (context, state) {
               return state.when(
                 loading: () => const LoadingScreen(),
-                error: (domainError) => ErrorMessage(
-                  error: domainError,
-                  onTryAgain: () {
-                    context.read<VerifyEmailCubit>().sendVerificationEmail();
-                  },
-                ),
+                error:
+                    (domainError) => ErrorMessage(
+                      error: domainError,
+                      onTryAgain: () {
+                        context
+                            .read<VerifyEmailCubit>()
+                            .sendVerificationEmail();
+                      },
+                    ),
                 success: () => const _VerifyEmailContent(),
               );
             },
@@ -39,22 +41,42 @@ class VerifyEmailScreen extends StatelessWidget {
     );
   }
 }
+
 class _VerifyEmailContent extends StatelessWidget {
   const _VerifyEmailContent();
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<VerifyEmailCubit>();
     return SingleChildScrollView(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           SizedBox(height: 48),
-          Text("A verification link has been sent to your email address.".tr(context), style: Theme.of(context).textTheme.titleLarge),
+          Text(
+            "A verification link has been sent to your email address.".tr(
+              context,
+            ),
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
           SizedBox(height: 32),
           AppButton(
             text: "Continue".tr(context),
             onPressed: () {
-              context.popRoute();
+              if (cubit.verifyInstruction.afterLogin) {
+                final postLoginInstruction =
+                    cubit.verifyInstruction.postLoginInstruction;
+                if (postLoginInstruction != null) {
+                  context.popThenPushRoute(
+                    postLoginInstruction.redirectionRoute,
+                    extra: postLoginInstruction.itsExtras,
+                  );
+                } else {
+                  context.goRoute(Routes.home);
+                }
+              } else {
+                context.popRoute();
+              }
             },
           ),
           SizedBox(height: 16),
@@ -70,4 +92,3 @@ class _VerifyEmailContent extends StatelessWidget {
     );
   }
 }
-

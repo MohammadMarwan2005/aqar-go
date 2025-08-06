@@ -6,6 +6,7 @@ import 'package:aqar_go/presentation/feature/my_ad_details/my_ad_actions_cubit/m
 import 'package:aqar_go/presentation/feature/my_ad_details/my_ad_details_cubit/my_ad_details_cubit.dart';
 import 'package:aqar_go/presentation/feature/my_ads/activate_ads_cubit/activate_ads_cubit.dart';
 import 'package:aqar_go/presentation/feature/my_properties/my_properties_screen.dart';
+import 'package:aqar_go/presentation/feature/verify_email/verify_instruction.dart';
 import 'package:aqar_go/presentation/helper/navigation_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -80,11 +81,17 @@ final appRouter = GoRouter(
     ),
     GoRoute(
       path: Routes.verifyEmail,
-      builder:
-          (context, state) => BlocProvider<VerifyEmailCubit>(
-            create: (context) => getIt(),
-            child: VerifyEmailScreen(),
-          ),
+      builder: (context, state) {
+        final verifyInstruction = state.extra as VerifyInstruction;
+        return BlocProvider<VerifyEmailCubit>(
+          create:
+              (context) => VerifyEmailCubit(
+                getIt(),
+                verifyInstruction: verifyInstruction,
+              ),
+          child: VerifyEmailScreen(),
+        );
+      },
     ),
     GoRoute(
       path: Routes.forgotPassword,

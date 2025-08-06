@@ -105,7 +105,6 @@ Future<void> di() async {
   getIt.registerFactory<MyPropertiesCubit>(() => MyPropertiesCubit(getIt()));
   getIt.registerFactory<MyAdsCubit>(() => MyAdsCubit(getIt()));
   getIt.registerFactory<ActivateAdsCubit>(() => ActivateAdsCubit(getIt()));
-  getIt.registerFactory<VerifyEmailCubit>(() => VerifyEmailCubit(getIt()));
   getIt.registerFactory<ResetPasswordCubit>(() => ResetPasswordCubit(getIt()));
 
   getIt.registerFactory<MediaPickerCubit>(

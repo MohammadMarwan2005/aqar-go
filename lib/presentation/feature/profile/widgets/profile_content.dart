@@ -1,5 +1,6 @@
 import 'package:aqar_go/presentation/feature/profile/widgets/profile_avatar.dart';
 import 'package:aqar_go/presentation/feature/profile/widgets/settings_list_item.dart';
+import 'package:aqar_go/presentation/feature/verify_email/verify_instruction.dart';
 import 'package:aqar_go/presentation/helper/navigation_helper.dart';
 import 'package:aqar_go/presentation/helper/ui_helper.dart';
 import 'package:aqar_go/presentation/lang/app_localization.dart';
@@ -59,7 +60,7 @@ class ProfileContent extends StatelessWidget {
             iconAsset: Assets.svgs.markEmailRead.path,
             title: "Email Verification".tr(context),
             onTap: () {
-              context.pushRoute(Routes.verifyEmail);
+              context.pushRoute(Routes.verifyEmail, extra: VerifyInstruction(afterLogin: false));
             },
           ),
         SettingsListItem(
@@ -109,7 +110,7 @@ class ProfileContent extends StatelessWidget {
         "Email not verified yet".tr(context),
         action: TextButton(
           onPressed: () {
-            context.pushRoute(Routes.verifyEmail);
+            context.pushRoute(Routes.verifyEmail, extra: VerifyInstruction(afterLogin: false));
           },
           child: Text("Verify".tr(context)),
         ),

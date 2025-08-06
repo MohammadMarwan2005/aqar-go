@@ -5,6 +5,7 @@ import 'package:aqar_go/presentation/lang/app_localization.dart';
 import 'package:aqar_go/presentation/routing/guest_mode/post_login_instruction.dart';
 import 'package:aqar_go/presentation/routing/routes.dart';
 import 'package:flutter/material.dart';
+import '../verify_email/verify_instruction.dart';
 import 'auth_state.dart';
 
 authListener(
@@ -25,14 +26,24 @@ authListener(
     error: (domainError) {
       context.showMyAlertDialogFromDomainError(domainError);
     },
-    success: (_) {
-      if (postLoginInstruction != null) {
-        context.popThenPushRoute(
-          postLoginInstruction.redirectionRoute,
-          extra: postLoginInstruction.itsExtras,
-        );
+    success: (successData) {
+      if (successData.isVerified()) {
+        if (postLoginInstruction != null) {
+          context.popThenPushRoute(
+            postLoginInstruction.redirectionRoute,
+            extra: postLoginInstruction.itsExtras,
+          );
+        } else {
+          context.goRoute(Routes.home);
+        }
       } else {
-        context.goRoute(Routes.home);
+        context.popThenPushRoute(
+          Routes.verifyEmail,
+          extra: VerifyInstruction(
+            afterLogin: true,
+            postLoginInstruction: postLoginInstruction,
+          ),
+        );
       }
     },
   );
