@@ -2,7 +2,8 @@ import 'package:aqar_go/data/model/ad/ad_data.dart';
 import 'package:aqar_go/data/model/ad/request/create_ad_request.dart';
 import 'package:aqar_go/data/model/api_response.dart';
 import 'package:aqar_go/data/model/auth/auth_response_data.dart';
-import 'package:aqar_go/data/model/profile/data_user_profile.dart';
+import 'package:aqar_go/data/model/near_to_you/near_to_you_request.dart';
+import 'package:aqar_go/data/model/paged_response.dart';
 import 'package:aqar_go/data/model/property/property_data.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/error_logger.dart';
@@ -19,6 +20,7 @@ import 'api_constants.dart';
 
 part 'api_service.g.dart';
 
+// dart run build_runner watch -d
 @RestApi(baseUrl: APIConstants.baseUrl)
 abstract class APIService {
   factory APIService(Dio dio, {String baseUrl}) = _APIService;
@@ -62,6 +64,12 @@ abstract class APIService {
   @POST(APIConstants.getUserAdsUrl)
   Future<APIResponse<List<AdData>>> getUserAds();
 
+  @POST(APIConstants.getNearToYouAdsUrl)
+  Future<APIResponse<PagedResponse<AdData>>> getNearToYouAds({
+    @Query("page") required int page,
+    @Body() required NearToYouRequest request,
+  });
+
   @POST(APIConstants.activateSelectedAdsUrl)
   Future<APIResponse<List<dynamic>>> activateSelectedAds(
     @Body() ActivateSelectedAdsRequest activateSelectedAdsRequest,
@@ -77,13 +85,14 @@ abstract class APIService {
   Future<APIResponse<dynamic>> sendVerificationEmail();
 
   @POST(APIConstants.sendResetPasswordUrl)
-  Future<APIResponse<dynamic>> sendResetPasswordEmail(@Body() SendResetPasswordEmailRequest request);
+  Future<APIResponse<dynamic>> sendResetPasswordEmail(
+    @Body() SendResetPasswordEmailRequest request,
+  );
 
   @POST(APIConstants.resetPasswordUrl)
   Future<APIResponse<AuthResponseData>> resetPassword(
-      @Body() ResetPasswordRequest resetPasswordRequest
-      );
-
+    @Body() ResetPasswordRequest resetPasswordRequest,
+  );
 
   @POST(APIConstants.updateProfileUrl)
   Future<APIResponse<DataUser>> updateProfile(@Body() FormData formData);

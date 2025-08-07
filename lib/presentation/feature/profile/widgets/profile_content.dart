@@ -6,7 +6,6 @@ import 'package:aqar_go/presentation/helper/ui_helper.dart';
 import 'package:aqar_go/presentation/lang/app_localization.dart';
 import 'package:aqar_go/presentation/routing/routes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 import '../../../../domain/model/profile/user_profile.dart';
 import '../../../assets/assets.gen.dart';
@@ -65,8 +64,10 @@ class ProfileContent extends StatelessWidget {
           ),
         SettingsListItem(
           iconAsset: Assets.svgs.diamond.path,
-          title: "Our Plans".tr(context),
-          onTap: () {},
+          title: "Free & Paid Plans".tr(context),
+          onTap: () {
+            context.pushRoute(Routes.plans, extra: userProfile.isPremium);
+          },
         ),
         SettingsListItem(
           iconAsset: Assets.svgs.language.path,
@@ -85,7 +86,9 @@ class ProfileContent extends StatelessWidget {
         SettingsListItem(
           iconAsset: Assets.svgs.policy.path,
           title: "Privacy Policy".tr(context),
-          onTap: () {},
+          onTap: () {
+            context.pushRoute(Routes.privacyPolicy);
+          },
         ),
       ],
     );

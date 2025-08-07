@@ -43,6 +43,13 @@ class TestScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 32),
                 AppButton(
+                  onPressed: () {
+                    context.pushRoute(Routes.nearToYou);
+                  },
+                  text: "Near To You".tr(context),
+                ),
+                SizedBox(height: 32),
+                AppButton(
                   isSecondary: true,
                   onPressed: () {
                     final LocalDataRepo repo = getIt();

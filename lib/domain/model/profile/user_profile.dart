@@ -6,6 +6,8 @@ class UserProfile {
   final String? imageUrl;
   final bool isVerified;
   final bool isPremium;
+  final double? longitude;
+  final double? latitude;
 
   UserProfile({
     required this.userId,
@@ -15,5 +17,7 @@ class UserProfile {
     required this.imageUrl,
     required this.isVerified,
     required this.isPremium,
+    this.longitude,
+    this.latitude,
   });
 }

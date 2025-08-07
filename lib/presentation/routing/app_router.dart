@@ -1,4 +1,7 @@
 import 'package:aqar_go/presentation/feature/check_password_otp/check_password_otp_screen.dart';
+import 'package:aqar_go/presentation/feature/near_to_you/cubit/near_to_you_cubit.dart';
+import 'package:aqar_go/presentation/feature/near_to_you/near_to_you_screen.dart';
+import 'package:aqar_go/presentation/feature/plans/plans_screen.dart';
 import 'package:aqar_go/presentation/feature/reset_password/reset_password_screen.dart';
 import 'package:aqar_go/presentation/feature/maps/cubit/maps_cubit.dart';
 import 'package:aqar_go/presentation/feature/media_picker/media_picker_cubit.dart';
@@ -28,6 +31,8 @@ import '../feature/my_ads/cubit/my_ads_cubit.dart';
 import '../feature/my_ads/my_ads_screen.dart';
 import '../feature/my_properties/cubit/my_properties_cubit.dart';
 import '../feature/onboarding/onboarding_screen.dart';
+import '../feature/plans/cubit/plans_cubit.dart';
+import '../feature/privacy_plicy/privacy_policy_screen.dart';
 import '../feature/profile/update/update_profile_cubit.dart';
 import '../feature/profile/update/update_profile_screen.dart';
 import '../feature/reset_password/cubit/reset_password_cubit.dart';
@@ -51,7 +56,30 @@ final appRouter = GoRouter(
   routes: [
     GoRoute(
       path: Routes.onboarding,
-      builder: (context, state) => OnboardingScreen(),
+      builder: (context, state) => OnboardingScreen(localDataRepo: getIt()),
+    ),
+    GoRoute(
+      path: Routes.privacyPolicy,
+      builder: (context, state) => PrivacyPolicyScreen(),
+    ),
+    GoRoute(
+      path: Routes.plans,
+      builder: (context, state) {
+        final isPremium = state.extra as bool;
+        return BlocProvider<PlansCubit>(
+          create: (context) => PlansCubit(isPremium: isPremium),
+          child: PlansScreen(),
+        );
+      },
+    ),
+    GoRoute(
+      path: Routes.nearToYou,
+      builder: (context, state) {
+        return BlocProvider<NearToYouCubit>(
+          create: (context) => NearToYouCubit(getIt(), getIt()),
+          child: NearToYouScreen(),
+        );
+      },
     ),
     GoRoute(
       path: Routes.login,

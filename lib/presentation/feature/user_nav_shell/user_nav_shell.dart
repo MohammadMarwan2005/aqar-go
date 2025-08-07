@@ -1,3 +1,4 @@
+import 'package:aqar_go/presentation/feature/home/home_screen.dart';
 import 'package:aqar_go/presentation/helper/navigation_helper.dart';
 import 'package:aqar_go/presentation/widgets/app_bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:go_router/go_router.dart';
 import '../../../common/di/get_it.dart';
 import '../../routing/routes.dart';
 import '../media_picker/media_picker_cubit.dart';
+import '../near_to_you/cubit/near_to_you_cubit.dart';
 import '../profile/show/profile_cubit.dart';
 import '../profile/show/profile_screen.dart';
 import '../test/test_screen.dart';
@@ -31,7 +33,15 @@ class UserNavShell extends StatelessWidget {
   }
 
   static var userGoRoutes = [
-    GoRoute(path: Routes.home, builder: (context, state) => TestScreen()),
+    GoRoute(
+      path: Routes.home,
+      builder: (context, state) {
+        return BlocProvider<NearToYouCubit>(
+          create: (context) => NearToYouCubit(getIt(), getIt()),
+          child: HomeScreen(),
+        );
+      },
+    ),
     GoRoute(
       path: Routes.search,
       builder:

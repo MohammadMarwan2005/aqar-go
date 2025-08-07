@@ -7,8 +7,8 @@ class RoutingUseCase {
   RoutingUseCase(this._localDataRepo);
 
   Future<String> getFirstRoute() async {
-    final token = await _localDataRepo.getToken();
-    if (token != null) return Routes.home;
-    return Routes.onboarding;
+    final onboarded = _localDataRepo.hasOnboarded();
+    if(!onboarded) return Routes.onboarding;
+    return Routes.home;
   }
 }
