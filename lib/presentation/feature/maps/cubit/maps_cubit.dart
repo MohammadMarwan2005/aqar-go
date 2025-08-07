@@ -1,3 +1,4 @@
+import 'package:aqar_go/presentation/helper/location_permission_manager.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:geolocator/geolocator.dart';
@@ -8,11 +9,13 @@ part 'maps_state.dart';
 class MapsCubit extends Cubit<MapsState> {
   late GoogleMapController _mapController;
 
+  final LocationPermissionManager _locationPermissionManager;
+
   void setMapController(GoogleMapController controller) {
     _mapController = controller;
   }
 
-  MapsCubit() : super(MapsState()) {
+  MapsCubit(this._locationPermissionManager) : super(MapsState()) {
     _getCurrentLocation();
   }
 
@@ -31,27 +34,10 @@ class MapsCubit extends Cubit<MapsState> {
   }
 
   Future<void> _getCurrentLocation() async {
-    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    LocationPermission permission = await Geolocator.checkPermission();
 
-    if (!serviceEnabled) {
-      await Geolocator.openLocationSettings();
-      return;
-    }
+    _locationPermissionManager.requestLocationPermission();
 
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.deniedForever ||
-          permission == LocationPermission.denied) {
-        return;
-      }
-    }
-
-    Position position = await Geolocator.getCurrentPosition(
-      locationSettings: LocationSettings(accuracy: LocationAccuracy.high),
-    );
-
-    final googleLocation = LatLng(position.latitude, position.longitude);
+    final googleLocation = await _locationPermissionManager.getLocation();
     emit(state.copyWith(location: googleLocation));
 
     _mapController.animateCamera(

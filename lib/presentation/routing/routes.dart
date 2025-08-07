@@ -16,6 +16,7 @@ sealed class Routes {
   static const updateProfile = "/update-profile";
   static const privacyPolicy = "/privacy-policy";
   static const plans = "/plans";
+  static const nearToYou = "/near-to-you";
 
   static const home = "/home-user";
   static const search = "/search-user";
@@ -34,6 +35,8 @@ sealed class Routes {
   }
 
   static String getMyAdDetails(int id) => _getRouteWithId(myAdDetails, id.toString());
+
+  static String getViewAd(int id) => _getRouteWithId(viewAd, id.toString());
 
   static String _getRouteWithId(String route, String id, {String idKey = ":id"}) {
     return route.replaceAll(idKey, id);

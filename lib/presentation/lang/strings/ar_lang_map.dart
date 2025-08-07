@@ -236,6 +236,8 @@ const Map<String, String> _arLangMap = {
   "Priority ad reach": "وصول إعلاني مميز",
   "24/7 Premium support": "خدمة دعم مميزة على مدار الساعة",
   "More...": "والمزيد...",
+  "Near To You": "قريب منك",
+  "See All": "اظهار الكل",
   "Current Plan": "الخطة الحالية",
   " /month": " /شهرياً",
   " (Free Forever)": " (مجانية للأبد)",

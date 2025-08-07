@@ -111,7 +111,6 @@ class MyAdCard extends StatelessWidget {
                 ),
               ],
             ),
-
             // Expiration Label
             Positioned(
               top: 8,

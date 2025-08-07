@@ -1,4 +1,6 @@
 import 'package:aqar_go/presentation/feature/check_password_otp/check_password_otp_screen.dart';
+import 'package:aqar_go/presentation/feature/near_to_you/cubit/near_to_you_cubit.dart';
+import 'package:aqar_go/presentation/feature/near_to_you/near_to_you_screen.dart';
 import 'package:aqar_go/presentation/feature/plans/plans_screen.dart';
 import 'package:aqar_go/presentation/feature/reset_password/reset_password_screen.dart';
 import 'package:aqar_go/presentation/feature/maps/cubit/maps_cubit.dart';
@@ -67,6 +69,15 @@ final appRouter = GoRouter(
         return BlocProvider<PlansCubit>(
           create: (context) => PlansCubit(isPremium: isPremium),
           child: PlansScreen(),
+        );
+      },
+    ),
+    GoRoute(
+      path: Routes.nearToYou,
+      builder: (context, state) {
+        return BlocProvider<NearToYouCubit>(
+          create: (context) => NearToYouCubit(getIt(), getIt()),
+          child: NearToYouScreen(),
         );
       },
     ),

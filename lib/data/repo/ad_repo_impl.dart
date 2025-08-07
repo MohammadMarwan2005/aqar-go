@@ -1,5 +1,7 @@
 import 'package:aqar_go/data/model/activate_selected_ads/activate_selected_ads_request.dart';
 import 'package:aqar_go/data/model/ad/ad_data.dart';
+import 'package:aqar_go/data/model/near_to_you/near_to_you_request.dart';
+import 'package:aqar_go/data/model/paged_response.dart';
 import 'package:aqar_go/domain/model/ad/ad.dart';
 import 'package:aqar_go/domain/model/resource.dart';
 
@@ -9,6 +11,7 @@ import '../api/safe_api_caller.dart';
 import '../model/ad/request/create_ad_request.dart';
 import '../model/ad/response/create_ad_response.dart';
 import '../model/api_response.dart';
+import '../model/paging/page_request.dart';
 
 class AdRepoImpl extends AdRepo {
   final APIService _apiService;
@@ -100,6 +103,24 @@ class AdRepoImpl extends AdRepo {
       },
       dataToDomain: (data) {
         return;
+      },
+    );
+  }
+
+  @override
+  Future<Resource<List<Ad>>> getNearToYouAds({
+    required int page,
+    required int pageSize,
+    required double long,
+    required double lat,
+  }) {
+    final request = NearToYouRequest(pageSize: pageSize, long: long, lat: lat);
+    return _safeAPICaller.call<List<Ad>, APIResponse<PagedResponse<AdData>>>(
+      apiCall: () {
+        return _apiService.getNearToYouAds(page: page, request: request);
+      },
+      dataToDomain: (data) {
+        return data.data.data.map((adData) => adData.toDomain()).toList();
       },
     );
   }
