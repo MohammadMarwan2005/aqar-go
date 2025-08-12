@@ -14,6 +14,7 @@ import '../../../domain/model/media_file.dart';
 import '../../../domain/model/property.dart';
 import '../../widgets/app_button.dart';
 import '../../widgets/error_message.dart';
+import '../../widgets/images_slider.dart';
 import '../../widgets/loading_screen.dart';
 
 class MyAdDetailsScreen extends StatelessWidget {
@@ -69,7 +70,7 @@ class _MyAdDetailsContent extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Images slider
-              _buildImageSlider(ad.property.images),
+              ImagesSlider.fromFiles(files: ad.property.images),
               const SizedBox(height: 12),
 
               // Title & expiration info
@@ -110,66 +111,6 @@ class _MyAdDetailsContent extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildImageSlider(List<MediaFile> images) {
-    final pageController = PageController();
-    int currentPage = 0;
-
-    return StatefulBuilder(
-      builder: (context, setState) {
-        return SizedBox(
-          height: 300,
-          child: Stack(
-            children: [
-              PageView.builder(
-                controller: pageController,
-                itemCount: images.length,
-                onPageChanged: (index) {
-                  setState(() {
-                    currentPage = index;
-                  });
-                },
-                itemBuilder: (context, index) {
-                  final imageUrl = images[index].imageUrl;
-                  return Image.network(
-                    imageUrl ?? '',
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                    errorBuilder:
-                        (_, __, ___) =>
-                            const Center(child: Icon(Icons.broken_image)),
-                  );
-                },
-              ),
-              Positioned(
-                bottom: 16,
-                left: 0,
-                right: 0,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(
-                    images.length,
-                    (index) => Container(
-                      width: 8,
-                      height: 8,
-                      margin: const EdgeInsets.symmetric(horizontal: 4),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color:
-                            currentPage == index
-                                ? Colors.white
-                                : Colors.white.withOpacity(0.5),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
     );
   }
 }

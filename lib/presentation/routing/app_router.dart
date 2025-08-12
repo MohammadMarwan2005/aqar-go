@@ -1,3 +1,5 @@
+import 'package:aqar_go/presentation/feature/ad_details/ad_details_screen.dart';
+import 'package:aqar_go/presentation/feature/ad_details/cubit/ad_details_cubit.dart';
 import 'package:aqar_go/presentation/feature/check_password_otp/check_password_otp_screen.dart';
 import 'package:aqar_go/presentation/feature/near_to_you/cubit/near_to_you_cubit.dart';
 import 'package:aqar_go/presentation/feature/near_to_you/near_to_you_screen.dart';
@@ -225,5 +227,15 @@ final appRouter = GoRouter(
       builder: (context, state, child) => UserNavShell(child: child),
       routes: UserNavShell.userGoRoutes,
     ),
+    GoRoute(
+      path: Routes.viewAd,
+      builder: (context, state) {
+        final id = state.extractIdParam("id");
+        return BlocProvider<AdDetailsCubit>(
+          create: (context) => AdDetailsCubit(id, getIt()),
+          child: AdDetailsScreen(),
+        );
+      },
+    )
   ],
 );

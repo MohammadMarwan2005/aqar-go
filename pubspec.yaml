@@ -73,6 +73,7 @@ dependencies:
   geolocator: ^14.0.1
   geocoding: ^4.0.0
   flutter_dotenv: ^5.2.1
+  photo_view: ^0.15.0
 
 #  geocoding: ^4.0.0
 #  flutter_google_places_hoc081098: ^2.0.0
