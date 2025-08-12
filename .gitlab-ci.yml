@@ -6,6 +6,12 @@ stages:
 
 variables:
   NODE_VERSION: "20"
+  # These should be defined as GitLab protected variables in the project settings
+  KEYSTORE_PASSWORD: $KEYSTORE_PASSWORD
+  KEY_PASSWORD: $KEY_PASSWORD
+  KEY_ALIAS: $KEY_ALIAS
+  # Base64 encoded keystore content
+  KEYSTORE_BASE64: $KEYSTORE_BASE64
 
 cache:
   key:
@@ -22,6 +28,14 @@ before_script:
   - flutter doctor
   - node --version || (curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash - && apt-get install -y nodejs)
   - npm install -g firebase-tools
+  - echo "$KEYSTORE_BASE64" | base64 -d > ./my-release-key.keystore
+  - echo "KEYSTORE_PASSWORD=$KEYSTORE_PASSWORD"
+  - echo -e "storePassword=$KEYSTORE_PASSWORD\nkeyPassword=$KEY_PASSWORD\nkeyAlias=$KEY_ALIAS\nstoreFile=$(pwd)/my-release-key.keystore" > android/key.properties
+  - echo "KEY_PASSWORD=$KEY_PASSWORD"
+  - echo "KEY_ALIAS=$KEY_ALIAS"
+  - ls -l android/
+  - cat android/key.properties
+
 
 build_and_package:
   stage: build

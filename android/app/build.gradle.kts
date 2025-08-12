@@ -1,4 +1,5 @@
 import java.util.Properties
+import java.io.FileInputStream
 
 plugins {
     id("com.android.application")
@@ -19,6 +20,12 @@ android {
         dotenvFile.inputStream().use { props.load(it) }
     }
     val googleMapsApiKey = props.getProperty("GOOGLE_MAPS_API_KEY") ?: "default_dummy_key"
+    val keyProperties = Properties().apply {
+        val file = rootProject.file("key.properties")
+        if (file.exists()) {
+            load(FileInputStream(file))
+        }
+    }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -42,11 +49,27 @@ android {
         manifestPlaceholders["GOOGLE_MAPS_API_KEY"] = googleMapsApiKey
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = file(keyProperties.getProperty("storeFile"))
+            storePassword = keyProperties.getProperty("storePassword")
+            keyAlias = keyProperties.getProperty("keyAlias")
+            keyPassword = keyProperties.getProperty("keyPassword")
+        }
+        create("customDebug") {
+            storeFile = file(keyProperties.getProperty("storeFile"))
+            storePassword = keyProperties.getProperty("storePassword")
+            keyAlias = keyProperties.getProperty("keyAlias")
+            keyPassword = keyProperties.getProperty("keyPassword")
+        }
+    }
+
+
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.getByName("release")
         }
     }
 }

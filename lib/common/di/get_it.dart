@@ -4,7 +4,6 @@ import 'package:aqar_go/domain/repo/ad_repo.dart';
 import 'package:aqar_go/presentation/feature/auth/register/register_cubit.dart';
 import 'package:aqar_go/presentation/feature/maps/cubit/maps_cubit.dart';
 import 'package:aqar_go/presentation/feature/media_picker/media_picker_cubit.dart';
-import 'package:aqar_go/presentation/feature/verify_email/cubit/verify_email_cubit.dart';
 import 'package:aqar_go/presentation/helper/location_permission_manager.dart';
 import 'package:aqar_go/presentation/routing/routing_use_case.dart';
 import 'package:dio/dio.dart';
@@ -12,6 +11,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../data/api/api_service.dart';
@@ -88,6 +88,8 @@ Future<void> di() async {
   getIt.registerLazySingleton<AdRepo>(() => AdRepoImpl(getIt(), getIt()));
 
   getIt.registerLazySingleton<LocationPermissionManager>(() => LocationPermissionManager());
+  getIt.registerLazySingleton<SharePlus>(() => SharePlus.instance);
+
   // use cases:
   getIt.registerLazySingleton<RoutingUseCase>(() => RoutingUseCase(getIt()));
   getIt.registerLazySingleton<CreateUpdatePropertyUsecase>(

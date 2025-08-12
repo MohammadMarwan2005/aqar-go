@@ -1,4 +1,6 @@
 sealed class Routes {
+  static const webRoute = "https://aqargo.duckdns.org";
+
   static const onboarding = "/";
   static const test = "/test";
   static const login = "/login";

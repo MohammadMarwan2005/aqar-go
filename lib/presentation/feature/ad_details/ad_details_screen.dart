@@ -1,10 +1,11 @@
 import 'package:aqar_go/presentation/lang/app_localization.dart';
 import 'package:aqar_go/presentation/widgets/images_slider.dart';
+import 'package:aqar_go/presentation/widgets/share_deep_link_icon.dart';
+import 'package:aqar_go/presentation/widgets/up_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../domain/model/ad/ad.dart';
-import '../../../domain/model/media_file.dart';
 import '../../../domain/model/property.dart';
 import '../../widgets/error_message.dart';
 import '../../widgets/loading_screen.dart';
@@ -17,7 +18,11 @@ class AdDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Ad Details".tr(context)), actions: []),
+      appBar: AppBar(
+        leading: UpButton(),
+        title: Text("Ad Details".tr(context)),
+        actions: [ShareDeepLinkIcon()],
+      ),
       body: SafeArea(
         child: BlocBuilder<AdDetailsCubit, AdDetailsState>(
           builder: (context, state) {

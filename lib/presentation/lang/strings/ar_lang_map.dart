@@ -242,4 +242,6 @@ const Map<String, String> _arLangMap = {
   " /month": " /شهرياً",
   " (Free Forever)": " (مجانية للأبد)",
   "Get Started": "ابدأ الآن",
+  "Share": "مشاركة",
+  "Ad Details": "تفاصيل الإعلان",
 };

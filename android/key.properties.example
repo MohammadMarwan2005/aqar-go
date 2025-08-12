@@ -1,0 +1,4 @@
+storePassword=YOUR_KEYSTORE_PASSWORD
+keyPassword=YOUR_KEY_PASSWORD
+keyAlias=YOUR_KEY_ALIAS
+storeFile=PATH_TO_YOUR_KEYSTORE/my-release-key.keystore
