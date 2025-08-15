@@ -1,10 +1,8 @@
-import 'package:aqar_go/common/di/get_it.dart';
 import 'package:aqar_go/presentation/helper/navigation_helper.dart';
 import 'package:aqar_go/presentation/lang/app_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../data/repo/local_data_repo.dart';
 import '../../../domain/model/ad/ad.dart';
 import '../../lang/ui/switch_lang_label.dart';
 import '../../routing/routes.dart';
@@ -13,8 +11,7 @@ import '../../widgets/small_ad_card.dart';
 import '../near_to_you/cubit/near_to_you_cubit.dart';
 import '../paging_base/cubit/paging_cubit.dart';
 import '../paging_base/paged_list_view.dart';
-
-final LocalDataRepo _localDataRepo = getIt();
+import '../recommended_ads/cubit/recommended_ads_cubit.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -39,6 +36,7 @@ class HomeScreen extends StatelessWidget {
           child: RefreshIndicator(
             onRefresh: () async {
               context.read<NearToYouCubit>().resetState();
+              context.read<RecommendedAdsCubit>().resetState();
             },
             child: SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
@@ -104,6 +102,50 @@ class _NearToYouWidget extends StatelessWidget {
               },
               onRefresh: () {
                 context.read<NearToYouCubit>().resetState();
+              },
+            );
+          },
+        ),
+        SizedBox(height: 16),
+        Row(
+          children: [
+            Text(
+              "Recommended".tr(context),
+              style: Theme.of(context).textTheme.headlineSmall,
+            ),
+            const Spacer(),
+            TextButton(
+              onPressed: () {
+                context.pushRoute(Routes.recommendedAds);
+              },
+              child: Text(
+                "See All".tr(context),
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 8),
+        BlocBuilder<RecommendedAdsCubit, PagingState<Ad>>(
+          builder: (context, state) {
+            return PagedListView(
+              scrollDirection: Axis.horizontal,
+              state: state,
+              itemBuilder: (item) {
+                return SmallAdCard(
+                  ad: item,
+                  onTap: () {
+                    context.pushRoute(Routes.getViewAd(item.id));
+                  },
+                );
+              },
+              fetchNextPage: () {
+                context.read<RecommendedAdsCubit>().fetchNextPageItems();
+              },
+              onRefresh: () {
+                context.read<RecommendedAdsCubit>().resetState();
               },
             );
           },

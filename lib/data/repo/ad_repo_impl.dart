@@ -14,7 +14,7 @@ import '../api/safe_api_caller.dart';
 import '../model/ad/request/create_ad_request.dart';
 import '../model/ad/response/create_ad_response.dart';
 import '../model/api_response.dart';
-import '../model/paging/page_request.dart';
+import '../model/recommended_ads/get_recommended_ads_request.dart';
 
 class AdRepoImpl extends AdRepo {
   final APIService _apiService;
@@ -121,6 +121,22 @@ class AdRepoImpl extends AdRepo {
     return _safeAPICaller.call<List<Ad>, APIResponse<PagedResponse<AdData>>>(
       apiCall: () {
         return _apiService.getNearToYouAds(page: page, request: request);
+      },
+      dataToDomain: (data) {
+        return data.data.data.map((adData) => adData.toDomain()).toList();
+      },
+    );
+  }
+
+  @override
+  Future<Resource<List<Ad>>> getRecommendedAds({
+    required int page,
+    required int pageSize,
+  }) {
+    final request = GetRecommendedAdsRequest(pageSize: pageSize);
+    return _safeAPICaller.call<List<Ad>, APIResponse<PagedResponse<AdData>>>(
+      apiCall: () {
+        return _apiService.getRecommendedAds(page: page, request: request);
       },
       dataToDomain: (data) {
         return data.data.data.map((adData) => adData.toDomain()).toList();

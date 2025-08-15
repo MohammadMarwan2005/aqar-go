@@ -388,6 +388,43 @@ class _APIService implements APIService {
   }
 
   @override
+  Future<APIResponse<PagedResponse<AdData>>> getRecommendedAds({
+    required int page,
+    required GetRecommendedAdsRequest request,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'page': page};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(request.toJson());
+    final _options = _setStreamType<APIResponse<PagedResponse<AdData>>>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            'http://116.203.254.150:8001/api/ad/recommend',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late APIResponse<PagedResponse<AdData>> _value;
+    try {
+      _value = APIResponse<PagedResponse<AdData>>.fromJson(
+        _result.data!,
+        (json) => PagedResponse<AdData>.fromJson(
+          json as Map<String, dynamic>,
+          (json) => AdData.fromJson(json as Map<String, dynamic>),
+        ),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
   Future<APIResponse<List<dynamic>>> activateSelectedAds(
     ActivateSelectedAdsRequest activateSelectedAdsRequest,
   ) async {

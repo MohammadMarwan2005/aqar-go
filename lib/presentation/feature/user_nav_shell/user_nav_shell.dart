@@ -11,6 +11,7 @@ import '../media_picker/media_picker_cubit.dart';
 import '../near_to_you/cubit/near_to_you_cubit.dart';
 import '../profile/show/profile_cubit.dart';
 import '../profile/show/profile_screen.dart';
+import '../recommended_ads/cubit/recommended_ads_cubit.dart';
 
 class UserNavShell extends StatelessWidget {
   final Widget child;
@@ -35,8 +36,15 @@ class UserNavShell extends StatelessWidget {
     GoRoute(
       path: Routes.home,
       builder: (context, state) {
-        return BlocProvider<NearToYouCubit>(
-          create: (context) => NearToYouCubit(getIt(), getIt()),
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider<NearToYouCubit>(
+              create: (context) => NearToYouCubit(getIt(), getIt()),
+            ),
+            BlocProvider<RecommendedAdsCubit>(
+              create: (context) => RecommendedAdsCubit(getIt()),
+            ),
+          ],
           child: HomeScreen(),
         );
       },

@@ -14,6 +14,7 @@ import '../model/ad/response/create_ad_response.dart';
 import '../model/auth/login_request.dart';
 import '../model/auth/register_request.dart';
 import '../model/profile/user/data_user.dart';
+import '../model/recommended_ads/get_recommended_ads_request.dart';
 import '../model/reset_password/reset/reset_password_request.dart';
 import '../model/reset_password/send_email/send_reset_password_email_request.dart';
 import '../model/search/data_search_filter_settings.dart';
@@ -75,6 +76,12 @@ abstract class APIService {
   Future<APIResponse<PagedResponse<AdData>>> getNearToYouAds({
     @Query("page") required int page,
     @Body() required NearToYouRequest request,
+  });
+
+  @POST(APIConstants.getRecommendedAdsUrl)
+  Future<APIResponse<PagedResponse<AdData>>> getRecommendedAds({
+    @Query("page") required int page,
+    @Body() required GetRecommendedAdsRequest request,
   });
 
   @POST(APIConstants.activateSelectedAdsUrl)

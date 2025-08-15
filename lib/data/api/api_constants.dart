@@ -16,6 +16,7 @@ class APIConstants {
   static const String getUserAdsUrl = "$baseUrl/ad/getUserAds";
   static const String searchAdsUrl = "$baseUrl/ad/search";
   static const String getNearToYouAdsUrl = "$baseUrl/ad/nearToYou";
+  static const String getRecommendedAdsUrl = "$baseUrl/ad/recommend";
   static const String activateSelectedAdsUrl = "$baseUrl/ad/activateSelectedAds";
   static const String deactivateAdUrl = "$baseUrl/ad/unactivate";
   static const String deleteAdUrl = "$baseUrl/ad/delete";

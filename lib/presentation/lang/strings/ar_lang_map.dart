@@ -280,4 +280,5 @@ const Map<String, String> _arLangMap = {
   "Search Results": "نتائج البحث",
   "Can't get your location. Please enable location and try again.": "لا يمكننا الحصول على موقعك. \nيرجى تفعيل الموقع والمحاولة مرة اخرى.",
   "Location permission is denied. Please allow location access and try again.": "تم رفض الاذن للموقع. \nيرجى سماح الوصول للموقع والمحاولة مرة اخرى.",
+  "Recommended": "الموصى به",
 };

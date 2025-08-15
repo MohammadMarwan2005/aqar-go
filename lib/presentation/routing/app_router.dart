@@ -41,6 +41,8 @@ import '../feature/plans/cubit/plans_cubit.dart';
 import '../feature/privacy_plicy/privacy_policy_screen.dart';
 import '../feature/profile/update/update_profile_cubit.dart';
 import '../feature/profile/update/update_profile_screen.dart';
+import '../feature/recommended_ads/cubit/recommended_ads_cubit.dart';
+import '../feature/recommended_ads/recommended_ads_screen.dart';
 import '../feature/reset_password/cubit/reset_password_cubit.dart';
 import '../feature/search/filter/cubit/search_filter_cubit.dart';
 import '../feature/search/results/cubit/search_results_cubit.dart';
@@ -87,6 +89,15 @@ final appRouter = GoRouter(
         return BlocProvider<NearToYouCubit>(
           create: (context) => NearToYouCubit(getIt(), getIt()),
           child: NearToYouScreen(),
+        );
+      },
+    ),
+    GoRoute(
+      path: Routes.recommendedAds,
+      builder: (context, state) {
+        return BlocProvider<RecommendedAdsCubit>(
+          create: (context) => RecommendedAdsCubit(getIt()),
+          child: RecommendedAdsScreen(),
         );
       },
     ),

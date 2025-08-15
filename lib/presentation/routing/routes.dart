@@ -19,6 +19,7 @@ sealed class Routes {
   static const privacyPolicy = "/privacy-policy";
   static const plans = "/plans";
   static const nearToYou = "/near-to-you";
+  static const recommendedAds = "/recommended-ads";
 
   static const home = "/home-user";
   static const searchResults = "/results-search";

@@ -8,12 +8,15 @@ abstract class AdRepo {
 
   Future<Resource<List<Ad>>> getMyAds();
 
-  /// returns the ad id, todo: we will make return the ad
   Future<Resource<List<Ad>>> getNearToYouAds({
     required int page,
     required int pageSize,
     required double long,
     required double lat,
+  });
+  Future<Resource<List<Ad>>> getRecommendedAds({
+    required int page,
+    required int pageSize,
   });
 
   Future<Resource<int>> createAd(int propertyId);
