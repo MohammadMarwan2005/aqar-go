@@ -50,7 +50,7 @@ class MapSelector extends StatelessWidget {
                   ),
                 )
                 : Text(
-                  "${titleId.tr(context)} (${field.value?.position.longitude.toStringAsFixed(3) ?? "_"}, ${field.value?.position.longitude.toStringAsFixed(3) ?? "_"})",
+                  "${titleId.tr(context)} (${field.value?.position.longitude.toStringAsFixed(3) ?? "_"}, ${field.value?.position.latitude.toStringAsFixed(3) ?? "_"})",
                   style: Theme.of(context).textTheme.titleLarge,
                 );
 

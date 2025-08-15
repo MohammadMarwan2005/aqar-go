@@ -1,10 +1,13 @@
+import 'package:aqar_go/common/helpers/logging_helper.dart';
 import 'package:aqar_go/data/model/activate_selected_ads/activate_selected_ads_request.dart';
 import 'package:aqar_go/data/model/ad/ad_data.dart';
 import 'package:aqar_go/data/model/near_to_you/near_to_you_request.dart';
 import 'package:aqar_go/data/model/paged_response.dart';
+import 'package:aqar_go/data/model/search/data_search_filter_settings.dart';
 import 'package:aqar_go/domain/model/ad/ad.dart';
 import 'package:aqar_go/domain/model/resource.dart';
 
+import '../../domain/model/search/search_filter_settings.dart';
 import '../../domain/repo/ad_repo.dart';
 import '../api/api_service.dart';
 import '../api/safe_api_caller.dart';
@@ -118,6 +121,27 @@ class AdRepoImpl extends AdRepo {
     return _safeAPICaller.call<List<Ad>, APIResponse<PagedResponse<AdData>>>(
       apiCall: () {
         return _apiService.getNearToYouAds(page: page, request: request);
+      },
+      dataToDomain: (data) {
+        return data.data.data.map((adData) => adData.toDomain()).toList();
+      },
+    );
+  }
+
+  @override
+  Future<Resource<List<Ad>>> searchAds({
+    required int page,
+    required int pageSize,
+    required SearchFilterSettings searchFilterSettings,
+  }) async {
+    final request = DataSearchFilterSettings.fromDomain(searchFilterSettings, pageSize);
+    debugLog(request.toJson().toString());
+    return _safeAPICaller.call<List<Ad>, APIResponse<PagedResponse<AdData>>>(
+      apiCall: () {
+        return _apiService.search(
+          page,
+          request,
+        );
       },
       dataToDomain: (data) {
         return data.data.data.map((adData) => adData.toDomain()).toList();

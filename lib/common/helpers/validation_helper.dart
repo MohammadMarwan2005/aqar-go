@@ -12,14 +12,14 @@ extension ValidationHelper on String? {
     return null;
   }
 
-  String? validateAllDigits() {
-    if (this == null || this!.isEmpty) {
+  String? validateAllDigits({bool allowEmptyOrNull = false}) {
+    if (this == null || this!.isEmpty && !allowEmptyOrNull) {
       return "This field cannot be empty";
     }
-    final emailRegExp = RegExp(
-      r'^[0-9]+$',
+    final numberRegExp = RegExp(
+      r'^[0-9]*$',
     );
-    if (!emailRegExp.hasMatch(this!)) {
+    if (!numberRegExp.hasMatch(this!)) {
       return "Enter a valid number";
     }
     return null;

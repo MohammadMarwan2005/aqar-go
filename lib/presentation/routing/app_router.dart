@@ -11,6 +11,7 @@ import 'package:aqar_go/presentation/feature/my_ad_details/my_ad_actions_cubit/m
 import 'package:aqar_go/presentation/feature/my_ad_details/my_ad_details_cubit/my_ad_details_cubit.dart';
 import 'package:aqar_go/presentation/feature/my_ads/activate_ads_cubit/activate_ads_cubit.dart';
 import 'package:aqar_go/presentation/feature/my_properties/my_properties_screen.dart';
+import 'package:aqar_go/presentation/feature/search/filter/search_filter_screen.dart';
 import 'package:aqar_go/presentation/feature/verify_email/verify_instruction.dart';
 import 'package:aqar_go/presentation/helper/navigation_helper.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,6 +21,7 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../common/di/get_it.dart';
 import '../../domain/model/property.dart';
+import '../../domain/model/search/search_filter_settings.dart';
 import '../../presentation/feature/auth/login/login_cubit.dart';
 import '../../presentation/feature/auth/login/login_screen.dart';
 import '../../presentation/feature/auth/register/register_cubit.dart';
@@ -38,6 +40,9 @@ import '../feature/privacy_plicy/privacy_policy_screen.dart';
 import '../feature/profile/update/update_profile_cubit.dart';
 import '../feature/profile/update/update_profile_screen.dart';
 import '../feature/reset_password/cubit/reset_password_cubit.dart';
+import '../feature/search/filter/cubit/search_filter_cubit.dart';
+import '../feature/search/results/cubit/search_results_cubit.dart';
+import '../feature/search/results/search_results_screen.dart';
 import '../feature/test/test_screen.dart';
 import '../feature/user_nav_shell/user_nav_shell.dart';
 import '../feature/verify_email/cubit/verify_email_cubit.dart';
@@ -236,6 +241,26 @@ final appRouter = GoRouter(
           child: AdDetailsScreen(),
         );
       },
-    )
+    ),
+    GoRoute(
+      path: Routes.searchResults,
+      builder: (context, state) {
+        final settings = state.extra as SearchFilterSettings;
+        return BlocProvider<SearchResultsCubit>(
+          create: (context) => SearchResultsCubit(getIt(), settings),
+          child: SearchResultsScreen(),
+        );
+      },
+    ),
+    GoRoute(
+      path: Routes.searchFilters,
+      builder: (context, state) {
+        final passedSettings = state.extra as SearchFilterSettings?;
+        return BlocProvider<SearchFilterCubit>(
+          create: (context) => SearchFilterCubit(passedSettings),
+          child: SearchFilterScreen(),
+        );
+      },
+    ),
   ],
 );

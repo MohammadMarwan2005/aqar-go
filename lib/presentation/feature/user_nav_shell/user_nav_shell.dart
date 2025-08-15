@@ -11,7 +11,6 @@ import '../media_picker/media_picker_cubit.dart';
 import '../near_to_you/cubit/near_to_you_cubit.dart';
 import '../profile/show/profile_cubit.dart';
 import '../profile/show/profile_screen.dart';
-import '../test/test_screen.dart';
 
 class UserNavShell extends StatelessWidget {
   final Widget child;
@@ -41,11 +40,6 @@ class UserNavShell extends StatelessWidget {
           child: HomeScreen(),
         );
       },
-    ),
-    GoRoute(
-      path: Routes.search,
-      builder:
-          (context, state) => Scaffold(body: Center(child: Text("Test: Search"))),
     ),
     GoRoute(
       path: Routes.profile,
