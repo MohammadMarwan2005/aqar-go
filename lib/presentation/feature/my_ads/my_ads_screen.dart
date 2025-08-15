@@ -110,7 +110,10 @@ class _MyAdsList extends StatelessWidget {
                         child: MyAdCard(
                           ad: myAds[index],
                           onTap: () {
-                            context.push(Routes.getMyAdDetails(myAds[index].id));
+                            context.push(
+                              Routes.getMyAdDetails(myAds[index].id),
+                              extra: context.read<MyAdsCubit>(),
+                            );
                           },
                         ),
                       );

@@ -16,6 +16,7 @@ import '../../widgets/app_button.dart';
 import '../../widgets/error_message.dart';
 import '../../widgets/images_slider.dart';
 import '../../widgets/loading_screen.dart';
+import '../my_ads/cubit/my_ads_cubit.dart';
 
 class MyAdDetailsScreen extends StatelessWidget {
   const MyAdDetailsScreen({super.key});
@@ -191,7 +192,7 @@ class PropertableContent extends StatelessWidget {
 class _MyAdActionsWidget extends StatelessWidget {
   final Ad ad;
 
-  const _MyAdActionsWidget({super.key, required this.ad});
+  const _MyAdActionsWidget({required this.ad});
 
   @override
   Widget build(BuildContext context) {
@@ -251,6 +252,10 @@ class _MyAdActionsWidget extends StatelessWidget {
             context.showMyAlertDialogFromDomainError(error);
           },
           success: (myAdAction) {
+            try {
+              // the cubit is provided it will update the list
+              context.read<MyAdsCubit>().getMyAds();
+            } catch (_) {}
             final message = _getMessage(context, myAdAction);
             context.showMyAlertDialog(
               "Done".tr(context),

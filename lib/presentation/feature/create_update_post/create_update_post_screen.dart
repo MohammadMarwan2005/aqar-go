@@ -23,6 +23,7 @@ import '../../widgets/boolean_field_with_title.dart';
 import '../../widgets/number_field_with_value.dart';
 import '../../widgets/single_select_field_with_title.dart';
 import '../maps/map_selector.dart';
+import '../my_properties/cubit/my_properties_cubit.dart';
 
 class CreateUpdatePostScreen extends StatelessWidget {
   const CreateUpdatePostScreen({super.key});
@@ -40,12 +41,18 @@ class CreateUpdatePostScreen extends StatelessWidget {
           case CreateAdLoading():
             return;
           case CreateUpdatePostSuccess():
+            if (cubit.isUpdate) {
+              context.read<MyPropertiesCubit>().fetchMyProperties();
+            }
             context.showMySnackBar(
               "Property uploaded successfully!".tr(context),
             );
             context.popRoute();
             return;
           case CreateAdSuccess():
+            if (cubit.isUpdate) {
+              context.read<MyPropertiesCubit>().fetchMyProperties();
+            }
             context.showMySnackBar("Ad created successfully!".tr(context));
             context.popRoute();
           case CreateUpdatePostError(
@@ -320,10 +327,7 @@ class _PropertableFields extends StatelessWidget {
   final CreateUpdatePostCubit cubit;
   final CreateUpdatePostState state;
 
-  const _PropertableFields({
-    required this.cubit,
-    required this.state,
-  });
+  const _PropertableFields({required this.cubit, required this.state});
 
   @override
   Widget build(BuildContext context) {
@@ -339,7 +343,7 @@ class _PropertableFields extends StatelessWidget {
               selectedValues: [state.formData.selectedLandType],
               onSelect: (newValue) {
                 cubit.updateFormData(
-                      (currentFormData) =>
+                  (currentFormData) =>
                       currentFormData.copyWith(selectedLandType: newValue),
                 );
               },
@@ -351,7 +355,7 @@ class _PropertableFields extends StatelessWidget {
               selectedValues: [state.formData.selectedLandSlop],
               onSelect: (newValue) {
                 cubit.updateFormData(
-                      (currentFormData) =>
+                  (currentFormData) =>
                       currentFormData.copyWith(selectedLandSlop: newValue),
                 );
               },
@@ -362,7 +366,7 @@ class _PropertableFields extends StatelessWidget {
               value: state.formData.isServiced,
               onChanged: (newValue) {
                 cubit.updateFormData(
-                      (currentFormData) =>
+                  (currentFormData) =>
                       currentFormData.copyWith(isServiced: newValue),
                 );
               },
@@ -372,9 +376,8 @@ class _PropertableFields extends StatelessWidget {
               value: state.formData.isInsideMasterPlan,
               onChanged: (newValue) {
                 cubit.updateFormData(
-                      (currentFormData) => currentFormData.copyWith(
-                    isInsideMasterPlan: newValue,
-                  ),
+                  (currentFormData) =>
+                      currentFormData.copyWith(isInsideMasterPlan: newValue),
                 );
               },
             ),
@@ -390,7 +393,7 @@ class _PropertableFields extends StatelessWidget {
               selectedValues: [state.formData.selectedShopType],
               onSelect: (newValue) {
                 cubit.updateFormData(
-                      (currentFormData) =>
+                  (currentFormData) =>
                       currentFormData.copyWith(selectedShopType: newValue),
                 );
               },
@@ -401,7 +404,7 @@ class _PropertableFields extends StatelessWidget {
               value: state.formData.hasWarehouse,
               onChanged: (newValue) {
                 cubit.updateFormData(
-                      (currentFormData) =>
+                  (currentFormData) =>
                       currentFormData.copyWith(hasWarehouse: newValue),
                 );
               },
@@ -411,7 +414,7 @@ class _PropertableFields extends StatelessWidget {
               value: state.formData.hasBathroom,
               onChanged: (newValue) {
                 cubit.updateFormData(
-                      (currentFormData) =>
+                  (currentFormData) =>
                       currentFormData.copyWith(hasBathroom: newValue),
                 );
               },
@@ -421,7 +424,7 @@ class _PropertableFields extends StatelessWidget {
               value: state.formData.hasAc,
               onChanged: (newValue) {
                 cubit.updateFormData(
-                      (currentFormData) =>
+                  (currentFormData) =>
                       currentFormData.copyWith(hasAc: newValue),
                 );
               },
@@ -437,7 +440,7 @@ class _PropertableFields extends StatelessWidget {
               value: state.formData.officeFloor,
               onChanged: (newValue) {
                 cubit.updateFormData(
-                      (currentFormData) =>
+                  (currentFormData) =>
                       currentFormData.copyWith(officeFloor: newValue),
                 );
               },
@@ -447,7 +450,7 @@ class _PropertableFields extends StatelessWidget {
               value: state.formData.officeRooms,
               onChanged: (newValue) {
                 cubit.updateFormData(
-                      (currentFormData) =>
+                  (currentFormData) =>
                       currentFormData.copyWith(officeRooms: newValue),
                 );
               },
@@ -457,7 +460,7 @@ class _PropertableFields extends StatelessWidget {
               value: state.formData.officeBathrooms,
               onChanged: (newValue) {
                 cubit.updateFormData(
-                      (currentFormData) =>
+                  (currentFormData) =>
                       currentFormData.copyWith(officeBathrooms: newValue),
                 );
               },
@@ -467,7 +470,7 @@ class _PropertableFields extends StatelessWidget {
               value: state.formData.meetingRooms,
               onChanged: (newValue) {
                 cubit.updateFormData(
-                      (currentFormData) =>
+                  (currentFormData) =>
                       currentFormData.copyWith(meetingRooms: newValue),
                 );
               },
@@ -477,7 +480,7 @@ class _PropertableFields extends StatelessWidget {
               value: state.formData.hasParking,
               onChanged: (newValue) {
                 cubit.updateFormData(
-                      (currentFormData) =>
+                  (currentFormData) =>
                       currentFormData.copyWith(hasParking: newValue),
                 );
               },
@@ -487,7 +490,7 @@ class _PropertableFields extends StatelessWidget {
               value: state.formData.officeFurnished,
               onChanged: (newValue) {
                 cubit.updateFormData(
-                      (currentFormData) =>
+                  (currentFormData) =>
                       currentFormData.copyWith(officeFurnished: newValue),
                 );
               },
@@ -503,7 +506,7 @@ class _PropertableFields extends StatelessWidget {
               value: state.formData.floor,
               onChanged: (newValue) {
                 cubit.updateFormData(
-                      (currentFormData) =>
+                  (currentFormData) =>
                       currentFormData.copyWith(floor: newValue),
                 );
               },
@@ -513,7 +516,7 @@ class _PropertableFields extends StatelessWidget {
               value: state.formData.apartmentRooms,
               onChanged: (newValue) {
                 cubit.updateFormData(
-                      (currentFormData) =>
+                  (currentFormData) =>
                       currentFormData.copyWith(apartmentRooms: newValue),
                 );
               },
@@ -523,9 +526,8 @@ class _PropertableFields extends StatelessWidget {
               value: state.formData.apartmentBathrooms,
               onChanged: (newValue) {
                 cubit.updateFormData(
-                      (currentFormData) => currentFormData.copyWith(
-                    apartmentBathrooms: newValue,
-                  ),
+                  (currentFormData) =>
+                      currentFormData.copyWith(apartmentBathrooms: newValue),
                 );
               },
             ),
@@ -534,7 +536,7 @@ class _PropertableFields extends StatelessWidget {
               value: state.formData.apartmentBedrooms,
               onChanged: (newValue) {
                 cubit.updateFormData(
-                      (currentFormData) =>
+                  (currentFormData) =>
                       currentFormData.copyWith(apartmentBedrooms: newValue),
                 );
               },
@@ -544,7 +546,7 @@ class _PropertableFields extends StatelessWidget {
               value: state.formData.hasElevator,
               onChanged: (newValue) {
                 cubit.updateFormData(
-                      (currentFormData) =>
+                  (currentFormData) =>
                       currentFormData.copyWith(hasElevator: newValue),
                 );
               },
@@ -554,9 +556,8 @@ class _PropertableFields extends StatelessWidget {
               value: state.formData.hasAlternativePower,
               onChanged: (newValue) {
                 cubit.updateFormData(
-                      (currentFormData) => currentFormData.copyWith(
-                    hasAlternativePower: newValue,
-                  ),
+                  (currentFormData) =>
+                      currentFormData.copyWith(hasAlternativePower: newValue),
                 );
               },
             ),
@@ -565,7 +566,7 @@ class _PropertableFields extends StatelessWidget {
               value: state.formData.hasGarage,
               onChanged: (newValue) {
                 cubit.updateFormData(
-                      (currentFormData) =>
+                  (currentFormData) =>
                       currentFormData.copyWith(hasGarage: newValue),
                 );
               },
@@ -576,7 +577,7 @@ class _PropertableFields extends StatelessWidget {
               selectedValues: [state.formData.apartmentFurnishedType],
               onSelect: (newValue) {
                 cubit.updateFormData(
-                      (currentFormData) => currentFormData.copyWith(
+                  (currentFormData) => currentFormData.copyWith(
                     apartmentFurnishedType: newValue,
                   ),
                 );

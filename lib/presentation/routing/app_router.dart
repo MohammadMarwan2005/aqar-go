@@ -4,6 +4,7 @@ import 'package:aqar_go/presentation/feature/check_password_otp/check_password_o
 import 'package:aqar_go/presentation/feature/near_to_you/cubit/near_to_you_cubit.dart';
 import 'package:aqar_go/presentation/feature/near_to_you/near_to_you_screen.dart';
 import 'package:aqar_go/presentation/feature/plans/plans_screen.dart';
+import 'package:aqar_go/presentation/feature/profile/show/profile_cubit.dart';
 import 'package:aqar_go/presentation/feature/reset_password/reset_password_screen.dart';
 import 'package:aqar_go/presentation/feature/maps/cubit/maps_cubit.dart';
 import 'package:aqar_go/presentation/feature/media_picker/media_picker_cubit.dart';
@@ -29,6 +30,7 @@ import '../../presentation/feature/auth/register/register_screen.dart';
 import '../feature/check_password_otp/check_password_otp_args.dart';
 import '../feature/check_password_otp/cubit/check_password_otp_cubit.dart';
 import '../feature/create_update_post/create_update_post_screen.dart';
+import '../feature/create_update_post/cubit/create_update_post_args.dart';
 import '../feature/create_update_post/cubit/create_update_post_cubit.dart';
 import '../feature/my_ad_details/my_ad_details_screen.dart';
 import '../feature/my_ads/cubit/my_ads_cubit.dart';
@@ -158,23 +160,28 @@ final appRouter = GoRouter(
     ),
     GoRoute(
       path: Routes.updateProfile,
-      builder:
-          (context, state) => MultiBlocProvider(
-            providers: [
-              BlocProvider<MediaPickerCubit>(create: (context) => getIt()),
-              BlocProvider<UpdateProfileCubit>(create: (context) => getIt()),
-            ],
-            child: UpdateProfileScreen(),
-          ),
+      builder: (context, state) {
+        final profileCubit = state.extra as ProfileCubit;
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider<MediaPickerCubit>(create: (context) => getIt()),
+            BlocProvider<UpdateProfileCubit>(create: (context) => getIt()),
+            BlocProvider.value(value: profileCubit),
+          ],
+          child: UpdateProfileScreen(),
+        );
+      },
     ),
     GoRoute(
       path: Routes.myAdDetails,
       builder: (context, state) {
+        final myAdsCubit = state.extra as MyAdsCubit?;
         final id = state.extractIdParam("id");
         return MultiBlocProvider(
           providers: [
             BlocProvider(create: (context) => MyAdDetailsCubit(id, getIt())),
             BlocProvider(create: (context) => MyAdActionsCubit(id, getIt())),
+            if (myAdsCubit != null) BlocProvider.value(value: myAdsCubit),
           ],
           child: MyAdDetailsScreen(),
         );
@@ -183,7 +190,9 @@ final appRouter = GoRouter(
     GoRoute(
       path: Routes.createUpdatePost,
       builder: (context, state) {
-        final Property? property = state.extra as Property?;
+        final args = state.extra as CreateUpdatePostArgs?;
+        final Property? property = args?.property;
+        final MyPropertiesCubit? myPropertiesCubit = args?.myPropertiesCubit;
         return MultiBlocProvider(
           providers: [
             BlocProvider<MediaPickerCubit>(
@@ -202,6 +211,8 @@ final appRouter = GoRouter(
                   ),
             ),
             BlocProvider<MapsCubit>(create: (context) => getIt()),
+            if (myPropertiesCubit != null)
+              BlocProvider.value(value: myPropertiesCubit),
           ],
           child: CreateUpdatePostScreen(),
         );

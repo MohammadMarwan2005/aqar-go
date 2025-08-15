@@ -277,4 +277,5 @@ const Map<String, String> _arLangMap = {
   "Min Bathrooms": "الحمامات على الأقل",
   "Reset Filters?": "اعادة تعيين الفلاتر؟",
   "Are you sure you want to reset all filters?": "هل تريد بالتاكد انك تريد اعادة تعيين جميع الفلاتر؟",
+  "Search Results": "نتائج البحث",
 };

@@ -1,3 +1,4 @@
+import 'package:aqar_go/presentation/feature/create_update_post/cubit/create_update_post_args.dart';
 import 'package:aqar_go/presentation/helper/navigation_helper.dart';
 import 'package:aqar_go/presentation/feature/my_properties/cubit/my_properties_cubit.dart';
 import 'package:aqar_go/presentation/lang/app_localization.dart';
@@ -53,7 +54,10 @@ class MyPropertiesScreen extends StatelessWidget {
                                     onTap: () {
                                       context.pushRoute(
                                         Routes.createUpdatePost,
-                                        extra: properties[index],
+                                        extra: CreateUpdatePostArgs(
+                                          property: properties[index],
+                                          myPropertiesCubit: context.read<MyPropertiesCubit>(),
+                                        ),
                                       );
                                     },
                                   ),
