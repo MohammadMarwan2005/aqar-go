@@ -4,7 +4,7 @@ enum DataFurnishedType {
   economic("economic"),
   standard("standard"),
   deluxe("delux"),
-  superDeluxe("super_deluxe"),
+  superDeluxe("super_delux"),
   luxury("luxury"),
   invalid("invalid");
 

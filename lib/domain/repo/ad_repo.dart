@@ -1,6 +1,7 @@
 import 'package:aqar_go/domain/model/resource.dart';
 
 import '../model/ad/ad.dart';
+import '../model/search/search_filter_settings.dart';
 
 abstract class AdRepo {
   Future<Resource<Ad>> getAdById(int adId);
@@ -24,4 +25,10 @@ abstract class AdRepo {
   Future<Resource<void>> deactivateAd(int adId);
 
   Future<Resource<void>> deleteAd(int adId);
+
+  Future<Resource<List<Ad>>> searchAds({
+    required int page,
+    required int pageSize,
+    required SearchFilterSettings searchFilterSettings,
+  });
 }

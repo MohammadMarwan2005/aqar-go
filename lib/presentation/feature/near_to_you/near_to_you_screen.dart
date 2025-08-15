@@ -4,7 +4,6 @@ import 'package:aqar_go/presentation/feature/paging_base/cubit/paging_cubit.dart
 import 'package:aqar_go/presentation/feature/paging_base/paged_list_view.dart';
 import 'package:aqar_go/presentation/lang/app_localization.dart';
 import 'package:aqar_go/presentation/widgets/ad_card.dart';
-import 'package:aqar_go/presentation/widgets/small_ad_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

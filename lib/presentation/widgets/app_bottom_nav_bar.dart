@@ -73,12 +73,12 @@ class NavItemData {
       labelId: 'Create Post',
       route: Routes.createUpdatePost,
     ),
-    NavItemData(
-      activeIcon: Icons.search,
-      inactiveIcon: Icons.search,
-      labelId: 'Search',
-      route: Routes.search,
-    ),
+    // NavItemData(
+    //   activeIcon: Icons.search,
+    //   inactiveIcon: Icons.search,
+    //   labelId: 'Search',
+    //   route: Routes.search,
+    // ),
     NavItemData(
       activeIcon: Icons.person,
       inactiveIcon: Icons.person_outline,

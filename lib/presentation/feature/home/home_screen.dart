@@ -25,6 +25,14 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text("AqarGo".tr(context)),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () {
+              context.pushRoute(Routes.searchFilters);
+            },
+          ),
+        ],
       ),
       body: SafeArea(
         child: ScreenPadding(

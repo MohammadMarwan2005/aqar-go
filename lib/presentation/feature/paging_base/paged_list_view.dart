@@ -1,3 +1,4 @@
+import 'package:aqar_go/domain/model/domain_error.dart';
 import 'package:aqar_go/presentation/feature/paging_base/cubit/paging_cubit.dart';
 import 'package:aqar_go/presentation/widgets/error_message.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,10 @@ class PagedListView<T> extends StatefulWidget {
   final Axis scrollDirection;
   final double? height;
   final double? width;
+  final Widget Function(DomainError error, void Function() onTryAgain)?
+  errorPlaceholder;
+  final Widget? loadingPlaceholder;
+  final Widget Function(PagingState<T> state)? noMoreItemsPlaceholder;
 
   const PagedListView({
     super.key,
@@ -20,6 +25,9 @@ class PagedListView<T> extends StatefulWidget {
     required this.onRefresh,
     this.height,
     this.width,
+    this.errorPlaceholder,
+    this.loadingPlaceholder,
+    this.noMoreItemsPlaceholder,
   });
 
   @override
@@ -59,6 +67,7 @@ class _PagedListViewState<T> extends State<PagedListView<T>> {
           widget.onRefresh();
         },
         child: ListView.builder(
+          physics: const AlwaysScrollableScrollPhysics(),
           scrollDirection: widget.scrollDirection,
           controller: scrollController,
           itemCount: currentItems.length + 1,
@@ -67,26 +76,37 @@ class _PagedListViewState<T> extends State<PagedListView<T>> {
               return Center(
                 child: widget.state.when(
                   loaded: (items, page, hasReachedEnd) {
-                    return const Padding(
+                    return Padding(
                       padding: EdgeInsets.all(16.0),
-                      child: Text("No more items"),
+                      child:
+                          (widget.noMoreItemsPlaceholder != null)
+                              ? widget.noMoreItemsPlaceholder!(widget.state)
+                              : Text("No more items"),
                     );
                   },
                   loading:
-                      (oldData, page, hasReachedEnd) => const Padding(
+                      (oldData, page, hasReachedEnd) => Padding(
                         padding: EdgeInsets.all(16.0),
                         child: Padding(
                           padding: EdgeInsets.all(8.0),
-                          child: CircularProgressIndicator(strokeWidth: 3),
+                          child:
+                              widget.loadingPlaceholder ??
+                              CircularProgressIndicator(strokeWidth: 3),
                         ),
                       ),
-                  error:
-                      (oldData, error, page, hasReachedEnd) => ErrorMessage(
+                  error: (oldData, error, page, hasReachedEnd) {
+                    if (widget.errorPlaceholder != null) {
+                      return widget.errorPlaceholder!(
+                        error,
+                        widget.fetchNextPage,
+                      );
+                    } else {
+                      return ErrorMessage(
                         error: error,
-                        onTryAgain: () {
-                          widget.fetchNextPage();
-                        },
-                      ),
+                        onTryAgain: widget.fetchNextPage,
+                      );
+                    }
+                  },
                 ),
               );
             }

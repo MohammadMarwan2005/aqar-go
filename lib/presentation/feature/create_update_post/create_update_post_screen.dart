@@ -1,13 +1,15 @@
-import 'package:aqar_go/presentation/helper/navigation_helper.dart';
-import 'package:aqar_go/presentation/helper/ui_helper.dart';
 import 'package:aqar_go/common/helpers/validation_helper.dart';
 import 'package:aqar_go/domain/model/domain_error.dart';
+import 'package:aqar_go/domain/model/land/land_slop.dart';
+import 'package:aqar_go/domain/model/land/land_type.dart';
 import 'package:aqar_go/domain/model/property.dart';
 import 'package:aqar_go/presentation/assets/property_widgets_helper.dart';
 import 'package:aqar_go/presentation/feature/create_update_post/cubit/create_update_post_cubit.dart';
 import 'package:aqar_go/presentation/feature/maps/cubit/maps_cubit.dart';
 import 'package:aqar_go/presentation/feature/media_picker/image_picker_widget.dart';
 import 'package:aqar_go/presentation/feature/media_picker/media_picker_cubit.dart';
+import 'package:aqar_go/presentation/helper/navigation_helper.dart';
+import 'package:aqar_go/presentation/helper/ui_helper.dart';
 import 'package:aqar_go/presentation/lang/app_localization.dart';
 import 'package:aqar_go/presentation/widgets/app_button.dart';
 import 'package:aqar_go/presentation/widgets/app_text_field.dart';
@@ -15,6 +17,11 @@ import 'package:aqar_go/presentation/widgets/screen_horizontal_padding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../domain/model/apartment/furnished_type.dart';
+import '../../../domain/model/shop/shop_type.dart';
+import '../../widgets/boolean_field_with_title.dart';
+import '../../widgets/number_field_with_value.dart';
+import '../../widgets/single_select_field_with_title.dart';
 import '../maps/map_selector.dart';
 
 class CreateUpdatePostScreen extends StatelessWidget {
@@ -115,7 +122,7 @@ class CreateUpdatePostScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // property stuff:
-                      PropertyFields(cubit: cubit, state: state),
+                      _PropertyFields(cubit: cubit, state: state),
                       _LocalSizedBox(),
                       PropertableSelector(
                         selectedType: state.formData.selectedPropertableEnum,
@@ -128,7 +135,7 @@ class CreateUpdatePostScreen extends StatelessWidget {
                         },
                       ),
                       _LocalSizedBox(),
-                      PropertableFields(cubit: cubit, state: state),
+                      _PropertableFields(cubit: cubit, state: state),
                       SizedBox(height: 32),
                     ],
                   ),
@@ -142,11 +149,11 @@ class CreateUpdatePostScreen extends StatelessWidget {
   }
 }
 
-class PropertyFields extends StatelessWidget {
+class _PropertyFields extends StatelessWidget {
   final CreateUpdatePostCubit cubit;
   final CreateUpdatePostState state;
 
-  const PropertyFields({super.key, required this.cubit, required this.state});
+  const _PropertyFields({super.key, required this.cubit, required this.state});
 
   @override
   Widget build(BuildContext context) {
@@ -197,7 +204,6 @@ class PropertyFields extends StatelessWidget {
           keyboardType: TextInputType.number,
         ),
         _LocalSizedBox(),
-
         AppTextField(
           initialValue: state.formData.addressName.toString(),
           onChanged: (value) {
@@ -229,7 +235,7 @@ class _LocalSizedBox extends StatelessWidget {
 }
 
 class PropertableSelector extends StatelessWidget {
-  final PropertableEnum selectedType;
+  final PropertableEnum? selectedType;
   final void Function(PropertableEnum newValue) onSelect;
 
   const PropertableSelector({
@@ -310,21 +316,275 @@ class PropertableSelector extends StatelessWidget {
   }
 }
 
-class PropertableFields extends StatelessWidget {
+class _PropertableFields extends StatelessWidget {
   final CreateUpdatePostCubit cubit;
   final CreateUpdatePostState state;
 
-  const PropertableFields({
-    super.key,
+  const _PropertableFields({
     required this.cubit,
     required this.state,
   });
 
   @override
   Widget build(BuildContext context) {
-    return state.formData.selectedPropertableEnum.getFields(
-      context,
-      spacer: _LocalSizedBox(),
-    );
+    final cubit = context.read<CreateUpdatePostCubit>();
+    switch (state.formData.selectedPropertableEnum) {
+      case PropertableEnum.land:
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SelectFieldWithTitle(
+              title: "Land Type".tr(context),
+              values: LandType.values,
+              selectedValues: [state.formData.selectedLandType],
+              onSelect: (newValue) {
+                cubit.updateFormData(
+                      (currentFormData) =>
+                      currentFormData.copyWith(selectedLandType: newValue),
+                );
+              },
+              enumToName: (enu) => enu.name.tr(context),
+            ),
+            SelectFieldWithTitle(
+              title: "Slope".tr(context),
+              values: LandSlop.values,
+              selectedValues: [state.formData.selectedLandSlop],
+              onSelect: (newValue) {
+                cubit.updateFormData(
+                      (currentFormData) =>
+                      currentFormData.copyWith(selectedLandSlop: newValue),
+                );
+              },
+              enumToName: (enu) => enu.name.tr(context),
+            ),
+            BooleanFiledWithTitle(
+              title: "Serviced?".tr(context),
+              value: state.formData.isServiced,
+              onChanged: (newValue) {
+                cubit.updateFormData(
+                      (currentFormData) =>
+                      currentFormData.copyWith(isServiced: newValue),
+                );
+              },
+            ),
+            BooleanFiledWithTitle(
+              title: "Inside master plan?".tr(context),
+              value: state.formData.isInsideMasterPlan,
+              onChanged: (newValue) {
+                cubit.updateFormData(
+                      (currentFormData) => currentFormData.copyWith(
+                    isInsideMasterPlan: newValue,
+                  ),
+                );
+              },
+            ),
+          ],
+        );
+      case PropertableEnum.shop:
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SelectFieldWithTitle(
+              title: "Shop Type".tr(context),
+              values: ShopType.values,
+              selectedValues: [state.formData.selectedShopType],
+              onSelect: (newValue) {
+                cubit.updateFormData(
+                      (currentFormData) =>
+                      currentFormData.copyWith(selectedShopType: newValue),
+                );
+              },
+              enumToName: (enu) => enu.name.tr(context),
+            ),
+            BooleanFiledWithTitle(
+              title: "Has warehouse?".tr(context),
+              value: state.formData.hasWarehouse,
+              onChanged: (newValue) {
+                cubit.updateFormData(
+                      (currentFormData) =>
+                      currentFormData.copyWith(hasWarehouse: newValue),
+                );
+              },
+            ),
+            BooleanFiledWithTitle(
+              title: "Has bathroom?".tr(context),
+              value: state.formData.hasBathroom,
+              onChanged: (newValue) {
+                cubit.updateFormData(
+                      (currentFormData) =>
+                      currentFormData.copyWith(hasBathroom: newValue),
+                );
+              },
+            ),
+            BooleanFiledWithTitle(
+              title: "Has electrical source?".tr(context),
+              value: state.formData.hasAc,
+              onChanged: (newValue) {
+                cubit.updateFormData(
+                      (currentFormData) =>
+                      currentFormData.copyWith(hasAc: newValue),
+                );
+              },
+            ),
+          ],
+        );
+      case PropertableEnum.office:
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            NumberFieldWithTitle(
+              title: "Floor".tr(context),
+              value: state.formData.officeFloor,
+              onChanged: (newValue) {
+                cubit.updateFormData(
+                      (currentFormData) =>
+                      currentFormData.copyWith(officeFloor: newValue),
+                );
+              },
+            ),
+            NumberFieldWithTitle(
+              title: "Rooms".tr(context),
+              value: state.formData.officeRooms,
+              onChanged: (newValue) {
+                cubit.updateFormData(
+                      (currentFormData) =>
+                      currentFormData.copyWith(officeRooms: newValue),
+                );
+              },
+            ),
+            NumberFieldWithTitle(
+              title: "Bathrooms".tr(context),
+              value: state.formData.officeBathrooms,
+              onChanged: (newValue) {
+                cubit.updateFormData(
+                      (currentFormData) =>
+                      currentFormData.copyWith(officeBathrooms: newValue),
+                );
+              },
+            ),
+            NumberFieldWithTitle(
+              title: "Meeting Rooms".tr(context),
+              value: state.formData.meetingRooms,
+              onChanged: (newValue) {
+                cubit.updateFormData(
+                      (currentFormData) =>
+                      currentFormData.copyWith(meetingRooms: newValue),
+                );
+              },
+            ),
+            BooleanFiledWithTitle(
+              title: "Has Parking?".tr(context),
+              value: state.formData.hasParking,
+              onChanged: (newValue) {
+                cubit.updateFormData(
+                      (currentFormData) =>
+                      currentFormData.copyWith(hasParking: newValue),
+                );
+              },
+            ),
+            BooleanFiledWithTitle(
+              title: "Furnished?".tr(context),
+              value: state.formData.officeFurnished,
+              onChanged: (newValue) {
+                cubit.updateFormData(
+                      (currentFormData) =>
+                      currentFormData.copyWith(officeFurnished: newValue),
+                );
+              },
+            ),
+          ],
+        );
+      case PropertableEnum.apartment:
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            NumberFieldWithTitle(
+              title: "Floor".tr(context),
+              value: state.formData.floor,
+              onChanged: (newValue) {
+                cubit.updateFormData(
+                      (currentFormData) =>
+                      currentFormData.copyWith(floor: newValue),
+                );
+              },
+            ),
+            NumberFieldWithTitle(
+              title: "Rooms".tr(context),
+              value: state.formData.apartmentRooms,
+              onChanged: (newValue) {
+                cubit.updateFormData(
+                      (currentFormData) =>
+                      currentFormData.copyWith(apartmentRooms: newValue),
+                );
+              },
+            ),
+            NumberFieldWithTitle(
+              title: "Bathrooms".tr(context),
+              value: state.formData.apartmentBathrooms,
+              onChanged: (newValue) {
+                cubit.updateFormData(
+                      (currentFormData) => currentFormData.copyWith(
+                    apartmentBathrooms: newValue,
+                  ),
+                );
+              },
+            ),
+            NumberFieldWithTitle(
+              title: "Bedrooms".tr(context),
+              value: state.formData.apartmentBedrooms,
+              onChanged: (newValue) {
+                cubit.updateFormData(
+                      (currentFormData) =>
+                      currentFormData.copyWith(apartmentBedrooms: newValue),
+                );
+              },
+            ),
+            BooleanFiledWithTitle(
+              title: "Has Elevator?".tr(context),
+              value: state.formData.hasElevator,
+              onChanged: (newValue) {
+                cubit.updateFormData(
+                      (currentFormData) =>
+                      currentFormData.copyWith(hasElevator: newValue),
+                );
+              },
+            ),
+            BooleanFiledWithTitle(
+              title: "Has Alternative Power?".tr(context),
+              value: state.formData.hasAlternativePower,
+              onChanged: (newValue) {
+                cubit.updateFormData(
+                      (currentFormData) => currentFormData.copyWith(
+                    hasAlternativePower: newValue,
+                  ),
+                );
+              },
+            ),
+            BooleanFiledWithTitle(
+              title: "Has Garage?".tr(context),
+              value: state.formData.hasGarage,
+              onChanged: (newValue) {
+                cubit.updateFormData(
+                      (currentFormData) =>
+                      currentFormData.copyWith(hasGarage: newValue),
+                );
+              },
+            ),
+            SelectFieldWithTitle(
+              title: "Furnished Type".tr(context),
+              values: FurnishedType.values,
+              selectedValues: [state.formData.apartmentFurnishedType],
+              onSelect: (newValue) {
+                cubit.updateFormData(
+                      (currentFormData) => currentFormData.copyWith(
+                    apartmentFurnishedType: newValue,
+                  ),
+                );
+              },
+              enumToName: (enu) => enu.name,
+            ),
+          ],
+        );
+    }
   }
 }

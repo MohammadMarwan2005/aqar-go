@@ -16,6 +16,7 @@ import '../model/auth/register_request.dart';
 import '../model/profile/user/data_user.dart';
 import '../model/reset_password/reset/reset_password_request.dart';
 import '../model/reset_password/send_email/send_reset_password_email_request.dart';
+import '../model/search/data_search_filter_settings.dart';
 import 'api_constants.dart';
 
 part 'api_service.g.dart';
@@ -63,6 +64,12 @@ abstract class APIService {
 
   @POST(APIConstants.getUserAdsUrl)
   Future<APIResponse<List<AdData>>> getUserAds();
+
+  @POST(APIConstants.searchAdsUrl)
+  Future<APIResponse<PagedResponse<AdData>>> search(
+    @Query("page") int page,
+    @Body() DataSearchFilterSettings dataSearchFilterSettings,
+  );
 
   @POST(APIConstants.getNearToYouAdsUrl)
   Future<APIResponse<PagedResponse<AdData>>> getNearToYouAds({

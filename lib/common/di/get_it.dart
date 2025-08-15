@@ -1,6 +1,7 @@
 import 'package:aqar_go/data/repo/auth_repo.dart';
 import 'package:aqar_go/data/repo/property_repo_impl.dart';
 import 'package:aqar_go/domain/repo/ad_repo.dart';
+import 'package:aqar_go/domain/usecase/search_ads_usecase.dart';
 import 'package:aqar_go/presentation/feature/auth/register/register_cubit.dart';
 import 'package:aqar_go/presentation/feature/maps/cubit/maps_cubit.dart';
 import 'package:aqar_go/presentation/feature/media_picker/media_picker_cubit.dart';
@@ -92,6 +93,7 @@ Future<void> di() async {
 
   // use cases:
   getIt.registerLazySingleton<RoutingUseCase>(() => RoutingUseCase(getIt()));
+  getIt.registerLazySingleton<SearchAdsUsecase>(() => SearchAdsUsecase(getIt()));
   getIt.registerLazySingleton<CreateUpdatePropertyUsecase>(
     () => CreateUpdatePropertyUsecase(getIt()),
   );

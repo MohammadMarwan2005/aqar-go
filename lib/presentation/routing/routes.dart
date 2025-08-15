@@ -21,10 +21,11 @@ sealed class Routes {
   static const nearToYou = "/near-to-you";
 
   static const home = "/home-user";
-  static const search = "/search-user";
+  static const searchResults = "/results-search";
+  static const searchFilters = "/filter-search";
   static const profile = "/profile";
 
-  static const _allowedRoutesForGuest = [onboarding, home, search, viewAd, login, register, forgotPassword, checkPasswordOTP];
+  static const _allowedRoutesForGuest = [onboarding, home, nearToYou, searchFilters, searchResults, viewAd, login, register, forgotPassword, checkPasswordOTP];
 
   static bool isAllowed(String route) {
     return _allowedRoutesForGuest.any((allowedRoute) {
