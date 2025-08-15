@@ -88,7 +88,7 @@ Future<void> di() async {
   );
   getIt.registerLazySingleton<AdRepo>(() => AdRepoImpl(getIt(), getIt()));
 
-  getIt.registerLazySingleton<LocationPermissionManager>(() => LocationPermissionManager());
+  getIt.registerLazySingleton<LocationManager>(() => LocationManager());
   getIt.registerLazySingleton<SharePlus>(() => SharePlus.instance);
 
   // use cases:

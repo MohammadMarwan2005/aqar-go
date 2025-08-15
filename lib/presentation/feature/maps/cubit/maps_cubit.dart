@@ -9,7 +9,7 @@ part 'maps_state.dart';
 class MapsCubit extends Cubit<MapsState> {
   late GoogleMapController _mapController;
 
-  final LocationPermissionManager _locationPermissionManager;
+  final LocationManager _locationPermissionManager;
 
   void setMapController(GoogleMapController controller) {
     _mapController = controller;
