@@ -11,4 +11,13 @@ const Map<String, String> _enLangMap = {
   "violence": "Violence",
   "scam": "Scam",
   "fakeInformation": "Fake Information",
+  "m2": "m²",
+  "yes_has_parking": "Parking",
+  "yes_has_elevator": "Elevator",
+  "yes_has_alternative_power": "Alternative Power",
+  "yes_has_garage": "Garage",
+  "yes_furnished": "Furnished",
+  "yes_has_warehouse": "Warehouse",
+  "yes_has_ac": "AC",
+  "yes_has_bathroom": "Bathroom",
 };

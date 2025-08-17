@@ -40,6 +40,6 @@ abstract class AdRepo {
   Future<Resource<void>> reportAd(
     int adId,
     ReportReason reason, {
-    String? comment,
+    String? description,
   });
 }

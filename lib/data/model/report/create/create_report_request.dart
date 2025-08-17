@@ -9,12 +9,12 @@ class CreateReportRequest {
   @JsonKey(name: 'ad_id')
   final int adId;
   final String reason;
-  final String? comment;
+  final String? description;
 
   const CreateReportRequest({
     required this.adId,
     required this.reason,
-    this.comment,
+    this.description,
   });
 
   /// Factory + toJson

@@ -3,13 +3,10 @@ import 'package:aqar_go/presentation/lang/app_localization.dart';
 import 'package:aqar_go/presentation/widgets/app_button.dart';
 import 'package:aqar_go/presentation/widgets/error_message.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../../domain/model/ad/ad.dart';
 import '../../../../domain/model/search/search_filter_settings.dart';
-import '../../../routing/routes.dart';
 import '../../../widgets/ad_card.dart';
 import '../../../widgets/screen_horizontal_padding.dart';
 import '../../paging_base/cubit/paging_cubit.dart';
@@ -37,7 +34,10 @@ class SearchResultsScreen extends StatelessWidget {
                       scrollDirection: Axis.vertical,
                       state: state,
                       itemBuilder: (ad) {
-                        return AdCard(ad: ad);
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: AdCard(ad: ad),
+                        );
                       },
                       fetchNextPage: () {
                         context.read<SearchResultsCubit>().fetchNextPageItems();

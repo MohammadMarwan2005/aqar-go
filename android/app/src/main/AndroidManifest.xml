@@ -64,4 +64,12 @@
             <data android:mimeType="text/plain" />
         </intent>
     </queries>
+    <queries>
+        <package android:name="com.whatsapp"/>
+
+        <intent>
+            <action android:name="android.intent.action.DIAL" />
+            <data android:scheme="tel" />
+        </intent>
+    </queries>
 </manifest>

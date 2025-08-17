@@ -61,6 +61,9 @@ class _NearToYouWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final cardWidth = 0.7 * screenWidth;
+    final cardHeight = cardWidth * 1.2;
     return Column(
       children: [
         Row(
@@ -87,10 +90,13 @@ class _NearToYouWidget extends StatelessWidget {
         BlocBuilder<NearToYouCubit, PagingState<Ad>>(
           builder: (context, state) {
             return PagedListView(
+              height: cardHeight,
               scrollDirection: Axis.horizontal,
               state: state,
               itemBuilder: (item) {
                 return SmallAdCard(
+                  width: cardWidth,
+                  height: cardHeight,
                   ad: item,
                   onTap: () {
                     context.pushRoute(Routes.getViewAd(item.id));
@@ -106,7 +112,6 @@ class _NearToYouWidget extends StatelessWidget {
             );
           },
         ),
-        SizedBox(height: 16),
         Row(
           children: [
             Text(
@@ -131,10 +136,13 @@ class _NearToYouWidget extends StatelessWidget {
         BlocBuilder<RecommendedAdsCubit, PagingState<Ad>>(
           builder: (context, state) {
             return PagedListView(
+              height: cardHeight,
               scrollDirection: Axis.horizontal,
               state: state,
               itemBuilder: (item) {
                 return SmallAdCard(
+                  width: cardWidth,
+                  height: cardHeight,
                   ad: item,
                   onTap: () {
                     context.pushRoute(Routes.getViewAd(item.id));

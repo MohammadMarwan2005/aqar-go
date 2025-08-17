@@ -3,11 +3,13 @@ import 'package:aqar_go/presentation/helper/navigation_helper.dart';
 import 'package:aqar_go/presentation/feature/my_properties/cubit/my_properties_cubit.dart';
 import 'package:aqar_go/presentation/lang/app_localization.dart';
 import 'package:aqar_go/presentation/routing/routes.dart';
+import 'package:aqar_go/presentation/widgets/ad_primary_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../domain/model/property.dart';
 import '../../widgets/error_message.dart';
+import '../../widgets/green_red_chip.dart';
 import '../../widgets/loading_screen.dart';
 import '../../widgets/screen_horizontal_padding.dart';
 
@@ -41,7 +43,9 @@ class MyPropertiesScreen extends StatelessWidget {
                     },
                     child:
                         (properties.isEmpty)
-                            ? Center(child: Text("No Properties Found!".tr(context)))
+                            ? Center(
+                              child: Text("No Properties Found!".tr(context)),
+                            )
                             : ListView.builder(
                               itemCount: properties.length,
                               itemBuilder: (context, index) {
@@ -56,7 +60,8 @@ class MyPropertiesScreen extends StatelessWidget {
                                         Routes.createUpdatePost,
                                         extra: CreateUpdatePostArgs(
                                           property: properties[index],
-                                          myPropertiesCubit: context.read<MyPropertiesCubit>(),
+                                          myPropertiesCubit:
+                                              context.read<MyPropertiesCubit>(),
                                         ),
                                       );
                                     },
@@ -86,7 +91,7 @@ class PropertyCard extends StatelessWidget {
     final imageUrl = property.images.firstOrNull?.imageUrl;
 
     return InkWell(
-      overlayColor: WidgetStatePropertyAll(Colors.white),
+      overlayColor: WidgetStatePropertyAll(Theme.of(context).colorScheme.surface),
       onTap: onTap,
       borderRadius: BorderRadius.circular(12),
       child: Container(
@@ -105,15 +110,28 @@ class PropertyCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AspectRatio(
-              aspectRatio: 16 / 9,
-              child:
-                  (imageUrl != null)
-                      ? Image.network(imageUrl, fit: BoxFit.cover)
-                      : Image.asset(
-                        "assets/images/profile_image_placeholder.png",
-                        fit: BoxFit.cover,
-                      ),
+            Stack(
+              children: [
+                AspectRatio(
+                  aspectRatio: 16 / 9,
+                  child:
+                      (imageUrl != null)
+                          ? Image.network(imageUrl, fit: BoxFit.cover)
+                          : Image.asset(
+                            "assets/images/profile_image_placeholder.png",
+                            fit: BoxFit.cover,
+                          ),
+                ),
+                PositionedDirectional(
+                  top: 4,
+                  start: 4,
+                  child: GreenRedChip(
+                    goodText: "Published".tr(context),
+                    badText: "Unpublished".tr(context),
+                    good: property.isAd,
+                  ),
+                ),
+              ],
             ),
             Padding(
               padding: const EdgeInsets.all(12.0),
@@ -142,14 +160,7 @@ class PropertyCard extends StatelessWidget {
                       SizedBox(width: 4),
                       Text('${property.price}'),
                       Spacer(),
-                      Chip(
-                        label: Text(
-                          property.propertable.toEnum().labelId.tr(context),
-                        ),
-                        backgroundColor: Colors.blue.shade50,
-                        labelStyle: TextStyle(color: Colors.blue.shade800),
-                        padding: EdgeInsets.symmetric(horizontal: 8),
-                      ),
+                      PropertableTypeChip(propertable: property.propertable),
                     ],
                   ),
                 ],

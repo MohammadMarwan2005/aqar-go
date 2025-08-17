@@ -6,7 +6,7 @@ import 'package:photo_view/photo_view_gallery.dart';
 import '../../domain/model/media_file.dart';
 
 // Constants for consistent styling and behavior
-const double _defaultSliderHeight = 300.0;
+// const double _defaultSliderHeight = 300.0;
 const double _dotHeight = 8.0;
 const double _activeDotWidth = 16.0;
 const double _inactiveDotWidth = 8.0;
@@ -46,8 +46,10 @@ class ImagesSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final defaultSliderHeight = 9/16 * screenWidth;
     if (imagesUrls.isEmpty) {
-      return _buildEmptyState();
+      return _buildEmptyState(defaultSliderHeight);
     }
 
     final pageController = PageController();
@@ -56,7 +58,7 @@ class ImagesSlider extends StatelessWidget {
     return StatefulBuilder(
       builder: (context, setState) {
         return SizedBox(
-          height: height ?? _defaultSliderHeight,
+          height: height ?? defaultSliderHeight,
           child: Stack(
             children: [
               PageView.builder(
@@ -107,9 +109,9 @@ class ImagesSlider extends StatelessWidget {
     );
   }
 
-  Widget _buildEmptyState() {
+  Widget _buildEmptyState(double defaultSliderHeight) {
     return SizedBox(
-      height: height ?? _defaultSliderHeight,
+      height: height ?? defaultSliderHeight,
       child: const Center(
         child: Icon(
           Icons.image_not_supported,

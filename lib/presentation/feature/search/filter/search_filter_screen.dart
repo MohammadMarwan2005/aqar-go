@@ -252,7 +252,7 @@ class _PropertableFields extends StatelessWidget {
                 },
               ),
               _LocalizedSizedBox(),
-              _TitleAndSpacer(title: "Inside master plan".tr(context)),
+              _TitleAndSpacer(title: "Inside master plan?".tr(context)),
               BooleanField(
                 value: searchFilterSettings.landIsInsideMasterPlan,
                 onChanged: (newValue) {

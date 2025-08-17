@@ -25,21 +25,22 @@ class ReportCubit extends Cubit<ReportState> {
   final TextEditingController otherReasonController = TextEditingController();
 
   submitReport() async {
-    String? comment = otherReasonController.text;
-    if (comment.isEmpty) comment = null;
+    String? description = otherReasonController.text;
+    if (description.isEmpty) description = null;
 
     emit(ReportState.loading(state.selectedReason));
 
     final result = await _adRepo.reportAd(
       adId,
       state.selectedReason!,
-      comment: comment,
+      description: description,
     );
 
     result.when(
       onSuccess: (successData) {
         emit(ReportState.success(state.selectedReason));
-        emit(ReportState.initial(state.selectedReason));
+        otherReasonController.clear();
+        emit(ReportState.initial(null));
       },
       onError: (error) {
         emit(ReportState.error(error, state.selectedReason));

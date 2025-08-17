@@ -10,7 +10,7 @@ CreateReportRequest _$CreateReportRequestFromJson(Map<String, dynamic> json) =>
     CreateReportRequest(
       adId: (json['ad_id'] as num).toInt(),
       reason: json['reason'] as String,
-      comment: json['comment'] as String?,
+      description: json['description'] as String?,
     );
 
 Map<String, dynamic> _$CreateReportRequestToJson(
@@ -18,5 +18,5 @@ Map<String, dynamic> _$CreateReportRequestToJson(
 ) => <String, dynamic>{
   'ad_id': instance.adId,
   'reason': instance.reason,
-  if (instance.comment case final value?) 'comment': value,
+  if (instance.description case final value?) 'description': value,
 };

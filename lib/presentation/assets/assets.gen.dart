@@ -65,6 +65,14 @@ class $AssetsSvgsGen {
   SvgGenImage get themeContrast =>
       const SvgGenImage('assets/svgs/theme_contrast.svg');
 
+  /// File path: assets/svgs/whatsapp_logo.svg
+  SvgGenImage get whatsappLogo =>
+      const SvgGenImage('assets/svgs/whatsapp_logo.svg');
+
+  /// File path: assets/svgs/whatsapp_logo_2.svg
+  SvgGenImage get whatsappLogo2 =>
+      const SvgGenImage('assets/svgs/whatsapp_logo_2.svg');
+
   /// List of all assets
   List<SvgGenImage> get values => [
     apartment,
@@ -79,6 +87,8 @@ class $AssetsSvgsGen {
     policy,
     shop,
     themeContrast,
+    whatsappLogo,
+    whatsappLogo2,
   ];
 }
 

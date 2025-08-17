@@ -18,6 +18,7 @@ class AppBottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final activeColor = Theme.of(context).colorScheme.primary;
     return Container(
       decoration: BoxDecoration(
         // border: Border(top: BorderSide(color: DelishopColors.lightGrey)),
@@ -26,10 +27,10 @@ class AppBottomNavBar extends StatelessWidget {
         elevation: 0,
         items: navBarItems.toNavigationBarItemsList(selectedIndex, context),
         currentIndex: selectedIndex,
-        selectedItemColor: NavItemData.activeColor,
+        selectedItemColor: activeColor,
         showUnselectedLabels: true,
         enableFeedback: true,
-        selectedLabelStyle: TextStyle(color: NavItemData.activeColor),
+        selectedLabelStyle: TextStyle(color: activeColor),
         unselectedLabelStyle: TextStyle(color: NavItemData.inactiveColor),
         unselectedItemColor: NavItemData.inactiveColor,
         onTap: (value) {
@@ -57,7 +58,6 @@ class NavItemData {
   });
 
 
-  static var activeColor = DarkBlueTheme.light().colorScheme.primary;
   static var inactiveColor = AppStaticColors.lightGrey;
 
   static const List<NavItemData> userNavItems = [

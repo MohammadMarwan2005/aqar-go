@@ -1,5 +1,6 @@
 import 'package:aqar_go/domain/model/domain_error.dart';
 import 'package:aqar_go/presentation/feature/paging_base/cubit/paging_cubit.dart';
+import 'package:aqar_go/presentation/lang/app_localization.dart';
 import 'package:aqar_go/presentation/widgets/error_message.dart';
 import 'package:flutter/material.dart';
 
@@ -81,7 +82,7 @@ class _PagedListViewState<T> extends State<PagedListView<T>> {
                       child:
                           (widget.noMoreItemsPlaceholder != null)
                               ? widget.noMoreItemsPlaceholder!(widget.state)
-                              : Text("No more items"),
+                              : Text("No more items".tr(context)),
                     );
                   },
                   loading:
@@ -119,9 +120,10 @@ class _PagedListViewState<T> extends State<PagedListView<T>> {
     // Wrap with appropriate constraints based on scroll direction
     return widget.scrollDirection == Axis.horizontal
         ? SizedBox(
-          height: 250, // Fixed height for horizontal scroll
+          height: widget.height ?? 250, // Fixed height for horizontal scroll
           child: listView,
         )
-        : listView;
+        :
+      listView;
   }
 }

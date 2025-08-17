@@ -24,7 +24,10 @@ class NearToYouScreen extends StatelessWidget {
                 scrollDirection: Axis.vertical,
                 state: state,
                 itemBuilder: (ad) {
-                  return AdCard(ad: ad);
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    child: AdCard(ad: ad),
+                  );
                 },
                 fetchNextPage: () {
                   context.read<NearToYouCubit>().fetchNextPageItems();

@@ -172,7 +172,7 @@ class AdRepoImpl extends AdRepo {
   Future<Resource<void>> reportAd(
     int adId,
     ReportReason reason, {
-    String? comment,
+    String? description,
   }) {
     return _safeAPICaller.call<void, APIResponse<dynamic>>(
       apiCall: () {
@@ -180,7 +180,7 @@ class AdRepoImpl extends AdRepo {
           CreateReportRequest(
             adId: adId,
             reason: DataReportReason.fromDomain(reason).backendValue,
-            comment: comment
+            description: description
           ),
         );
       },
