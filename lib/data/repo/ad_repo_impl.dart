@@ -5,6 +5,7 @@ import 'package:aqar_go/data/model/near_to_you/near_to_you_request.dart';
 import 'package:aqar_go/data/model/paged_response.dart';
 import 'package:aqar_go/data/model/search/data_search_filter_settings.dart';
 import 'package:aqar_go/domain/model/ad/ad.dart';
+import 'package:aqar_go/domain/model/report/report_reason.dart';
 import 'package:aqar_go/domain/model/resource.dart';
 
 import '../../domain/model/search/search_filter_settings.dart';
@@ -15,6 +16,8 @@ import '../model/ad/request/create_ad_request.dart';
 import '../model/ad/response/create_ad_response.dart';
 import '../model/api_response.dart';
 import '../model/recommended_ads/get_recommended_ads_request.dart';
+import '../model/report/create/create_report_request.dart';
+import '../model/report/data_report_reason.dart';
 
 class AdRepoImpl extends AdRepo {
   final APIService _apiService;
@@ -150,17 +153,39 @@ class AdRepoImpl extends AdRepo {
     required int pageSize,
     required SearchFilterSettings searchFilterSettings,
   }) async {
-    final request = DataSearchFilterSettings.fromDomain(searchFilterSettings, pageSize);
+    final request = DataSearchFilterSettings.fromDomain(
+      searchFilterSettings,
+      pageSize,
+    );
     debugLog(request.toJson().toString());
     return _safeAPICaller.call<List<Ad>, APIResponse<PagedResponse<AdData>>>(
       apiCall: () {
-        return _apiService.search(
-          page,
-          request,
-        );
+        return _apiService.search(page, request);
       },
       dataToDomain: (data) {
         return data.data.data.map((adData) => adData.toDomain()).toList();
+      },
+    );
+  }
+
+  @override
+  Future<Resource<void>> reportAd(
+    int adId,
+    ReportReason reason, {
+    String? comment,
+  }) {
+    return _safeAPICaller.call<void, APIResponse<dynamic>>(
+      apiCall: () {
+        return _apiService.createReport(
+          CreateReportRequest(
+            adId: adId,
+            reason: DataReportReason.fromDomain(reason).backendValue,
+            comment: comment
+          ),
+        );
+      },
+      dataToDomain: (data) {
+        return;
       },
     );
   }

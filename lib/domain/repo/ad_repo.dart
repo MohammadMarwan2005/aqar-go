@@ -1,3 +1,4 @@
+import 'package:aqar_go/domain/model/report/report_reason.dart';
 import 'package:aqar_go/domain/model/resource.dart';
 
 import '../model/ad/ad.dart';
@@ -14,6 +15,7 @@ abstract class AdRepo {
     required double long,
     required double lat,
   });
+
   Future<Resource<List<Ad>>> getRecommendedAds({
     required int page,
     required int pageSize,
@@ -33,5 +35,11 @@ abstract class AdRepo {
     required int page,
     required int pageSize,
     required SearchFilterSettings searchFilterSettings,
+  });
+
+  Future<Resource<void>> reportAd(
+    int adId,
+    ReportReason reason, {
+    String? comment,
   });
 }

@@ -15,6 +15,7 @@ import '../model/auth/login_request.dart';
 import '../model/auth/register_request.dart';
 import '../model/profile/user/data_user.dart';
 import '../model/recommended_ads/get_recommended_ads_request.dart';
+import '../model/report/create/create_report_request.dart';
 import '../model/reset_password/reset/reset_password_request.dart';
 import '../model/reset_password/send_email/send_reset_password_email_request.dart';
 import '../model/search/data_search_filter_settings.dart';
@@ -110,4 +111,9 @@ abstract class APIService {
 
   @POST(APIConstants.updateProfileUrl)
   Future<APIResponse<DataUser>> updateProfile(@Body() FormData formData);
+
+  @POST(APIConstants.createReportUrl)
+  Future<APIResponse<dynamic>> createReport(
+    @Body() CreateReportRequest createReportRequest,
+  );
 }

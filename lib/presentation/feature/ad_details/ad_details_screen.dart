@@ -1,27 +1,69 @@
+import 'package:aqar_go/presentation/feature/report/report_bottom_sheet.dart';
 import 'package:aqar_go/presentation/lang/app_localization.dart';
+import 'package:aqar_go/presentation/widgets/app_button.dart';
 import 'package:aqar_go/presentation/widgets/images_slider.dart';
 import 'package:aqar_go/presentation/widgets/share_deep_link_icon.dart';
 import 'package:aqar_go/presentation/widgets/up_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../domain/model/ad/ad.dart';
 import '../../../domain/model/property.dart';
 import '../../widgets/error_message.dart';
 import '../../widgets/loading_screen.dart';
 import '../../widgets/screen_horizontal_padding.dart';
+import '../report/cubit/report_cubit.dart';
 import 'cubit/ad_details_cubit.dart';
 
 class AdDetailsScreen extends StatelessWidget {
   const AdDetailsScreen({super.key});
 
+  Widget _buildWhenReport({
+    required BuildContext context,
+    required Widget Function() isReportSheetOpen,
+    required Widget Function() isReportSheetClosed,
+  }) {
+    return ValueListenableBuilder<bool>(
+      valueListenable: context.read<ReportCubit>().isReportSheetOpen,
+      builder: (context, isOpen, _) {
+        switch (isOpen) {
+          case true:
+            return isReportSheetOpen();
+          case false:
+            return isReportSheetClosed();
+        }
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: UpButton(),
-        title: Text("Ad Details".tr(context)),
-        actions: [ShareDeepLinkIcon()],
+        leading: _buildWhenReport(
+          context: context,
+          isReportSheetOpen:
+              () => IconButton(
+                onPressed: () {
+                  context.pop();
+                },
+                icon: Icon(Icons.close),
+              ),
+          isReportSheetClosed: () => UpButton(),
+        ),
+        title: _buildWhenReport(
+          context: context,
+          isReportSheetOpen: () => Text("Report Ad".tr(context)),
+          isReportSheetClosed: () => Text("Ad Details".tr(context)),
+        ),
+        actions: [
+          _buildWhenReport(
+            context: context,
+            isReportSheetOpen: () => SizedBox.shrink(),
+            isReportSheetClosed: () => const ShareDeepLinkIcon(),
+          ),
+        ],
       ),
       body: SafeArea(
         child: BlocBuilder<AdDetailsCubit, AdDetailsState>(
@@ -47,12 +89,12 @@ class AdDetailsScreen extends StatelessWidget {
 class _AdDetailsContent extends StatelessWidget {
   final Ad ad;
 
-  const _AdDetailsContent({super.key, required this.ad});
+  const _AdDetailsContent({required this.ad});
 
   @override
   Widget build(BuildContext context) {
+    final reportCubit = context.read<ReportCubit>();
     final property = ad.property;
-
     return Scaffold(
       body: ScreenPadding(
         child: SingleChildScrollView(
@@ -87,6 +129,23 @@ class _AdDetailsContent extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: PropertableContent(property.propertable),
+              ),
+              AppButton(
+                onPressed: () {
+                  final controller = showBottomSheet(
+                    context: context,
+                    builder:
+                        (context) => BlocProvider.value(
+                          value: reportCubit,
+                          child: ReportBottomSheet(),
+                        ),
+                  );
+                  controller.closed.then((_) {
+                    reportCubit.isSheetOpen = false;
+                  });
+                  reportCubit.isSheetOpen = true;
+                },
+                text: "Report",
               ),
             ],
           ),
@@ -126,7 +185,7 @@ class PropertableContent extends StatelessWidget {
             _item("Floor", o.floor),
             _item("Rooms", o.rooms),
             _item("Bathrooms", o.bathrooms),
-            _item("Meeting Rooms", o.meetingRooms ?? "-"),
+            _item("Meeting Rooms", o.meetingRooms),
             _item("Parking", o.hasParking),
           ],
         );

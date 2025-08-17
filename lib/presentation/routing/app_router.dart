@@ -5,6 +5,7 @@ import 'package:aqar_go/presentation/feature/near_to_you/cubit/near_to_you_cubit
 import 'package:aqar_go/presentation/feature/near_to_you/near_to_you_screen.dart';
 import 'package:aqar_go/presentation/feature/plans/plans_screen.dart';
 import 'package:aqar_go/presentation/feature/profile/show/profile_cubit.dart';
+import 'package:aqar_go/presentation/feature/report/cubit/report_cubit.dart';
 import 'package:aqar_go/presentation/feature/reset_password/reset_password_screen.dart';
 import 'package:aqar_go/presentation/feature/maps/cubit/maps_cubit.dart';
 import 'package:aqar_go/presentation/feature/media_picker/media_picker_cubit.dart';
@@ -258,8 +259,15 @@ final appRouter = GoRouter(
       path: Routes.viewAd,
       builder: (context, state) {
         final id = state.extractIdParam("id");
-        return BlocProvider<AdDetailsCubit>(
-          create: (context) => AdDetailsCubit(id, getIt()),
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider<AdDetailsCubit>(
+              create: (context) => AdDetailsCubit(id, getIt()),
+            ),
+            BlocProvider<ReportCubit>(
+              create: (context) => ReportCubit(id, getIt()),
+            ),
+          ],
           child: AdDetailsScreen(),
         );
       },
