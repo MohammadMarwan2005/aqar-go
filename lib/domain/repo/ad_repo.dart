@@ -48,4 +48,8 @@ abstract class AdRepo {
     ReportReason reason, {
     String? description,
   });
+
+  Future<Resource<void>> notifyMe(
+    SearchFilterSettings searchFilterSettings,
+  );
 }

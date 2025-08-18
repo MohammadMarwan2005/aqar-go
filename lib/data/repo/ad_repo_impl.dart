@@ -198,7 +198,7 @@ class AdRepoImpl extends AdRepo {
           CreateReportRequest(
             adId: adId,
             reason: DataReportReason.fromDomain(reason).backendValue,
-            description: description
+            description: description,
           ),
         );
       },
@@ -206,5 +206,14 @@ class AdRepoImpl extends AdRepo {
         return;
       },
     );
+  }
+
+  @override
+  Future<Resource<void>> notifyMe(
+    SearchFilterSettings searchFilterSettings,
+  ) async {
+    await Future.delayed(const Duration(seconds: 1));
+    return Success(null);
+    // return Error(DomainError.unknownError);
   }
 }

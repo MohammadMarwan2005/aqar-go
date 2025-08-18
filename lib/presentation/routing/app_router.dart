@@ -3,6 +3,7 @@ import 'package:aqar_go/presentation/feature/ad_details/cubit/ad_details_cubit.d
 import 'package:aqar_go/presentation/feature/check_password_otp/check_password_otp_screen.dart';
 import 'package:aqar_go/presentation/feature/near_to_you/cubit/near_to_you_cubit.dart';
 import 'package:aqar_go/presentation/feature/near_to_you/near_to_you_screen.dart';
+import 'package:aqar_go/presentation/feature/notify_me/cubit/notify_me_cubit.dart';
 import 'package:aqar_go/presentation/feature/plans/plans_screen.dart';
 import 'package:aqar_go/presentation/feature/profile/show/profile_cubit.dart';
 import 'package:aqar_go/presentation/feature/report/cubit/report_cubit.dart';
@@ -280,8 +281,15 @@ final appRouter = GoRouter(
       path: Routes.searchResults,
       builder: (context, state) {
         final settings = state.extra as SearchFilterSettings;
-        return BlocProvider<SearchResultsCubit>(
-          create: (context) => SearchResultsCubit(getIt(), settings),
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider<SearchResultsCubit>(
+              create: (context) => SearchResultsCubit(getIt(), settings),
+            ),
+            BlocProvider<NotifyMeCubit>(
+              create: (context) => NotifyMeCubit(getIt(), settings, getIt()),
+            ),
+          ],
           child: SearchResultsScreen(),
         );
       },
