@@ -65,62 +65,60 @@ class ImagePickerWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 titleWidget,
-                SizedBox(
-                  height: rowCount * 120,
-                  child: GridView.count(
-                    crossAxisCount: 3,
-                    mainAxisSpacing: 1,
-                    crossAxisSpacing: 1,
-                    physics: const NeverScrollableScrollPhysics(),
-                    children: [
-                      ...files.map((file) {
-                        return ClickableCard(
-                          onTap: () {
-                            context.showMyAlertDialog(
-                              "Remove Image?".tr(context),
-                              [
-                                "Are you sure you want to remove this image?"
-                                    .tr(context),
-                              ],
-                              true,
-                              gotItPlaceholder: "Remove".tr(context),
-                              onGotItClicked: () {
-                                context.read<MediaPickerCubit>().removeImage(
-                                  file,
-                                );
+                GridView.count(
+                  crossAxisCount: 3,
+                  mainAxisSpacing: 1,
+                  crossAxisSpacing: 1,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: [
+                    ...files.map((file) {
+                      return ClickableCard(
+                        onTap: () {
+                          context.showMyAlertDialog(
+                            "Remove Image?".tr(context),
+                            [
+                              "Are you sure you want to remove this image?"
+                                  .tr(context),
+                            ],
+                            true,
+                            gotItPlaceholder: "Remove".tr(context),
+                            onGotItClicked: () {
+                              context.read<MediaPickerCubit>().removeImage(
+                                file,
+                              );
+                            },
+                            firstAction: TextButton(
+                              onPressed: () {
+                                context.pop();
                               },
-                              firstAction: TextButton(
-                                onPressed: () {
-                                  context.pop();
-                                },
-                                child: Text("Cancel"),
-                              ),
-                            );
-                          },
-                          child: _FileImage(file: file),
-                        );
-                      }),
-                      if (files.length < 10)
-                        ClickableCard(
-                          onTap: () {
-                            context.read<MediaPickerCubit>().pickImage();
-                          },
-                          child: Container(
-                            color: Colors.transparent,
-                            child: Center(
-                              child: Icon(
-                                Icons.add,
-                                size: 50,
-                                color: Theme
-                                    .of(context)
-                                    .iconTheme
-                                    .color,
-                              ),
+                              child: Text("Cancel"),
+                            ),
+                          );
+                        },
+                        child: _FileImage(file: file),
+                      );
+                    }),
+                    if (files.length < 10)
+                      ClickableCard(
+                        onTap: () {
+                          context.read<MediaPickerCubit>().pickImage();
+                        },
+                        child: Container(
+                          color: Colors.transparent,
+                          child: Center(
+                            child: Icon(
+                              Icons.add,
+                              size: 50,
+                              color: Theme
+                                  .of(context)
+                                  .iconTheme
+                                  .color,
                             ),
                           ),
                         ),
-                    ],
-                  ),
+                      ),
+                  ],
                 ),
               ],
             );
