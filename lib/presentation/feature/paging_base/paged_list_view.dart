@@ -102,9 +102,13 @@ class _PagedListViewState<T> extends State<PagedListView<T>> {
                         widget.fetchNextPage,
                       );
                     } else {
-                      return ErrorMessage(
-                        error: error,
-                        onTryAgain: widget.fetchNextPage,
+                      return SizedBox(
+                        width: widget.height,
+                        height: widget.height,
+                        child: ErrorMessage(
+                          error: error,
+                          onTryAgain: widget.fetchNextPage,
+                        ),
                       );
                     }
                   },

@@ -257,9 +257,8 @@ class SimilarAdsHorizontalList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final cardWidth = 0.6 * screenWidth;
-    final cardHeight = cardWidth * 1.4;
+    final cardWidth = SmallAdCard.getWidth(context);
+    final cardHeight = SmallAdCard.getHeight(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

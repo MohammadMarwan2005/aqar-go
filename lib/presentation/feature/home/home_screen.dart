@@ -61,9 +61,8 @@ class _NearToYouWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final cardWidth = 0.7 * screenWidth;
-    final cardHeight = cardWidth * 1.2;
+    final cardWidth = SmallAdCard.getWidth(context);
+    final cardHeight = SmallAdCard.getHeight(context);
     return Column(
       children: [
         TitleWithSeeAll(

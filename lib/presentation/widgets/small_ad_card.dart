@@ -17,6 +17,9 @@ class SmallAdCard extends StatelessWidget {
     required this.onTap,
   });
 
+  static double getHeight(BuildContext context) => MediaQuery.of(context).size.height * 0.4;
+  static double getWidth(BuildContext context) => MediaQuery.of(context).size.width * 0.7;
+
   @override
   Widget build(BuildContext context) {
     final imageUrl = ad.property.images.firstOrNull?.imageUrl;
@@ -75,12 +78,9 @@ class SmallAdCard extends StatelessWidget {
                   ],
                 ),
               ),
-              Expanded(
-                flex: 1,
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: AdPrimaryInfo(ad: ad, showPropertyType: false),
-                ),
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: AdPrimaryInfo(ad: ad, showPropertyType: false),
               ),
             ],
           ),
