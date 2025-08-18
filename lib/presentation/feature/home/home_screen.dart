@@ -66,25 +66,11 @@ class _NearToYouWidget extends StatelessWidget {
     final cardHeight = cardWidth * 1.2;
     return Column(
       children: [
-        Row(
-          children: [
-            Text(
-              "Near To You".tr(context),
-              style: Theme.of(context).textTheme.headlineSmall,
-            ),
-            const Spacer(),
-            TextButton(
-              onPressed: () {
-                context.pushRoute(Routes.nearToYou);
-              },
-              child: Text(
-                "See All".tr(context),
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-              ),
-            ),
-          ],
+        TitleWithSeeAll(
+          title: "Near To You".tr(context),
+          onSeeAllClick: () {
+            context.pushRoute(Routes.nearToYou);
+          },
         ),
         SizedBox(height: 8),
         BlocBuilder<NearToYouCubit, PagingState<Ad>>(
@@ -112,25 +98,11 @@ class _NearToYouWidget extends StatelessWidget {
             );
           },
         ),
-        Row(
-          children: [
-            Text(
-              "Recommended".tr(context),
-              style: Theme.of(context).textTheme.headlineSmall,
-            ),
-            const Spacer(),
-            TextButton(
-              onPressed: () {
-                context.pushRoute(Routes.recommendedAds);
-              },
-              child: Text(
-                "See All".tr(context),
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-              ),
-            ),
-          ],
+        TitleWithSeeAll(
+          title: "Recommended".tr(context),
+          onSeeAllClick: () {
+            context.pushRoute(Routes.recommendedAds);
+          },
         ),
         SizedBox(height: 8),
         BlocBuilder<RecommendedAdsCubit, PagingState<Ad>>(
@@ -157,6 +129,34 @@ class _NearToYouWidget extends StatelessWidget {
               },
             );
           },
+        ),
+      ],
+    );
+  }
+}
+
+class TitleWithSeeAll extends StatelessWidget {
+  final String title;
+  final Function() onSeeAllClick;
+  final String? seeAllPlaceholder;
+  final bool showSeeAll;
+
+  const TitleWithSeeAll({super.key, required this.title, required this.onSeeAllClick, this.seeAllPlaceholder, this.showSeeAll = true});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Text(title, style: Theme.of(context).textTheme.headlineSmall),
+        const Spacer(),
+        if(showSeeAll) TextButton(
+          onPressed: onSeeAllClick,
+          child: Text(
+            seeAllPlaceholder ?? "See All".tr(context),
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+              color: Theme.of(context).colorScheme.primary,
+            ),
+          ),
         ),
       ],
     );

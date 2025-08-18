@@ -148,6 +148,24 @@ class AdRepoImpl extends AdRepo {
   }
 
   @override
+  Future<Resource<List<Ad>>> getSimilarAds({
+    required int adId,
+    required int page,
+    required int pageSize,
+  }) {
+    // todo: call getSimilarAds(adId);
+    final request = GetRecommendedAdsRequest(pageSize: pageSize);
+    return _safeAPICaller.call<List<Ad>, APIResponse<PagedResponse<AdData>>>(
+      apiCall: () {
+        return _apiService.getRecommendedAds(page: page, request: request);
+      },
+      dataToDomain: (data) {
+        return data.data.data.map((adData) => adData.toDomain()).toList();
+      },
+    );
+  }
+
+  @override
   Future<Resource<List<Ad>>> searchAds({
     required int page,
     required int pageSize,

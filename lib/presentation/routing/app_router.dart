@@ -48,6 +48,7 @@ import '../feature/reset_password/cubit/reset_password_cubit.dart';
 import '../feature/search/filter/cubit/search_filter_cubit.dart';
 import '../feature/search/results/cubit/search_results_cubit.dart';
 import '../feature/search/results/search_results_screen.dart';
+import '../feature/similar_ads/cubit/similar_ads_cubit.dart';
 import '../feature/test/test_screen.dart';
 import '../feature/user_nav_shell/user_nav_shell.dart';
 import '../feature/verify_email/cubit/verify_email_cubit.dart';
@@ -266,6 +267,9 @@ final appRouter = GoRouter(
             ),
             BlocProvider<ReportCubit>(
               create: (context) => ReportCubit(id, getIt()),
+            ),
+            BlocProvider<SimilarAdsCubit>(
+              create: (context) => SimilarAdsCubit(id, getIt()),
             ),
           ],
           child: AdDetailsScreen(),

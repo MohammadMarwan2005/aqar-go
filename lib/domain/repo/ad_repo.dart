@@ -21,6 +21,12 @@ abstract class AdRepo {
     required int pageSize,
   });
 
+  Future<Resource<List<Ad>>> getSimilarAds({
+    required int adId,
+    required int page,
+    required int pageSize,
+  });
+
   Future<Resource<int>> createAd(int propertyId);
 
   Future<Resource<void>> activateAllAds();

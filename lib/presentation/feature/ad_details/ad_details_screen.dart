@@ -1,5 +1,6 @@
 import 'package:aqar_go/presentation/feature/auth/widgets/auth_suggestion.dart';
 import 'package:aqar_go/presentation/feature/report/report_bottom_sheet.dart';
+import 'package:aqar_go/presentation/helper/navigation_helper.dart';
 import 'package:aqar_go/presentation/helper/ui_helper.dart';
 import 'package:aqar_go/presentation/helper/url_helper.dart';
 import 'package:aqar_go/presentation/lang/app_localization.dart';
@@ -13,15 +14,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:material_symbols_icons/material_symbols_icons.dart';
 
 import '../../../domain/model/ad/ad.dart';
 import '../../../domain/model/profile/user_profile.dart';
-import '../../../domain/model/property.dart';
 import '../../assets/assets.gen.dart';
+import '../../routing/routes.dart';
 import '../../widgets/error_message.dart';
 import '../../widgets/loading_screen.dart';
+import '../../widgets/small_ad_card.dart';
+import '../paging_base/cubit/paging_cubit.dart';
+import '../paging_base/paged_list_view.dart';
 import '../report/cubit/report_cubit.dart';
+import '../similar_ads/cubit/similar_ads_cubit.dart';
 import 'cubit/ad_details_cubit.dart';
 
 class AdDetailsScreen extends StatelessWidget {
@@ -121,6 +125,8 @@ class _AdDetailsContent extends StatelessWidget {
             ),
             SizedBox(height: 16),
             ScreenPadding(child: _OwnerInfo(profile: ad.property.userProfile)),
+            const SizedBox(height: 32),
+            SimilarAdsHorizontalList(),
             SizedBox(height: 48),
             AuthSuggestion(
               suggestionText: "Inappropriate content?".tr(context),
@@ -154,43 +160,56 @@ class _OwnerInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (profile == null) {
-      return Text("Owner info is not available!".tr(context));
-    }
-    return Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _ProfileImage(imageUrl: profile?.imageUrl),
-        const SizedBox(width: 16),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "${profile?.firstName ?? ""} ${profile?.lastName ?? ""} ",
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            Text(
-              profile!.phoneNumber,
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-          ],
+        Text(
+          "Owner info".tr(context),
+          style: Theme.of(context).textTheme.titleLarge,
         ),
-        Spacer(),
-        IconButton(
-          onPressed: () {
-            openUrl(getCallUrl(profile?.phoneNumber ?? ""), () {
-              _failedToOpenUrl(context);
-            });
-          },
-          icon: Icon(Icons.call),
-        ),
-        IconButton(
-          onPressed: () {
-            openUrl(getWhatsappUrl(profile?.phoneNumber ?? ""), () {
-              _failedToOpenUrl(context);
-            });
-          },
-          icon: SvgPicture.asset(Assets.svgs.whatsappLogo2.path, height: 24),
-        ),
+        const SizedBox(height: 8),
+        switch (profile) {
+          null => Text("Owner info is not available!".tr(context)),
+          UserProfile() => Row(
+            children: [
+              _ProfileImage(imageUrl: profile?.imageUrl),
+              const SizedBox(width: 16),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "${profile?.firstName ?? ""} ${profile?.lastName ?? ""} ",
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  Text(
+                    profile!.phoneNumber,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                ],
+              ),
+              Spacer(),
+              IconButton(
+                onPressed: () {
+                  openUrl(getCallUrl(profile?.phoneNumber ?? ""), () {
+                    _failedToOpenUrl(context);
+                  });
+                },
+                icon: Icon(Icons.call),
+              ),
+              IconButton(
+                onPressed: () {
+                  openUrl(getWhatsappUrl(profile?.phoneNumber ?? ""), () {
+                    _failedToOpenUrl(context);
+                  });
+                },
+                icon: SvgPicture.asset(
+                  Assets.svgs.whatsappLogo2.path,
+                  height: 24,
+                ),
+              ),
+            ],
+          ),
+        },
       ],
     );
   }
@@ -229,6 +248,54 @@ class _ProfileImage extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
       ),
+    );
+  }
+}
+
+class SimilarAdsHorizontalList extends StatelessWidget {
+  const SimilarAdsHorizontalList({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final cardWidth = 0.6 * screenWidth;
+    final cardHeight = cardWidth * 1.4;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ScreenPadding(
+          child: Text(
+            "Similar Ads".tr(context),
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+        ),
+        SizedBox(height: 8),
+        BlocBuilder<SimilarAdsCubit, PagingState<Ad>>(
+          builder: (context, state) {
+            return PagedListView(
+              height: cardHeight,
+              scrollDirection: Axis.horizontal,
+              state: state,
+              itemBuilder: (item) {
+                return SmallAdCard(
+                  width: cardWidth,
+                  height: cardHeight,
+                  ad: item,
+                  onTap: () {
+                    context.pushRoute(Routes.getViewAd(item.id));
+                  },
+                );
+              },
+              fetchNextPage: () {
+                context.read<SimilarAdsCubit>().fetchNextPageItems();
+              },
+              onRefresh: () {
+                context.read<SimilarAdsCubit>().resetState();
+              },
+            );
+          },
+        ),
+      ],
     );
   }
 }

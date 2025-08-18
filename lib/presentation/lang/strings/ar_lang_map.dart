@@ -318,5 +318,6 @@ const Map<String, String> _arLangMap = {
   "Failed to open this link!": "فشل فتح هذا الرابط!",
   "Copied to clipboard!": "تم النسخ الى الحافظة!",
   "Owner info is not available!": "معلومات المالك غير متاحة!",
-
+  "Similar Ads": "إعلانات مشابهة",
+  "Owner info": "معلومات المالك",
 };
