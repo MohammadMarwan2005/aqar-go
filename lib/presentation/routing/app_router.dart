@@ -14,6 +14,7 @@ import 'package:aqar_go/presentation/feature/my_ad_details/my_ad_actions_cubit/m
 import 'package:aqar_go/presentation/feature/my_ad_details/my_ad_details_cubit/my_ad_details_cubit.dart';
 import 'package:aqar_go/presentation/feature/my_ads/activate_ads_cubit/activate_ads_cubit.dart';
 import 'package:aqar_go/presentation/feature/my_properties/my_properties_screen.dart';
+import 'package:aqar_go/presentation/feature/review/ad_reviews/cubit/ad_reviews_cubit.dart';
 import 'package:aqar_go/presentation/feature/search/filter/search_filter_screen.dart';
 import 'package:aqar_go/presentation/feature/verify_email/verify_instruction.dart';
 import 'package:aqar_go/presentation/helper/navigation_helper.dart';
@@ -271,6 +272,9 @@ final appRouter = GoRouter(
             ),
             BlocProvider<SimilarAdsCubit>(
               create: (context) => SimilarAdsCubit(id, getIt()),
+            ),
+            BlocProvider<AdReviewsCubit>(
+              create: (context) => AdReviewsCubit(id, getIt()),
             ),
           ],
           child: AdDetailsScreen(),

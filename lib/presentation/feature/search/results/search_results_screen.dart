@@ -221,6 +221,7 @@ class _NotifyMeInfo extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        Spacer(),
         if (isSuccess) Icon(Icons.check, color: Colors.green, size: 20),
         if (!isSuccess)
           Icon(
@@ -236,6 +237,7 @@ class _NotifyMeInfo extends StatelessWidget {
                 .tr(context),
           ),
         ),
+        Spacer(),
       ],
     );
   }

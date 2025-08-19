@@ -19,7 +19,9 @@ import '../../data/api/api_service.dart';
 import '../../data/api/safe_api_caller.dart';
 import '../../data/repo/ad_repo_impl.dart';
 import '../../data/repo/local_data_repo.dart';
+import '../../data/repo/review_repo_impl.dart';
 import '../../domain/repo/property_repo.dart';
+import '../../domain/repo/review_repo.dart';
 import '../../domain/usecase/create_property_usecase.dart';
 import '../../presentation/feature/auth/login/login_cubit.dart';
 import '../../presentation/feature/create_update_post/cubit/create_update_post_cubit.dart';
@@ -87,6 +89,7 @@ Future<void> di() async {
     () => PropertyRepoImpl(getIt(), getIt()),
   );
   getIt.registerLazySingleton<AdRepo>(() => AdRepoImpl(getIt(), getIt()));
+  getIt.registerLazySingleton<ReviewRepo>(() => ReviewRepoImpl(getIt(), getIt()));
 
   getIt.registerLazySingleton<LocationManager>(() => LocationManager());
   getIt.registerLazySingleton<SharePlus>(() => SharePlus.instance);

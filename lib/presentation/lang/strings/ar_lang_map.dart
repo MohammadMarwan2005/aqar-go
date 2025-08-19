@@ -320,7 +320,13 @@ const Map<String, String> _arLangMap = {
   "Owner info is not available!": "معلومات المالك غير متاحة!",
   "Similar Ads": "إعلانات مشابهة",
   "Owner info": "معلومات المالك",
-  "We will notify you when someone publish an ad matches you search": "سوف نرسل لك إشعاراً عندما يتم نشر إعلان يتوافق مع بحثك",
+  "We will notify you when someone publish an ad matches you search":
+      "سوف نرسل لك إشعاراً عندما يتم نشر إعلان يتوافق مع بحثك",
   "No more results!": "لا يوجد المزيد من النتايج!",
-  "Notify Me": "أرسل لي إشعاراً"
+  "Notify Me": "أرسل لي إشعاراً",
+  " See less": "اظهار أقل ",
+  " See more": "اظهار المزيد ",
+  "Reviews": "المراجعات",
+  "Unknown User": "مستخدم غير معروف",
+  "No reviews for this ad yet!": "لا يوجد مراجعات لهذا الإعلان بعد!",
 };

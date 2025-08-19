@@ -5,6 +5,7 @@ import 'package:aqar_go/data/model/auth/auth_response_data.dart';
 import 'package:aqar_go/data/model/near_to_you/near_to_you_request.dart';
 import 'package:aqar_go/data/model/paged_response.dart';
 import 'package:aqar_go/data/model/property/property_data.dart';
+import 'package:aqar_go/data/model/review/data_review.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
@@ -122,4 +123,13 @@ abstract class APIService {
   Future<APIResponse<dynamic>> createReport(
     @Body() CreateReportRequest createReportRequest,
   );
+
+  @GET(APIConstants.getAdReviewsUrl)
+  Future<APIResponse<List<DataReview>>> getAdReviews(@Path("id") int adId);
+
+  @GET(APIConstants.getReviewByIdUrl)
+  Future<APIResponse<DataReview>> getReviewById(@Path("id") int reviewId);
+
+  @POST(APIConstants.createReviewUrl)
+  Future<APIResponse<DataReview>> createReview(@Body() DataReview body);
 }

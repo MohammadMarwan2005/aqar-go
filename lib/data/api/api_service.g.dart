@@ -679,6 +679,104 @@ class _APIService implements APIService {
     return _value;
   }
 
+  @override
+  Future<APIResponse<List<DataReview>>> getAdReviews(int adId) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<APIResponse<List<DataReview>>>(
+      Options(method: 'GET', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            'http://116.203.254.150:8001/api/property/${adId}/reviews',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late APIResponse<List<DataReview>> _value;
+    try {
+      _value = APIResponse<List<DataReview>>.fromJson(
+        _result.data!,
+        (json) =>
+            json is List<dynamic>
+                ? json
+                    .map<DataReview>(
+                      (i) => DataReview.fromJson(i as Map<String, dynamic>),
+                    )
+                    .toList()
+                : List.empty(),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<APIResponse<DataReview>> getReviewById(int reviewId) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<APIResponse<DataReview>>(
+      Options(method: 'GET', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            'http://116.203.254.150:8001/api/reviews',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late APIResponse<DataReview> _value;
+    try {
+      _value = APIResponse<DataReview>.fromJson(
+        _result.data!,
+        (json) => DataReview.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<APIResponse<DataReview>> createReview(DataReview body) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body.toJson());
+    final _options = _setStreamType<APIResponse<DataReview>>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            'http://116.203.254.150:8001/api/reviews',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late APIResponse<DataReview> _value;
+    try {
+      _value = APIResponse<DataReview>.fromJson(
+        _result.data!,
+        (json) => DataReview.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||

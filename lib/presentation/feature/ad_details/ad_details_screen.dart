@@ -1,5 +1,6 @@
 import 'package:aqar_go/presentation/feature/auth/widgets/auth_suggestion.dart';
 import 'package:aqar_go/presentation/feature/report/report_bottom_sheet.dart';
+import 'package:aqar_go/presentation/feature/review/ad_reviews/ad_reviews_section.dart';
 import 'package:aqar_go/presentation/helper/navigation_helper.dart';
 import 'package:aqar_go/presentation/helper/ui_helper.dart';
 import 'package:aqar_go/presentation/helper/url_helper.dart';
@@ -126,8 +127,17 @@ class _AdDetailsContent extends StatelessWidget {
             SizedBox(height: 16),
             ScreenPadding(child: _OwnerInfo(profile: ad.property.userProfile)),
             const SizedBox(height: 32),
-            SimilarAdsHorizontalList(),
-            SizedBox(height: 48),
+            ScreenPadding(child: SimilarAdsHorizontalList()),
+            const SizedBox(height: 32),
+            ScreenPadding(
+              child: Text(
+                "Reviews".tr(context),
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+            ),
+            const SizedBox(height: 8),
+            ScreenPadding(child: AdReviewsSection()),
+            const SizedBox(height: 48),
             AuthSuggestion(
               suggestionText: "Inappropriate content?".tr(context),
               buttonLabel: "Report Ad".tr(context),
@@ -172,7 +182,7 @@ class _OwnerInfo extends StatelessWidget {
           null => Text("Owner info is not available!".tr(context)),
           UserProfile() => Row(
             children: [
-              _ProfileImage(imageUrl: profile?.imageUrl),
+              ProfileImage(imageUrl: profile?.imageUrl),
               const SizedBox(width: 16),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -219,14 +229,15 @@ class _OwnerInfo extends StatelessWidget {
   }
 }
 
-class _ProfileImage extends StatelessWidget {
+class ProfileImage extends StatelessWidget {
   final String? imageUrl;
+  final double? radius;
 
-  const _ProfileImage({required this.imageUrl});
+  const ProfileImage({super.key, required this.imageUrl, this.radius});
 
   @override
   Widget build(BuildContext context) {
-    final doubleRadius = 48.0;
+    final doubleRadius = radius ?? 48.0;
     return CircleAvatar(
       backgroundColor: Colors.transparent,
       radius: doubleRadius / 2 + 10,
@@ -262,13 +273,11 @@ class SimilarAdsHorizontalList extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ScreenPadding(
-          child: Text(
-            "Similar Ads".tr(context),
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
+        Text(
+          "Similar Ads".tr(context),
+          style: Theme.of(context).textTheme.titleLarge,
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         BlocBuilder<SimilarAdsCubit, PagingState<Ad>>(
           builder: (context, state) {
             return PagedListView(

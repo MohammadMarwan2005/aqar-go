@@ -21,4 +21,7 @@ class APIConstants {
   static const String deactivateAdUrl = "$baseUrl/ad/unactivate";
   static const String deleteAdUrl = "$baseUrl/ad/delete";
   static const String createReportUrl = "$baseUrl/report/create";
+  static const String getReviewByIdUrl = "$baseUrl/reviews";
+  static const String getAdReviewsUrl = "$baseUrl/property/{id}/reviews";
+  static const String createReviewUrl = "$baseUrl/reviews";
 }

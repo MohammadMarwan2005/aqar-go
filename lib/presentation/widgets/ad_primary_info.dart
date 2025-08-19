@@ -1,5 +1,6 @@
 import 'package:aqar_go/domain/model/property.dart';
 import 'package:aqar_go/presentation/lang/app_localization.dart';
+import 'package:aqar_go/presentation/widgets/expandable_text.dart';
 import 'package:aqar_go/presentation/widgets/url_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -29,10 +30,8 @@ class AdPrimaryInfo extends StatelessWidget {
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
         SizedBox(height: 4),
-        Text(
-          ad.property.description,
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
+        ExpandableText(
+          text: ad.property.description,
           style: TextStyle(fontSize: 14, color: Colors.grey[700]),
         ),
         SizedBox(height: 8),
