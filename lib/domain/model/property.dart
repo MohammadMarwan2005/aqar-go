@@ -4,6 +4,7 @@ import 'apartment/furnished_type.dart';
 import 'land/land_slop.dart';
 import 'land/land_type.dart';
 import 'media_file.dart';
+import 'profile/user_profile.dart';
 
 part 'land/land.dart';
 part 'office/office.dart';
@@ -25,6 +26,7 @@ class Property {
   final int id;
   final int userId;
   final int propertableId;
+  final UserProfile? userProfile;
 
   final bool isAd;
 
@@ -43,7 +45,8 @@ class Property {
     required this.description,
     required this.propertable,
     required this.images,
-    required this.isAd
+    required this.isAd,
+    this.userProfile
   });
 }
 

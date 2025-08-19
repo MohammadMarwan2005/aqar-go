@@ -5,6 +5,7 @@ import 'package:aqar_go/data/model/near_to_you/near_to_you_request.dart';
 import 'package:aqar_go/data/model/paged_response.dart';
 import 'package:aqar_go/data/model/search/data_search_filter_settings.dart';
 import 'package:aqar_go/domain/model/ad/ad.dart';
+import 'package:aqar_go/domain/model/report/report_reason.dart';
 import 'package:aqar_go/domain/model/resource.dart';
 
 import '../../domain/model/search/search_filter_settings.dart';
@@ -15,6 +16,8 @@ import '../model/ad/request/create_ad_request.dart';
 import '../model/ad/response/create_ad_response.dart';
 import '../model/api_response.dart';
 import '../model/paging/page_request.dart';
+import '../model/report/create/create_report_request.dart';
+import '../model/report/data_report_reason.dart';
 
 class AdRepoImpl extends AdRepo {
   final APIService _apiService;
@@ -129,23 +132,87 @@ class AdRepoImpl extends AdRepo {
   }
 
   @override
-  Future<Resource<List<Ad>>> searchAds({
+  Future<Resource<List<Ad>>> getRecommendedAds({
     required int page,
     required int pageSize,
-    required SearchFilterSettings searchFilterSettings,
-  }) async {
-    final request = DataSearchFilterSettings.fromDomain(searchFilterSettings, pageSize);
-    debugLog(request.toJson().toString());
+  }) {
+    final request = PageRequest(pageSize: pageSize);
     return _safeAPICaller.call<List<Ad>, APIResponse<PagedResponse<AdData>>>(
       apiCall: () {
-        return _apiService.search(
-          page,
-          request,
-        );
+        return _apiService.getRecommendedAds(page: page, request: request);
       },
       dataToDomain: (data) {
         return data.data.data.map((adData) => adData.toDomain()).toList();
       },
     );
+  }
+
+  @override
+  Future<Resource<List<Ad>>> getSimilarAds({
+    required int adId,
+    required int page,
+    required int pageSize,
+  }) {
+    final request = PageRequest(pageSize: pageSize);
+    return _safeAPICaller.call<List<Ad>, APIResponse<PagedResponse<AdData>>>(
+      apiCall: () {
+        return _apiService.getSimilarAds(page: page, request: request, adId: adId);
+      },
+      dataToDomain: (data) {
+        return data.data.data.map((adData) => adData.toDomain()).toList();
+      },
+    );
+  }
+
+  @override
+  Future<Resource<List<Ad>>> searchAds({
+    required int page,
+    required int pageSize,
+    required SearchFilterSettings searchFilterSettings,
+  }) async {
+    final request = DataSearchFilterSettings.fromDomain(
+      searchFilterSettings,
+      pageSize,
+    );
+    debugLog(request.toJson().toString());
+    return _safeAPICaller.call<List<Ad>, APIResponse<PagedResponse<AdData>>>(
+      apiCall: () {
+        return _apiService.search(page, request);
+      },
+      dataToDomain: (data) {
+        return data.data.data.map((adData) => adData.toDomain()).toList();
+      },
+    );
+  }
+
+  @override
+  Future<Resource<void>> reportAd(
+    int adId,
+    ReportReason reason, {
+    String? description,
+  }) {
+    return _safeAPICaller.call<void, APIResponse<dynamic>>(
+      apiCall: () {
+        return _apiService.createReport(
+          CreateReportRequest(
+            adId: adId,
+            reason: DataReportReason.fromDomain(reason).backendValue,
+            description: description,
+          ),
+        );
+      },
+      dataToDomain: (data) {
+        return;
+      },
+    );
+  }
+
+  @override
+  Future<Resource<void>> notifyMe(
+    SearchFilterSettings searchFilterSettings,
+  ) async {
+    await Future.delayed(const Duration(seconds: 1));
+    return Success(null);
+    // return Error(DomainError.unknownError);
   }
 }

@@ -1,27 +1,82 @@
+import 'package:aqar_go/presentation/feature/auth/widgets/auth_suggestion.dart';
+import 'package:aqar_go/presentation/feature/report/report_bottom_sheet.dart';
+import 'package:aqar_go/presentation/feature/review/ad_reviews/ad_reviews_section.dart';
+import 'package:aqar_go/presentation/helper/navigation_helper.dart';
+import 'package:aqar_go/presentation/helper/ui_helper.dart';
+import 'package:aqar_go/presentation/helper/url_helper.dart';
 import 'package:aqar_go/presentation/lang/app_localization.dart';
+import 'package:aqar_go/presentation/widgets/ad_primary_info.dart';
+import 'package:aqar_go/presentation/widgets/ad_secondary_info.dart';
 import 'package:aqar_go/presentation/widgets/images_slider.dart';
+import 'package:aqar_go/presentation/widgets/screen_horizontal_padding.dart';
 import 'package:aqar_go/presentation/widgets/share_deep_link_icon.dart';
 import 'package:aqar_go/presentation/widgets/up_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../domain/model/ad/ad.dart';
-import '../../../domain/model/property.dart';
+import '../../../domain/model/profile/user_profile.dart';
+import '../../assets/assets.gen.dart';
+import '../../routing/routes.dart';
 import '../../widgets/error_message.dart';
 import '../../widgets/loading_screen.dart';
-import '../../widgets/screen_horizontal_padding.dart';
+import '../../widgets/small_ad_card.dart';
+import '../paging_base/cubit/paging_cubit.dart';
+import '../paging_base/paged_list_view.dart';
+import '../report/cubit/report_cubit.dart';
+import '../similar_ads/cubit/similar_ads_cubit.dart';
 import 'cubit/ad_details_cubit.dart';
 
 class AdDetailsScreen extends StatelessWidget {
   const AdDetailsScreen({super.key});
 
+  Widget _buildWhenReport({
+    required BuildContext context,
+    required Widget Function() isReportSheetOpen,
+    required Widget Function() isReportSheetClosed,
+  }) {
+    return ValueListenableBuilder<bool>(
+      valueListenable: context.read<ReportCubit>().isReportSheetOpen,
+      builder: (context, isOpen, _) {
+        switch (isOpen) {
+          case true:
+            return isReportSheetOpen();
+          case false:
+            return isReportSheetClosed();
+        }
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: UpButton(),
-        title: Text("Ad Details".tr(context)),
-        actions: [ShareDeepLinkIcon()],
+        leading: _buildWhenReport(
+          context: context,
+          isReportSheetOpen:
+              () => IconButton(
+                onPressed: () {
+                  context.pop();
+                },
+                icon: Icon(Icons.close),
+              ),
+          isReportSheetClosed: () => UpButton(),
+        ),
+        title: _buildWhenReport(
+          context: context,
+          isReportSheetOpen: () => Text("Report Ad".tr(context)),
+          isReportSheetClosed: () => Text("Ad Details".tr(context)),
+        ),
+        actions: [
+          _buildWhenReport(
+            context: context,
+            isReportSheetOpen: () => SizedBox.shrink(),
+            isReportSheetClosed: () => const ShareDeepLinkIcon(),
+          ),
+        ],
       ),
       body: SafeArea(
         child: BlocBuilder<AdDetailsCubit, AdDetailsState>(
@@ -47,124 +102,209 @@ class AdDetailsScreen extends StatelessWidget {
 class _AdDetailsContent extends StatelessWidget {
   final Ad ad;
 
-  const _AdDetailsContent({super.key, required this.ad});
+  const _AdDetailsContent({required this.ad});
 
   @override
   Widget build(BuildContext context) {
+    final reportCubit = context.read<ReportCubit>();
     final property = ad.property;
-
     return Scaffold(
-      body: ScreenPadding(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Images slider
-              ImagesSlider.fromFiles(files: ad.property.images),
-              const SizedBox(height: 12),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      property.title,
-                      style: Theme.of(context).textTheme.headlineMedium,
-                    ),
-                    const SizedBox(height: 8),
-                    Text("${"Price".tr(context)}: ${property.price}"),
-                    Text("${"Area".tr(context)}: ${property.area} m²"),
-                    Text("${"Views".tr(context)}: ${ad.views}"),
-                    const SizedBox(height: 8),
-                    Text(property.description),
-                  ],
-                ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ImagesSlider.fromFiles(files: ad.property.images),
+            const SizedBox(height: 12),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: AdPrimaryInfo(ad: ad, isLocationLink: true),
+            ),
+            Divider(height: 16),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: AdSecondaryInfo(propertable: property.propertable),
+            ),
+            SizedBox(height: 16),
+            ScreenPadding(child: _OwnerInfo(profile: ad.property.userProfile)),
+            const SizedBox(height: 32),
+            ScreenPadding(child: SimilarAdsHorizontalList()),
+            const SizedBox(height: 32),
+            ScreenPadding(
+              child: Text(
+                "Reviews".tr(context),
+                style: Theme.of(context).textTheme.titleLarge,
               ),
-
-              const Divider(height: 32),
-
-              // Property-specific content
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: PropertableContent(property.propertable),
-              ),
-            ],
-          ),
+            ),
+            const SizedBox(height: 8),
+            ScreenPadding(child: AdReviewsSection()),
+            const SizedBox(height: 48),
+            AuthSuggestion(
+              suggestionText: "Inappropriate content?".tr(context),
+              buttonLabel: "Report Ad".tr(context),
+              onClick: () {
+                final controller = showBottomSheet(
+                  context: context,
+                  builder:
+                      (context) => BlocProvider.value(
+                        value: reportCubit,
+                        child: ReportBottomSheet(),
+                      ),
+                );
+                controller.closed.then((_) {
+                  reportCubit.isSheetOpen = false;
+                });
+                reportCubit.isSheetOpen = true;
+              },
+            ),
+            const SizedBox(height: 16),
+          ],
         ),
       ),
     );
   }
 }
 
-class PropertableContent extends StatelessWidget {
-  final Propertable propertable;
+class _OwnerInfo extends StatelessWidget {
+  final UserProfile? profile;
 
-  const PropertableContent(this.propertable, {super.key});
+  const _OwnerInfo({this.profile});
 
   @override
   Widget build(BuildContext context) {
-    switch (propertable) {
-      case Apartment a:
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _item("Floor", a.floor),
-            _item("Rooms", a.rooms),
-            _item("Bedrooms", a.bedrooms),
-            _item("Bathrooms", a.bathrooms),
-            _item("Furnished", a.furnished ? a.furnishedType : "No"),
-            _item("Elevator", a.hasElevator),
-            _item("Garage", a.hasGarage),
-            _item("Alt Power", a.hasAlternativePower),
-          ],
-        );
-
-      case Office o:
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _item("Floor", o.floor),
-            _item("Rooms", o.rooms),
-            _item("Bathrooms", o.bathrooms),
-            _item("Meeting Rooms", o.meetingRooms ?? "-"),
-            _item("Parking", o.hasParking),
-          ],
-        );
-
-      case Land l:
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _item("Land Type", l.landType.name),
-            _item("Land Slope", l.landSlop.name),
-            _item("Serviced", l.isServiced),
-            _item("Inside Master Plan", l.isInsideMasterPlan),
-          ],
-        );
-
-      case Shop s:
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _item("Floor", s.floor),
-            _item("Shop Type", s.shopType.name),
-            _item("Warehouse", s.hasWarehouse),
-            _item("Bathroom", s.hasBathroom),
-            _item("AC", s.hasAc),
-          ],
-        );
-    }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Owner info".tr(context),
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+        const SizedBox(height: 8),
+        switch (profile) {
+          null => Text("Owner info is not available!".tr(context)),
+          UserProfile() => Row(
+            children: [
+              ProfileImage(imageUrl: profile?.imageUrl),
+              const SizedBox(width: 16),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "${profile?.firstName ?? ""} ${profile?.lastName ?? ""} ",
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  Text(
+                    profile!.phoneNumber,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                ],
+              ),
+              Spacer(),
+              IconButton(
+                onPressed: () {
+                  openUrl(getCallUrl(profile?.phoneNumber ?? ""), () {
+                    _failedToOpenUrl(context);
+                  });
+                },
+                icon: Icon(Icons.call),
+              ),
+              IconButton(
+                onPressed: () {
+                  openUrl(getWhatsappUrl(profile?.phoneNumber ?? ""), () {
+                    _failedToOpenUrl(context);
+                  });
+                },
+                icon: SvgPicture.asset(
+                  Assets.svgs.whatsappLogo2.path,
+                  height: 24,
+                ),
+              ),
+            ],
+          ),
+        },
+      ],
+    );
   }
 
-  Widget _item(String label, dynamic value) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 4),
-      child: Row(
-        children: [
-          Text("$label: ", style: const TextStyle(fontWeight: FontWeight.bold)),
-          Flexible(child: Text(value.toString())),
-        ],
+  _failedToOpenUrl(BuildContext context) {
+    context.showMySnackBar("Failed to open this link!".tr(context));
+  }
+}
+
+class ProfileImage extends StatelessWidget {
+  final String? imageUrl;
+  final double? radius;
+
+  const ProfileImage({super.key, required this.imageUrl, this.radius});
+
+  @override
+  Widget build(BuildContext context) {
+    final doubleRadius = radius ?? 48.0;
+    return CircleAvatar(
+      backgroundColor: Colors.transparent,
+      radius: doubleRadius / 2 + 10,
+      child: ClipOval(
+        clipBehavior: Clip.antiAlias,
+        child:
+            (imageUrl != null)
+                ? Image.network(
+                  imageUrl!,
+                  width: doubleRadius,
+                  height: doubleRadius,
+                  fit: BoxFit.cover,
+                )
+                // todo: use flutter gen
+                : Image.asset(
+                  "assets/images/profile_image_placeholder.png",
+                  width: doubleRadius,
+                  height: doubleRadius,
+                  fit: BoxFit.cover,
+                ),
       ),
+    );
+  }
+}
+
+class SimilarAdsHorizontalList extends StatelessWidget {
+  const SimilarAdsHorizontalList({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final cardWidth = SmallAdCard.getWidth(context);
+    final cardHeight = SmallAdCard.getHeight(context);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Similar Ads".tr(context),
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+        const SizedBox(height: 8),
+        BlocBuilder<SimilarAdsCubit, PagingState<Ad>>(
+          builder: (context, state) {
+            return PagedListView(
+              height: cardHeight,
+              scrollDirection: Axis.horizontal,
+              state: state,
+              itemBuilder: (item) {
+                return SmallAdCard(
+                  width: cardWidth,
+                  height: cardHeight,
+                  ad: item,
+                  onTap: () {
+                    context.pushRoute(Routes.getViewAd(item.id));
+                  },
+                );
+              },
+              fetchNextPage: () {
+                context.read<SimilarAdsCubit>().fetchNextPageItems();
+              },
+              onRefresh: () {
+                context.read<SimilarAdsCubit>().resetState();
+              },
+            );
+          },
+        ),
+      ],
     );
   }
 }

@@ -110,7 +110,10 @@ class _MyAdsList extends StatelessWidget {
                         child: MyAdCard(
                           ad: myAds[index],
                           onTap: () {
-                            context.push(Routes.getMyAdDetails(myAds[index].id));
+                            context.push(
+                              Routes.getMyAdDetails(myAds[index].id),
+                              extra: context.read<MyAdsCubit>(),
+                            );
                           },
                         ),
                       );
@@ -151,6 +154,7 @@ class _ActivateAllButton extends StatelessWidget {
             context.showMyAlertDialog("Ads Activated".tr(context), [
               "All ads are activated successfully!".tr(context),
             ], false);
+            context.read<MyAdsCubit>().getMyAds();
           },
         );
       },

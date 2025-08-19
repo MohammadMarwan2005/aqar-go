@@ -73,20 +73,23 @@ class _PlanWidget extends StatelessWidget {
     final cubit = context.read<PlansCubit>();
     final isPremiumCard = plan.isPremium;
 
+    Color getPremiumOrDefault(Color? fallback) =>
+        isPremiumCard ? theme.colorScheme.primary : (fallback ?? theme.hintColor);
+
     return Card(
       elevation: 4,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
-        side:
-            isCurrentPlan
-                ? BorderSide(color: theme.primaryColor, width: 2)
-                : BorderSide.none,
+        side: isCurrentPlan
+            ? BorderSide(color: theme.colorScheme.primary, width: 2)
+            : BorderSide.none,
       ),
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            /// Header Row (Plan name + Current badge)
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -94,30 +97,20 @@ class _PlanWidget extends StatelessWidget {
                   plan.nameId.tr(context),
                   style: theme.textTheme.headlineSmall?.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: isPremiumCard ? theme.primaryColor : null,
+                    color: getPremiumOrDefault(null),
                   ),
                 ),
                 if (isCurrentPlan)
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 4,
-                    ),
-                    decoration: BoxDecoration(
-                      color: theme.primaryColor.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Text(
-                      "Current Plan".tr(context),
-                      style: TextStyle(
-                        color: theme.primaryColor,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
+                  _Badge(
+                    text: "Current Plan".tr(context),
+                    background: theme.colorScheme.primary.withOpacity(0.1),
+                    foreground: theme.colorScheme.primary,
                   ),
               ],
             ),
             const SizedBox(height: 8),
+
+            /// Price
             Text.rich(
               TextSpan(
                 children: [
@@ -125,20 +118,20 @@ class _PlanWidget extends StatelessWidget {
                     text: "\$${plan.priceInDollar}",
                     style: theme.textTheme.headlineMedium?.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: isPremiumCard ? theme.primaryColor : null,
+                      color: getPremiumOrDefault(null),
                     ),
                   ),
                   TextSpan(
                     text: " /month".tr(context),
                     style: theme.textTheme.bodyLarge?.copyWith(
-                      color: Colors.grey[600],
+                      color: theme.colorScheme.onSurfaceVariant,
                     ),
                   ),
                   if (plan.priceInDollar == 0)
                     TextSpan(
                       text: " (Free Forever)".tr(context),
-                      style: TextStyle(
-                        color: Colors.green,
+                      style: theme.textTheme.bodyLarge?.copyWith(
+                        color: theme.colorScheme.secondary,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -146,59 +139,32 @@ class _PlanWidget extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
+
+            /// Features
             ...plan.features.map(
-              (feature) => Padding(
-                padding: const EdgeInsets.only(bottom: 12.0),
-                child: Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(6),
-                      decoration: BoxDecoration(
-                        color:
-                            isPremiumCard
-                                ? theme.primaryColor.withOpacity(0.1)
-                                : Colors.grey[200],
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(
-                        feature.iconData,
-                        size: 16,
-                        color:
-                            isPremiumCard
-                                ? theme.primaryColor
-                                : Colors.grey[600],
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Text(
-                        feature.nameId.tr(context),
-                        style: theme.textTheme.bodyLarge?.copyWith(
-                          color: Colors.grey[800],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                  (feature) => _FeatureItem(
+                iconData: feature.iconData,
+                label: feature.nameId.tr(context),
+                highlight: isPremiumCard,
               ),
             ),
+
             const SizedBox(height: 16),
+
+            /// Button
             SizedBox(
               width: double.infinity,
               child: AppButton(
-                onPressed:
-                    isCurrentPlan
-                        ? null
-                        : () {
-                          if (cubit.state.isPremium) {
-                            cubit.goFree();
-                          } else {
-                            cubit.goPremium();
-                          }
-                        },
-                text: (isCurrentPlan ? "Current Plan" : "Get Started").tr(
-                  context,
-                ),
+                onPressed: isCurrentPlan
+                    ? null
+                    : () {
+                  if (cubit.state.isPremium) {
+                    cubit.goFree();
+                  } else {
+                    cubit.goPremium();
+                  }
+                },
+                text: (isCurrentPlan ? "Current Plan" : "Get Started").tr(context),
               ),
             ),
           ],
@@ -207,3 +173,86 @@ class _PlanWidget extends StatelessWidget {
     );
   }
 }
+
+/// 🔹 Small badge for "Current Plan"
+class _Badge extends StatelessWidget {
+  final String text;
+  final Color background;
+  final Color foreground;
+
+  const _Badge({
+    required this.text,
+    required this.background,
+    required this.foreground,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+      decoration: BoxDecoration(
+        color: background,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Text(
+        text,
+        style: TextStyle(
+          color: foreground,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+    );
+  }
+}
+
+/// 🔹 Reusable feature row
+class _FeatureItem extends StatelessWidget {
+  final IconData iconData;
+  final String label;
+  final bool highlight;
+
+  const _FeatureItem({
+    required this.iconData,
+    required this.label,
+    required this.highlight,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12.0),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(6),
+            decoration: BoxDecoration(
+              color: highlight
+                  ? theme.colorScheme.primary.withOpacity(0.1)
+                  : theme.colorScheme.surfaceContainerHigh,
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              iconData,
+              size: 16,
+              color: highlight
+                  ? theme.colorScheme.primary
+                  : theme.colorScheme.onSurfaceVariant,
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              label,
+              style: theme.textTheme.bodyLarge?.copyWith(
+                color: theme.colorScheme.onSurface,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+

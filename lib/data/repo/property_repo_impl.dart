@@ -1,5 +1,7 @@
 import 'package:aqar_go/data/model/api_response.dart';
 import 'package:aqar_go/data/model/create_property/create_property_request.dart';
+import 'package:aqar_go/data/model/paged_response.dart';
+import 'package:aqar_go/data/model/paging/page_request.dart';
 import 'package:aqar_go/data/model/property/property_data.dart';
 
 import '../../domain/model/property.dart';
@@ -44,14 +46,20 @@ class PropertyRepoImpl extends PropertyRepo {
   }
 
   @override
-  Future<Resource<List<Property>>> getUserProperties() async {
+  Future<Resource<List<Property>>> getUserProperties({
+    required int page,
+    required int pageSize,
+  }) async {
     return await _safeAPICaller
-        .call<List<Property>, APIResponse<List<PropertyData>>>(
+        .call<List<Property>, APIResponse<PagedResponse<PropertyData>>>(
           apiCall: () {
-            return _apiService.getUserProperties();
+            return _apiService.getUserProperties(
+              page: page,
+              request: PageRequest(pageSize: pageSize),
+            );
           },
           dataToDomain: (data) {
-            return data.data
+            return data.data.data
                 .map((dataProperty) => dataProperty.toDomain())
                 .toList();
           },

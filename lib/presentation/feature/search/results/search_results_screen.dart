@@ -1,17 +1,16 @@
 import 'package:aqar_go/presentation/helper/navigation_helper.dart';
+import 'package:aqar_go/presentation/helper/ui_helper.dart';
 import 'package:aqar_go/presentation/lang/app_localization.dart';
 import 'package:aqar_go/presentation/widgets/app_button.dart';
 import 'package:aqar_go/presentation/widgets/error_message.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../../domain/model/ad/ad.dart';
 import '../../../../domain/model/search/search_filter_settings.dart';
-import '../../../routing/routes.dart';
 import '../../../widgets/ad_card.dart';
 import '../../../widgets/screen_horizontal_padding.dart';
+import '../../notify_me/cubit/notify_me_cubit.dart';
 import '../../paging_base/cubit/paging_cubit.dart';
 import '../../paging_base/paged_list_view.dart';
 import 'cubit/search_results_cubit.dart';
@@ -37,7 +36,10 @@ class SearchResultsScreen extends StatelessWidget {
                       scrollDirection: Axis.vertical,
                       state: state,
                       itemBuilder: (ad) {
-                        return AdCard(ad: ad);
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: AdCard(ad: ad),
+                        );
                       },
                       fetchNextPage: () {
                         context.read<SearchResultsCubit>().fetchNextPageItems();
@@ -64,12 +66,7 @@ class SearchResultsScreen extends StatelessWidget {
                           );
                         }
                         if (state.getCurrentLoadedItems().length <= 10) {
-                          return Center(
-                            child: AppButton(
-                              onPressed: () {},
-                              text: "Notify Me".tr(context),
-                            ),
-                          );
+                          return _NotifyMeWidget();
                         }
                         return SizedBox.shrink();
                       },
@@ -148,5 +145,100 @@ class _FilterInfo extends StatelessWidget {
 
   void _goToFilter(BuildContext context, settings) {
     context.popRoute();
+  }
+}
+
+class _NotifyMeWidget extends StatelessWidget {
+  const _NotifyMeWidget();
+
+  @override
+  Widget build(BuildContext context) {
+    return ScreenPadding(
+      child: Center(
+        child: BlocConsumer<NotifyMeCubit, NotifyMeState>(
+          listener: (context, state) {
+            return state.when(
+              initial: () {},
+              loading: () {},
+              success: () {
+                context.showMyAlertDialog("Done".tr(context), [
+                  "We will notify you when someone publish an ad matches you search"
+                      .tr(context),
+                ], false);
+              },
+              error: (error) {
+                context.showMyAlertDialogFromDomainError(error);
+              },
+            );
+          },
+          builder: (BuildContext context, NotifyMeState state) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "No more results!".tr(context),
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
+                switch (state.isGuest) {
+                  false => Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(height: 16),
+                      if (!state.isSuccess())
+                        AppButton(
+                          isLoading: state.isLoading(),
+                          onPressed:
+                              (state.isSuccess())
+                                  ? null
+                                  : () {
+                                    context.read<NotifyMeCubit>().notifyMe();
+                                  },
+                          text: "Notify Me".tr(context),
+                        ),
+                      const SizedBox(height: 4),
+                      _NotifyMeInfo(isSuccess: state.isSuccess()),
+                    ],
+                  ),
+                  true => SizedBox.shrink(),
+                },
+              ],
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class _NotifyMeInfo extends StatelessWidget {
+  final bool isSuccess;
+
+  const _NotifyMeInfo({required this.isSuccess});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Spacer(),
+        if (isSuccess) Icon(Icons.check, color: Colors.green, size: 20),
+        if (!isSuccess)
+          Icon(
+            Icons.info,
+            color: Theme.of(context).colorScheme.primary,
+            size: 16,
+          ),
+        const SizedBox(width: 8),
+        Expanded(
+          child: Text(
+            textAlign: TextAlign.center,
+            "We will notify you when someone publish an ad matches you search"
+                .tr(context),
+          ),
+        ),
+        Spacer(),
+      ],
+    );
   }
 }

@@ -10,6 +10,7 @@ import '../../../widgets/error_message.dart';
 import '../../../widgets/loading_screen.dart';
 import '../../media_picker/media_picker_cubit.dart';
 import '../profile_state/profile_state.dart';
+import '../show/profile_cubit.dart';
 import '../widgets/profile_avatar.dart';
 
 class UpdateProfileScreen extends StatelessWidget {
@@ -18,12 +19,22 @@ class UpdateProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final updateProfileCubit = context.read<UpdateProfileCubit>();
+    final profileCubit = context.read<ProfileCubit>();
     final mediaPickerCubit = context.read<MediaPickerCubit>();
     return Scaffold(
       appBar: AppBar(title: Text("Update Profile".tr(context))),
       body: SafeArea(
         child: ScreenPadding(
-          child: BlocBuilder<UpdateProfileCubit, ProfileState>(
+          child: BlocConsumer<UpdateProfileCubit, ProfileState>(
+            listener: (context, state) {
+              return state.when(
+                loading: () {},
+                error: (domainError) {},
+                success: (profile) {
+                  profileCubit.fetchProfile();
+                },
+              );
+            },
             builder: (context, state) {
               return state.when(
                 loading: () => const LoadingScreen(),

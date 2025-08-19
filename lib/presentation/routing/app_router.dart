@@ -3,7 +3,10 @@ import 'package:aqar_go/presentation/feature/ad_details/cubit/ad_details_cubit.d
 import 'package:aqar_go/presentation/feature/check_password_otp/check_password_otp_screen.dart';
 import 'package:aqar_go/presentation/feature/near_to_you/cubit/near_to_you_cubit.dart';
 import 'package:aqar_go/presentation/feature/near_to_you/near_to_you_screen.dart';
+import 'package:aqar_go/presentation/feature/notify_me/cubit/notify_me_cubit.dart';
 import 'package:aqar_go/presentation/feature/plans/plans_screen.dart';
+import 'package:aqar_go/presentation/feature/profile/show/profile_cubit.dart';
+import 'package:aqar_go/presentation/feature/report/cubit/report_cubit.dart';
 import 'package:aqar_go/presentation/feature/reset_password/reset_password_screen.dart';
 import 'package:aqar_go/presentation/feature/maps/cubit/maps_cubit.dart';
 import 'package:aqar_go/presentation/feature/media_picker/media_picker_cubit.dart';
@@ -11,6 +14,9 @@ import 'package:aqar_go/presentation/feature/my_ad_details/my_ad_actions_cubit/m
 import 'package:aqar_go/presentation/feature/my_ad_details/my_ad_details_cubit/my_ad_details_cubit.dart';
 import 'package:aqar_go/presentation/feature/my_ads/activate_ads_cubit/activate_ads_cubit.dart';
 import 'package:aqar_go/presentation/feature/my_properties/my_properties_screen.dart';
+import 'package:aqar_go/presentation/feature/review/ad_reviews/cubit/ad_reviews_cubit.dart';
+import 'package:aqar_go/presentation/feature/review/my_review/cubit/my_review_cubit.dart';
+import 'package:aqar_go/presentation/feature/review/my_review/my_review_screen.dart';
 import 'package:aqar_go/presentation/feature/search/filter/search_filter_screen.dart';
 import 'package:aqar_go/presentation/feature/verify_email/verify_instruction.dart';
 import 'package:aqar_go/presentation/helper/navigation_helper.dart';
@@ -29,6 +35,7 @@ import '../../presentation/feature/auth/register/register_screen.dart';
 import '../feature/check_password_otp/check_password_otp_args.dart';
 import '../feature/check_password_otp/cubit/check_password_otp_cubit.dart';
 import '../feature/create_update_post/create_update_post_screen.dart';
+import '../feature/create_update_post/cubit/create_update_post_args.dart';
 import '../feature/create_update_post/cubit/create_update_post_cubit.dart';
 import '../feature/my_ad_details/my_ad_details_screen.dart';
 import '../feature/my_ads/cubit/my_ads_cubit.dart';
@@ -39,10 +46,13 @@ import '../feature/plans/cubit/plans_cubit.dart';
 import '../feature/privacy_plicy/privacy_policy_screen.dart';
 import '../feature/profile/update/update_profile_cubit.dart';
 import '../feature/profile/update/update_profile_screen.dart';
+import '../feature/recommended_ads/cubit/recommended_ads_cubit.dart';
+import '../feature/recommended_ads/recommended_ads_screen.dart';
 import '../feature/reset_password/cubit/reset_password_cubit.dart';
 import '../feature/search/filter/cubit/search_filter_cubit.dart';
 import '../feature/search/results/cubit/search_results_cubit.dart';
 import '../feature/search/results/search_results_screen.dart';
+import '../feature/similar_ads/cubit/similar_ads_cubit.dart';
 import '../feature/test/test_screen.dart';
 import '../feature/user_nav_shell/user_nav_shell.dart';
 import '../feature/verify_email/cubit/verify_email_cubit.dart';
@@ -85,6 +95,15 @@ final appRouter = GoRouter(
         return BlocProvider<NearToYouCubit>(
           create: (context) => NearToYouCubit(getIt(), getIt()),
           child: NearToYouScreen(),
+        );
+      },
+    ),
+    GoRoute(
+      path: Routes.recommendedAds,
+      builder: (context, state) {
+        return BlocProvider<RecommendedAdsCubit>(
+          create: (context) => RecommendedAdsCubit(getIt()),
+          child: RecommendedAdsScreen(),
         );
       },
     ),
@@ -158,23 +177,44 @@ final appRouter = GoRouter(
     ),
     GoRoute(
       path: Routes.updateProfile,
-      builder:
-          (context, state) => MultiBlocProvider(
-            providers: [
-              BlocProvider<MediaPickerCubit>(create: (context) => getIt()),
-              BlocProvider<UpdateProfileCubit>(create: (context) => getIt()),
-            ],
-            child: UpdateProfileScreen(),
-          ),
+      builder: (context, state) {
+        final profileCubit = state.extra as ProfileCubit;
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider<MediaPickerCubit>(create: (context) => getIt()),
+            BlocProvider<UpdateProfileCubit>(create: (context) => getIt()),
+            BlocProvider.value(value: profileCubit),
+          ],
+          child: UpdateProfileScreen(),
+        );
+      },
+    ),
+    GoRoute(
+      path: Routes.myReview,
+      builder: (context, state) {
+        final adId = state.extractIdParam("id");
+        final adReviewsCubit = state.extra as AdReviewsCubit;
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider<MyReviewCubit>(
+              create: (context) => MyReviewCubit(adId, getIt()),
+            ),
+            BlocProvider.value(value: adReviewsCubit),
+          ],
+          child: MyReviewScreen(),
+        );
+      },
     ),
     GoRoute(
       path: Routes.myAdDetails,
       builder: (context, state) {
+        final myAdsCubit = state.extra as MyAdsCubit?;
         final id = state.extractIdParam("id");
         return MultiBlocProvider(
           providers: [
             BlocProvider(create: (context) => MyAdDetailsCubit(id, getIt())),
             BlocProvider(create: (context) => MyAdActionsCubit(id, getIt())),
+            if (myAdsCubit != null) BlocProvider.value(value: myAdsCubit),
           ],
           child: MyAdDetailsScreen(),
         );
@@ -183,7 +223,9 @@ final appRouter = GoRouter(
     GoRoute(
       path: Routes.createUpdatePost,
       builder: (context, state) {
-        final Property? property = state.extra as Property?;
+        final args = state.extra as CreateUpdatePostArgs?;
+        final Property? property = args?.property;
+        final MyPropertiesCubit? myPropertiesCubit = args?.myPropertiesCubit;
         return MultiBlocProvider(
           providers: [
             BlocProvider<MediaPickerCubit>(
@@ -202,6 +244,8 @@ final appRouter = GoRouter(
                   ),
             ),
             BlocProvider<MapsCubit>(create: (context) => getIt()),
+            if (myPropertiesCubit != null)
+              BlocProvider.value(value: myPropertiesCubit),
           ],
           child: CreateUpdatePostScreen(),
         );
@@ -236,8 +280,21 @@ final appRouter = GoRouter(
       path: Routes.viewAd,
       builder: (context, state) {
         final id = state.extractIdParam("id");
-        return BlocProvider<AdDetailsCubit>(
-          create: (context) => AdDetailsCubit(id, getIt()),
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider<AdDetailsCubit>(
+              create: (context) => AdDetailsCubit(id, getIt()),
+            ),
+            BlocProvider<ReportCubit>(
+              create: (context) => ReportCubit(id, getIt()),
+            ),
+            BlocProvider<SimilarAdsCubit>(
+              create: (context) => SimilarAdsCubit(id, getIt()),
+            ),
+            BlocProvider<AdReviewsCubit>(
+              create: (context) => AdReviewsCubit(id, getIt()),
+            ),
+          ],
           child: AdDetailsScreen(),
         );
       },
@@ -246,8 +303,15 @@ final appRouter = GoRouter(
       path: Routes.searchResults,
       builder: (context, state) {
         final settings = state.extra as SearchFilterSettings;
-        return BlocProvider<SearchResultsCubit>(
-          create: (context) => SearchResultsCubit(getIt(), settings),
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider<SearchResultsCubit>(
+              create: (context) => SearchResultsCubit(getIt(), settings),
+            ),
+            BlocProvider<NotifyMeCubit>(
+              create: (context) => NotifyMeCubit(getIt(), settings, getIt()),
+            ),
+          ],
           child: SearchResultsScreen(),
         );
       },

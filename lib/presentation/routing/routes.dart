@@ -19,13 +19,15 @@ sealed class Routes {
   static const privacyPolicy = "/privacy-policy";
   static const plans = "/plans";
   static const nearToYou = "/near-to-you";
+  static const recommendedAds = "/recommended-ads";
 
   static const home = "/home-user";
   static const searchResults = "/results-search";
   static const searchFilters = "/filter-search";
   static const profile = "/profile";
+  static const myReview = "/review/:id";
 
-  static const _allowedRoutesForGuest = [onboarding, home, nearToYou, searchFilters, searchResults, viewAd, login, register, forgotPassword, checkPasswordOTP];
+  static const _allowedRoutesForGuest = [onboarding, home, nearToYou, recommendedAds, searchFilters, searchResults, viewAd, login, register, forgotPassword, checkPasswordOTP];
 
   static bool isAllowed(String route) {
     return _allowedRoutesForGuest.any((allowedRoute) {
@@ -40,6 +42,8 @@ sealed class Routes {
   static String getMyAdDetails(int id) => _getRouteWithId(myAdDetails, id.toString());
 
   static String getViewAd(int id) => _getRouteWithId(viewAd, id.toString());
+
+  static String getMyReview(int adId) => _getRouteWithId(myReview, adId.toString());
 
   static String _getRouteWithId(String route, String id, {String idKey = ":id"}) {
     return route.replaceAll(idKey, id);

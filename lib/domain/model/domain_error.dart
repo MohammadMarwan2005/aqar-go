@@ -23,6 +23,10 @@ class DomainError {
       "Unexpected response from server: {response}";
   static final _cancelledRequestErrorMessage = "Request was cancelled.";
   static final _badCertificateErrorMessage = "Bad SSL certificate.";
+  static final _cantGetYourLocationErrorMessage =
+      "Can't get your location. Please enable location and try again.";
+  static final _locationPermissionIsDeniedErrorMessage =
+      "Location permission is denied. Please allow location access and try again.";
 
   /// Indicates a connection error, which can occur due to no internet access
   /// or if the server is unreachable (e.g., the server is shut down or refused the connection).
@@ -56,6 +60,15 @@ class DomainError {
   static DomainError badCertificateError = DomainError(
     message: _badCertificateErrorMessage,
     messageId: _badCertificateErrorMessage,
+  );
+
+  static DomainError cantGetYourLocationError = DomainError(
+    message: _cantGetYourLocationErrorMessage,
+    messageId: _cantGetYourLocationErrorMessage,
+  );
+  static DomainError locationPermissionIsDeniedError = DomainError(
+    message: _locationPermissionIsDeniedErrorMessage,
+    messageId: _locationPermissionIsDeniedErrorMessage,
   );
 }
 

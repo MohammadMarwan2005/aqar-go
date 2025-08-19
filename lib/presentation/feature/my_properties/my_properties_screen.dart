@@ -1,14 +1,19 @@
+import 'package:aqar_go/presentation/feature/create_update_post/cubit/create_update_post_args.dart';
 import 'package:aqar_go/presentation/helper/navigation_helper.dart';
 import 'package:aqar_go/presentation/feature/my_properties/cubit/my_properties_cubit.dart';
 import 'package:aqar_go/presentation/lang/app_localization.dart';
 import 'package:aqar_go/presentation/routing/routes.dart';
+import 'package:aqar_go/presentation/widgets/ad_primary_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../domain/model/property.dart';
 import '../../widgets/error_message.dart';
+import '../../widgets/green_red_chip.dart';
 import '../../widgets/loading_screen.dart';
 import '../../widgets/screen_horizontal_padding.dart';
+import '../paging_base/cubit/paging_cubit.dart';
+import '../paging_base/paged_list_view.dart';
 
 class MyPropertiesScreen extends StatelessWidget {
   const MyPropertiesScreen({super.key});
@@ -19,48 +24,86 @@ class MyPropertiesScreen extends StatelessWidget {
       appBar: AppBar(title: Text("My Properties".tr(context))),
       body: SafeArea(
         child: ScreenPadding(
-          child: BlocBuilder<MyPropertiesCubit, MyPropertiesState>(
+          // child: BlocBuilder<MyPropertiesCubit, MyPropertiesState>(
+          //   builder: (context, state) {
+          //     return state.when(
+          //       loading: () {
+          //         return LoadingScreen();
+          //       },
+          //       error: (domainError) {
+          //         return ErrorMessage(
+          //           error: domainError,
+          //           onTryAgain: () {
+          //             context.read<MyPropertiesCubit>().fetchMyProperties();
+          //           },
+          //         );
+          //       },
+          //       success: (properties) {
+          //         return RefreshIndicator(
+          //           onRefresh: () async {
+          //             context.read<MyPropertiesCubit>().fetchMyProperties();
+          //           },
+          //           child:
+          //               (properties.isEmpty)
+          //                   ? Center(
+          //                     child: Text("No Properties Found!".tr(context)),
+          //                   )
+          //                   : ListView.builder(
+          //                     itemCount: properties.length,
+          //                     itemBuilder: (context, index) {
+          //                       return Padding(
+          //                         padding: const EdgeInsets.symmetric(
+          //                           vertical: 8.0,
+          //                         ),
+          //                         child: PropertyCard(
+          //                           property: properties[index],
+          //                           onTap: () {
+          //                             context.pushRoute(
+          //                               Routes.createUpdatePost,
+          //                               extra: CreateUpdatePostArgs(
+          //                                 property: properties[index],
+          //                                 myPropertiesCubit:
+          //                                     context.read<MyPropertiesCubit>(),
+          //                               ),
+          //                             );
+          //                           },
+          //                         ),
+          //                       );
+          //                     },
+          //                   ),
+          //         );
+          //       },
+          //     );
+          //   },
+          // ),
+          child: BlocBuilder<MyPropertiesCubit, PagingState<Property>>(
             builder: (context, state) {
-              return state.when(
-                loading: () {
-                  return LoadingScreen();
-                },
-                error: (domainError) {
-                  return ErrorMessage(
-                    error: domainError,
-                    onTryAgain: () {
-                      context.read<MyPropertiesCubit>().fetchMyProperties();
-                    },
+              return PagedListView(
+                scrollDirection: Axis.vertical,
+                state: state,
+                itemBuilder: (property) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    child: PropertyCard(
+                      property: property,
+                      onTap: () {
+                        context.pushRoute(
+                          Routes.createUpdatePost,
+                          extra: CreateUpdatePostArgs(
+                            property: property,
+                            myPropertiesCubit:
+                                context.read<MyPropertiesCubit>(),
+                          ),
+                        );
+                      },
+                    ),
                   );
                 },
-                success: (properties) {
-                  return RefreshIndicator(
-                    onRefresh: () async {
-                      context.read<MyPropertiesCubit>().fetchMyProperties();
-                    },
-                    child:
-                        (properties.isEmpty)
-                            ? Center(child: Text("No Properties Found!".tr(context)))
-                            : ListView.builder(
-                              itemCount: properties.length,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 8.0,
-                                  ),
-                                  child: PropertyCard(
-                                    property: properties[index],
-                                    onTap: () {
-                                      context.pushRoute(
-                                        Routes.createUpdatePost,
-                                        extra: properties[index],
-                                      );
-                                    },
-                                  ),
-                                );
-                              },
-                            ),
-                  );
+                fetchNextPage: () {
+                  context.read<MyPropertiesCubit>().fetchNextPageItems();
+                },
+                onRefresh: () {
+                  context.read<MyPropertiesCubit>().resetState();
                 },
               );
             },
@@ -82,7 +125,9 @@ class PropertyCard extends StatelessWidget {
     final imageUrl = property.images.firstOrNull?.imageUrl;
 
     return InkWell(
-      overlayColor: WidgetStatePropertyAll(Colors.white),
+      overlayColor: WidgetStatePropertyAll(
+        Theme.of(context).colorScheme.surface,
+      ),
       onTap: onTap,
       borderRadius: BorderRadius.circular(12),
       child: Container(
@@ -101,15 +146,28 @@ class PropertyCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AspectRatio(
-              aspectRatio: 16 / 9,
-              child:
-                  (imageUrl != null)
-                      ? Image.network(imageUrl, fit: BoxFit.cover)
-                      : Image.asset(
-                        "assets/images/profile_image_placeholder.png",
-                        fit: BoxFit.cover,
-                      ),
+            Stack(
+              children: [
+                AspectRatio(
+                  aspectRatio: 16 / 9,
+                  child:
+                      (imageUrl != null)
+                          ? Image.network(imageUrl, fit: BoxFit.cover)
+                          : Image.asset(
+                            "assets/images/profile_image_placeholder.png",
+                            fit: BoxFit.cover,
+                          ),
+                ),
+                PositionedDirectional(
+                  top: 4,
+                  start: 4,
+                  child: GreenRedChip(
+                    goodText: "Published".tr(context),
+                    badText: "Unpublished".tr(context),
+                    good: property.isAd,
+                  ),
+                ),
+              ],
             ),
             Padding(
               padding: const EdgeInsets.all(12.0),
@@ -138,14 +196,7 @@ class PropertyCard extends StatelessWidget {
                       SizedBox(width: 4),
                       Text('${property.price}'),
                       Spacer(),
-                      Chip(
-                        label: Text(
-                          property.propertable.toEnum().labelId.tr(context),
-                        ),
-                        backgroundColor: Colors.blue.shade50,
-                        labelStyle: TextStyle(color: Colors.blue.shade800),
-                        padding: EdgeInsets.symmetric(horizontal: 8),
-                      ),
+                      PropertableTypeChip(propertable: property.propertable),
                     ],
                   ),
                 ],

@@ -30,7 +30,7 @@ class ErrorMessage extends StatelessWidget {
             _LocalizedSizedBox(),
             ElevatedButton(
               onPressed: onTryAgain,
-              child: Text("Try Again".tr(context)),
+              child: Center(child: Text("Try Again".tr(context), textAlign: TextAlign.center)),
             ),
           ],
         ),

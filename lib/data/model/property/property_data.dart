@@ -1,5 +1,6 @@
 import 'package:aqar_go/data/model/apartment/apartment_data.dart';
 import 'package:aqar_go/data/model/office/office_data.dart';
+import 'package:aqar_go/data/model/profile/user/data_user.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../domain/model/property.dart';
@@ -35,6 +36,8 @@ class PropertyData {
   final bool isAd;
 
   final List<MediaFileData> images;
+  @JsonKey(name: 'user')
+  final DataUser? user;
 
   PropertyData({
     required this.id,
@@ -51,6 +54,7 @@ class PropertyData {
     required this.propertable,
     required this.images,
     required this.isAd,
+    this.user
   });
 
   factory PropertyData.fromJson(Map<String, dynamic> json) =>
@@ -72,6 +76,7 @@ class PropertyData {
     propertableId: propertableId,
     propertable: _mapPropertable(type, propertable),
     images: images.map((e) => e.toDomain()).toList(),
+    userProfile: user?.toDomain(),
   );
 
   static PropertyData fromDomain(Property p) {

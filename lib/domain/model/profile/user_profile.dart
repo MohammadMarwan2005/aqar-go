@@ -20,4 +20,6 @@ class UserProfile {
     this.longitude,
     this.latitude,
   });
+
+  String get fullName => "$firstName $lastName";
 }

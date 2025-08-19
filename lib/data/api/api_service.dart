@@ -5,6 +5,8 @@ import 'package:aqar_go/data/model/auth/auth_response_data.dart';
 import 'package:aqar_go/data/model/near_to_you/near_to_you_request.dart';
 import 'package:aqar_go/data/model/paged_response.dart';
 import 'package:aqar_go/data/model/property/property_data.dart';
+import 'package:aqar_go/data/model/review/data_review.dart';
+import 'package:aqar_go/data/model/review/request/create_update_review_request.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
@@ -14,6 +16,8 @@ import '../model/ad/response/create_ad_response.dart';
 import '../model/auth/login_request.dart';
 import '../model/auth/register_request.dart';
 import '../model/profile/user/data_user.dart';
+import '../model/paging/page_request.dart';
+import '../model/report/create/create_report_request.dart';
 import '../model/reset_password/reset/reset_password_request.dart';
 import '../model/reset_password/send_email/send_reset_password_email_request.dart';
 import '../model/search/data_search_filter_settings.dart';
@@ -52,7 +56,10 @@ abstract class APIService {
   Future<APIResponse<DataUser>> getProfile();
 
   @GET(APIConstants.getUserPropertiesUrl)
-  Future<APIResponse<List<PropertyData>>> getUserProperties();
+  Future<APIResponse<PagedResponse<PropertyData>>> getUserProperties({
+    @Query("page") required int page,
+    @Body() required PageRequest request,
+  });
 
   @POST(APIConstants.createAdUrl)
   Future<APIResponse<CreateAdResponse>> createAd(
@@ -75,6 +82,19 @@ abstract class APIService {
   Future<APIResponse<PagedResponse<AdData>>> getNearToYouAds({
     @Query("page") required int page,
     @Body() required NearToYouRequest request,
+  });
+
+  @POST(APIConstants.getRecommendedAdsUrl)
+  Future<APIResponse<PagedResponse<AdData>>> getRecommendedAds({
+    @Query("page") required int page,
+    @Body() required PageRequest request,
+  });
+
+  @POST("${APIConstants.getSimilarAdsUrl}/{id}")
+  Future<APIResponse<PagedResponse<AdData>>> getSimilarAds({
+    @Path("id") required int adId,
+    @Query("page") required int page,
+    @Body() required PageRequest request,
   });
 
   @POST(APIConstants.activateSelectedAdsUrl)
@@ -103,4 +123,32 @@ abstract class APIService {
 
   @POST(APIConstants.updateProfileUrl)
   Future<APIResponse<DataUser>> updateProfile(@Body() FormData formData);
+
+  @POST(APIConstants.createReportUrl)
+  Future<APIResponse<dynamic>> createReport(
+    @Body() CreateReportRequest createReportRequest,
+  );
+
+  @GET(APIConstants.getAdReviewsUrl)
+  Future<APIResponse<List<DataReview>>> getAdReviews(@Path("id") int adId);
+
+  @GET(APIConstants.getReviewByIdUrl)
+  Future<APIResponse<DataReview>> getReviewById(@Path("id") int reviewId);
+
+  @POST(APIConstants.reviewUrl)
+  Future<APIResponse<DataReview>> createReview(
+    @Body() CreateUpdateReviewRequest body,
+  );
+
+  @PUT("${APIConstants.reviewUrl}/{id}")
+  Future<APIResponse<DataReview>> updateReview(
+    @Body() CreateUpdateReviewRequest body,
+    @Path("id") int reviewId,
+  );
+
+  @GET(APIConstants.getMyReviewUrl)
+  Future<APIResponse<List<DataReview>>> getMyReview(@Path("id") int adId);
+
+  @DELETE("${APIConstants.reviewUrl}/{id}")
+  Future<APIResponse<dynamic>> deleteReview(@Path("id") int reviewId);
 }

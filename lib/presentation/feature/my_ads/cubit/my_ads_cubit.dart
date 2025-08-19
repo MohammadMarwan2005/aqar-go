@@ -12,8 +12,7 @@ part 'my_ads_state.dart';
 class MyAdsCubit extends Cubit<MyAdsState> {
   final AdRepo _adRepo;
 
-  MyAdsCubit(this._adRepo)
-    : super(const MyAdsState.loading()) {
+  MyAdsCubit(this._adRepo) : super(const MyAdsState.loading()) {
     getMyAds();
   }
 

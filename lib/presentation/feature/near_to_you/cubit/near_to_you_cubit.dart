@@ -5,7 +5,7 @@ import 'package:aqar_go/presentation/feature/paging_base/cubit/paging_cubit.dart
 import 'package:aqar_go/presentation/helper/location_permission_manager.dart';
 
 class NearToYouCubit extends PagingCubit<Ad> {
-  final LocationPermissionManager _locationPermissionManager;
+  final LocationManager _locationPermissionManager;
   final AdRepo _adRepo;
 
   NearToYouCubit(this._adRepo, this._locationPermissionManager)
@@ -13,13 +13,22 @@ class NearToYouCubit extends PagingCubit<Ad> {
 
   @override
   Future<Resource<List<Ad>>> getItems(int page) async {
-    await _locationPermissionManager.requestLocationPermission();
-    final location = await _locationPermissionManager.getLocation();
-    return _adRepo.getNearToYouAds(
-      page: page,
-      pageSize: pageSize,
-      long: location.longitude,
-      lat: location.latitude,
+    final locationStatus =
+        await _locationPermissionManager.requestLocationPermission();
+
+    return locationStatus.toResource().when(
+      onError: (error) {
+        return Error(error);
+      },
+      onSuccess: (successData) async {
+        final location = await _locationPermissionManager.getLocation();
+        return _adRepo.getNearToYouAds(
+          page: page,
+          pageSize: pageSize,
+          long: location.longitude,
+          lat: location.latitude,
+        );
+      },
     );
   }
 

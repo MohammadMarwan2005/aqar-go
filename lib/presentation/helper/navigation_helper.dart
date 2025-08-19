@@ -16,19 +16,21 @@ extension NavigationHelper on BuildContext {
       "Log in First".tr(this),
       ["Please log in to continue and access all features.".tr(this)],
       true,
-      gotItPlaceholder: "Cancel".tr(this),
+      gotItPlaceholder: "Login".tr(this),
+      onGotItClicked: () {
+        push(
+          Routes.login,
+          extra: PostLoginInstruction(
+            redirectionRoute: route,
+            itsExtras: extra,
+          ),
+        );
+      },
       firstAction: TextButton(
         onPressed: () {
           pop();
-          push(
-            Routes.login,
-            extra: PostLoginInstruction(
-              redirectionRoute: route,
-              itsExtras: extra,
-            ),
-          );
         },
-        child: Text("Login".tr(this)),
+        child: Text("Cancel".tr(this)),
       ),
     );
   }

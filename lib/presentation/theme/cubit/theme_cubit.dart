@@ -58,6 +58,8 @@ class ThemeCubit extends Cubit<ThemeState> {
   emitAndSaveTheme(CubitTheme? newTheme) {
     if (newTheme != null) {
       _localDataRepo.setString(newTheme.name, DataAccessKeys.themeKey);
+    } else {
+      _localDataRepo.removeString(DataAccessKeys.themeKey);
     }
     emit(ThemeState.loaded(theme: newTheme));
   }

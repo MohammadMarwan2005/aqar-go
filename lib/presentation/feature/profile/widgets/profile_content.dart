@@ -1,3 +1,4 @@
+import 'package:aqar_go/presentation/feature/profile/show/profile_cubit.dart';
 import 'package:aqar_go/presentation/feature/profile/widgets/profile_avatar.dart';
 import 'package:aqar_go/presentation/feature/profile/widgets/settings_list_item.dart';
 import 'package:aqar_go/presentation/feature/verify_email/verify_instruction.dart';
@@ -6,6 +7,7 @@ import 'package:aqar_go/presentation/helper/ui_helper.dart';
 import 'package:aqar_go/presentation/lang/app_localization.dart';
 import 'package:aqar_go/presentation/routing/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../domain/model/profile/user_profile.dart';
 import '../../../assets/assets.gen.dart';
@@ -21,7 +23,8 @@ class ProfileContent extends StatelessWidget {
       children: [
         ProfileAvatar(
           onEditPressed: () {
-            context.pushRoute(Routes.updateProfile);
+            final cubit = context.read<ProfileCubit>();
+            context.pushRoute(Routes.updateProfile, extra: cubit);
           },
           isPremium: userProfile.isPremium,
           imageUrl: userProfile.imageUrl,
