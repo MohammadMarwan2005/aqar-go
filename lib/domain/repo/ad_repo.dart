@@ -7,7 +7,10 @@ import '../model/search/search_filter_settings.dart';
 abstract class AdRepo {
   Future<Resource<Ad>> getAdById(int adId);
 
-  Future<Resource<List<Ad>>> getMyAds();
+  Future<Resource<List<Ad>>> getMyAds({
+    required int page,
+    required int pageSize,
+  });
 
   Future<Resource<List<Ad>>> getNearToYouAds({
     required int page,
@@ -49,7 +52,5 @@ abstract class AdRepo {
     String? description,
   });
 
-  Future<Resource<void>> notifyMe(
-    SearchFilterSettings searchFilterSettings,
-  );
+  Future<Resource<void>> notifyMe(SearchFilterSettings searchFilterSettings);
 }

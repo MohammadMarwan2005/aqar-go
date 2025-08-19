@@ -7,7 +7,7 @@ part of 'page_request.dart';
 // **************************************************************************
 
 PageRequest _$PageRequestFromJson(Map<String, dynamic> json) =>
-    PageRequest(pageSize: (json['number'] as num).toInt());
+    PageRequest(pageSize: (json['num'] as num).toInt());
 
 Map<String, dynamic> _$PageRequestToJson(PageRequest instance) =>
-    <String, dynamic>{'number': instance.pageSize};
+    <String, dynamic>{'num': instance.pageSize};

@@ -42,7 +42,7 @@ class CreateUpdatePostScreen extends StatelessWidget {
             return;
           case CreateUpdatePostSuccess():
             if (cubit.isUpdate) {
-              context.read<MyPropertiesCubit>().fetchMyProperties();
+              context.read<MyPropertiesCubit>().resetState();
             }
             context.showMySnackBar(
               "Property uploaded successfully!".tr(context),
@@ -51,7 +51,7 @@ class CreateUpdatePostScreen extends StatelessWidget {
             return;
           case CreateAdSuccess():
             if (cubit.isUpdate) {
-              context.read<MyPropertiesCubit>().fetchMyProperties();
+              context.read<MyPropertiesCubit>().resetState();
             }
             context.showMySnackBar("Ad created successfully!".tr(context));
             context.popRoute();

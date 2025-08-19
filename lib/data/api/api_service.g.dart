@@ -177,12 +177,16 @@ class _APIService implements APIService {
   }
 
   @override
-  Future<APIResponse<List<PropertyData>>> getUserProperties() async {
+  Future<APIResponse<PagedResponse<PropertyData>>> getUserProperties({
+    required int page,
+    required PageRequest request,
+  }) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'page': page};
     final _headers = <String, dynamic>{};
-    const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<APIResponse<List<PropertyData>>>(
+    final _data = <String, dynamic>{};
+    _data.addAll(request.toJson());
+    final _options = _setStreamType<APIResponse<PagedResponse<PropertyData>>>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -193,18 +197,14 @@ class _APIService implements APIService {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late APIResponse<List<PropertyData>> _value;
+    late APIResponse<PagedResponse<PropertyData>> _value;
     try {
-      _value = APIResponse<List<PropertyData>>.fromJson(
+      _value = APIResponse<PagedResponse<PropertyData>>.fromJson(
         _result.data!,
-        (json) =>
-            json is List<dynamic>
-                ? json
-                    .map<PropertyData>(
-                      (i) => PropertyData.fromJson(i as Map<String, dynamic>),
-                    )
-                    .toList()
-                : List.empty(),
+        (json) => PagedResponse<PropertyData>.fromJson(
+          json as Map<String, dynamic>,
+          (json) => PropertyData.fromJson(json as Map<String, dynamic>),
+        ),
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
@@ -277,12 +277,16 @@ class _APIService implements APIService {
   }
 
   @override
-  Future<APIResponse<List<AdData>>> getUserAds() async {
+  Future<APIResponse<PagedResponse<AdData>>> getUserAds({
+    required int page,
+    required PageRequest request,
+  }) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'page': page};
     final _headers = <String, dynamic>{};
-    const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<APIResponse<List<AdData>>>(
+    final _data = <String, dynamic>{};
+    _data.addAll(request.toJson());
+    final _options = _setStreamType<APIResponse<PagedResponse<AdData>>>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -293,18 +297,14 @@ class _APIService implements APIService {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late APIResponse<List<AdData>> _value;
+    late APIResponse<PagedResponse<AdData>> _value;
     try {
-      _value = APIResponse<List<AdData>>.fromJson(
+      _value = APIResponse<PagedResponse<AdData>>.fromJson(
         _result.data!,
-        (json) =>
-            json is List<dynamic>
-                ? json
-                    .map<AdData>(
-                      (i) => AdData.fromJson(i as Map<String, dynamic>),
-                    )
-                    .toList()
-                : List.empty(),
+        (json) => PagedResponse<AdData>.fromJson(
+          json as Map<String, dynamic>,
+          (json) => AdData.fromJson(json as Map<String, dynamic>),
+        ),
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
@@ -390,7 +390,7 @@ class _APIService implements APIService {
   @override
   Future<APIResponse<PagedResponse<AdData>>> getRecommendedAds({
     required int page,
-    required GetRecommendedAdsRequest request,
+    required PageRequest request,
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'page': page};

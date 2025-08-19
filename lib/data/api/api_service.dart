@@ -14,7 +14,7 @@ import '../model/ad/response/create_ad_response.dart';
 import '../model/auth/login_request.dart';
 import '../model/auth/register_request.dart';
 import '../model/profile/user/data_user.dart';
-import '../model/recommended_ads/get_recommended_ads_request.dart';
+import '../model/paging/page_request.dart';
 import '../model/report/create/create_report_request.dart';
 import '../model/reset_password/reset/reset_password_request.dart';
 import '../model/reset_password/send_email/send_reset_password_email_request.dart';
@@ -54,7 +54,10 @@ abstract class APIService {
   Future<APIResponse<DataUser>> getProfile();
 
   @GET(APIConstants.getUserPropertiesUrl)
-  Future<APIResponse<List<PropertyData>>> getUserProperties();
+  Future<APIResponse<PagedResponse<PropertyData>>> getUserProperties({
+    @Query("page") required int page,
+    @Body() required PageRequest request,
+  });
 
   @POST(APIConstants.createAdUrl)
   Future<APIResponse<CreateAdResponse>> createAd(
@@ -65,7 +68,10 @@ abstract class APIService {
   Future<APIResponse<AdData>> getAdById(@Path("id") int id);
 
   @POST(APIConstants.getUserAdsUrl)
-  Future<APIResponse<List<AdData>>> getUserAds();
+  Future<APIResponse<PagedResponse<AdData>>> getUserAds({
+    @Query("page") required int page,
+    @Body() required PageRequest request,
+  });
 
   @POST(APIConstants.searchAdsUrl)
   Future<APIResponse<PagedResponse<AdData>>> search(
@@ -82,7 +88,7 @@ abstract class APIService {
   @POST(APIConstants.getRecommendedAdsUrl)
   Future<APIResponse<PagedResponse<AdData>>> getRecommendedAds({
     @Query("page") required int page,
-    @Body() required GetRecommendedAdsRequest request,
+    @Body() required PageRequest request,
   });
 
   @POST(APIConstants.activateSelectedAdsUrl)

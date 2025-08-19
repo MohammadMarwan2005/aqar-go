@@ -4,7 +4,7 @@ part 'page_request.g.dart';
 
 @JsonSerializable()
 class PageRequest {
-  @JsonKey(name: "number")
+  @JsonKey(name: "num")
   int pageSize;
 
   PageRequest({required this.pageSize});

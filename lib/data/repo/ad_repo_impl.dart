@@ -15,7 +15,7 @@ import '../api/safe_api_caller.dart';
 import '../model/ad/request/create_ad_request.dart';
 import '../model/ad/response/create_ad_response.dart';
 import '../model/api_response.dart';
-import '../model/recommended_ads/get_recommended_ads_request.dart';
+import '../model/paging/page_request.dart';
 import '../model/report/create/create_report_request.dart';
 import '../model/report/data_report_reason.dart';
 
@@ -50,13 +50,19 @@ class AdRepoImpl extends AdRepo {
   }
 
   @override
-  Future<Resource<List<Ad>>> getMyAds() {
-    return _safeAPICaller.call<List<Ad>, APIResponse<List<AdData>>>(
+  Future<Resource<List<Ad>>> getMyAds({
+    required int page,
+    required int pageSize,
+  }) {
+    return _safeAPICaller.call<List<Ad>, APIResponse<PagedResponse<AdData>>>(
       apiCall: () {
-        return _apiService.getUserAds();
+        return _apiService.getUserAds(
+          page: page,
+          request: PageRequest(pageSize: pageSize),
+        );
       },
       dataToDomain: (data) {
-        return data.data.map((adData) => adData.toDomain()).toList();
+        return data.data.data.map((adData) => adData.toDomain()).toList();
       },
     );
   }
@@ -136,7 +142,7 @@ class AdRepoImpl extends AdRepo {
     required int page,
     required int pageSize,
   }) {
-    final request = GetRecommendedAdsRequest(pageSize: pageSize);
+    final request = PageRequest(pageSize: pageSize);
     return _safeAPICaller.call<List<Ad>, APIResponse<PagedResponse<AdData>>>(
       apiCall: () {
         return _apiService.getRecommendedAds(page: page, request: request);
@@ -154,7 +160,7 @@ class AdRepoImpl extends AdRepo {
     required int pageSize,
   }) {
     // todo: call getSimilarAds(adId);
-    final request = GetRecommendedAdsRequest(pageSize: pageSize);
+    final request = PageRequest(pageSize: pageSize);
     return _safeAPICaller.call<List<Ad>, APIResponse<PagedResponse<AdData>>>(
       apiCall: () {
         return _apiService.getRecommendedAds(page: page, request: request);

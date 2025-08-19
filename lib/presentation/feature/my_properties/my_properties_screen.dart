@@ -12,6 +12,8 @@ import '../../widgets/error_message.dart';
 import '../../widgets/green_red_chip.dart';
 import '../../widgets/loading_screen.dart';
 import '../../widgets/screen_horizontal_padding.dart';
+import '../paging_base/cubit/paging_cubit.dart';
+import '../paging_base/paged_list_view.dart';
 
 class MyPropertiesScreen extends StatelessWidget {
   const MyPropertiesScreen({super.key});
@@ -22,54 +24,86 @@ class MyPropertiesScreen extends StatelessWidget {
       appBar: AppBar(title: Text("My Properties".tr(context))),
       body: SafeArea(
         child: ScreenPadding(
-          child: BlocBuilder<MyPropertiesCubit, MyPropertiesState>(
+          // child: BlocBuilder<MyPropertiesCubit, MyPropertiesState>(
+          //   builder: (context, state) {
+          //     return state.when(
+          //       loading: () {
+          //         return LoadingScreen();
+          //       },
+          //       error: (domainError) {
+          //         return ErrorMessage(
+          //           error: domainError,
+          //           onTryAgain: () {
+          //             context.read<MyPropertiesCubit>().fetchMyProperties();
+          //           },
+          //         );
+          //       },
+          //       success: (properties) {
+          //         return RefreshIndicator(
+          //           onRefresh: () async {
+          //             context.read<MyPropertiesCubit>().fetchMyProperties();
+          //           },
+          //           child:
+          //               (properties.isEmpty)
+          //                   ? Center(
+          //                     child: Text("No Properties Found!".tr(context)),
+          //                   )
+          //                   : ListView.builder(
+          //                     itemCount: properties.length,
+          //                     itemBuilder: (context, index) {
+          //                       return Padding(
+          //                         padding: const EdgeInsets.symmetric(
+          //                           vertical: 8.0,
+          //                         ),
+          //                         child: PropertyCard(
+          //                           property: properties[index],
+          //                           onTap: () {
+          //                             context.pushRoute(
+          //                               Routes.createUpdatePost,
+          //                               extra: CreateUpdatePostArgs(
+          //                                 property: properties[index],
+          //                                 myPropertiesCubit:
+          //                                     context.read<MyPropertiesCubit>(),
+          //                               ),
+          //                             );
+          //                           },
+          //                         ),
+          //                       );
+          //                     },
+          //                   ),
+          //         );
+          //       },
+          //     );
+          //   },
+          // ),
+          child: BlocBuilder<MyPropertiesCubit, PagingState<Property>>(
             builder: (context, state) {
-              return state.when(
-                loading: () {
-                  return LoadingScreen();
-                },
-                error: (domainError) {
-                  return ErrorMessage(
-                    error: domainError,
-                    onTryAgain: () {
-                      context.read<MyPropertiesCubit>().fetchMyProperties();
-                    },
+              return PagedListView(
+                scrollDirection: Axis.vertical,
+                state: state,
+                itemBuilder: (property) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    child: PropertyCard(
+                      property: property,
+                      onTap: () {
+                        context.pushRoute(
+                          Routes.createUpdatePost,
+                          extra: CreateUpdatePostArgs(
+                            property: property,
+                            myPropertiesCubit:
+                                context.read<MyPropertiesCubit>(),
+                          ),
+                        );
+                      },
+                    ),
                   );
                 },
-                success: (properties) {
-                  return RefreshIndicator(
-                    onRefresh: () async {
-                      context.read<MyPropertiesCubit>().fetchMyProperties();
-                    },
-                    child:
-                        (properties.isEmpty)
-                            ? Center(
-                              child: Text("No Properties Found!".tr(context)),
-                            )
-                            : ListView.builder(
-                              itemCount: properties.length,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 8.0,
-                                  ),
-                                  child: PropertyCard(
-                                    property: properties[index],
-                                    onTap: () {
-                                      context.pushRoute(
-                                        Routes.createUpdatePost,
-                                        extra: CreateUpdatePostArgs(
-                                          property: properties[index],
-                                          myPropertiesCubit:
-                                              context.read<MyPropertiesCubit>(),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                );
-                              },
-                            ),
-                  );
+                fetchNextPage: () {
+                  context.read<MyPropertiesCubit>().fetchNextPageItems();
+                },
+                onRefresh: () {
+                  context.read<MyPropertiesCubit>().resetState();
                 },
               );
             },
@@ -91,7 +125,9 @@ class PropertyCard extends StatelessWidget {
     final imageUrl = property.images.firstOrNull?.imageUrl;
 
     return InkWell(
-      overlayColor: WidgetStatePropertyAll(Theme.of(context).colorScheme.surface),
+      overlayColor: WidgetStatePropertyAll(
+        Theme.of(context).colorScheme.surface,
+      ),
       onTap: onTap,
       borderRadius: BorderRadius.circular(12),
       child: Container(

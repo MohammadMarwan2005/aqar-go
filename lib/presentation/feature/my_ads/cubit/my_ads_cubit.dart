@@ -12,14 +12,14 @@ part 'my_ads_state.dart';
 class MyAdsCubit extends Cubit<MyAdsState> {
   final AdRepo _adRepo;
 
-  MyAdsCubit(this._adRepo)
-    : super(const MyAdsState.loading()) {
+  MyAdsCubit(this._adRepo) : super(const MyAdsState.loading()) {
     getMyAds();
   }
 
   void getMyAds() async {
     emit(const MyAdsState.loading());
-    final response = await _adRepo.getMyAds();
+    // the list is 15 at max, so we don't need paging here...
+    final response = await _adRepo.getMyAds(page: 1, pageSize: 100);
 
     response.when(
       onSuccess: (successData) {
