@@ -329,4 +329,11 @@ const Map<String, String> _arLangMap = {
   "Reviews": "المراجعات",
   "Unknown User": "مستخدم غير معروف",
   "No reviews for this ad yet!": "لا يوجد مراجعات لهذا الإعلان بعد!",
+  "Comment (Optional)": "تعليق (اختياري)",
+  "My Review": "مراجعتي",
+  "Add review": "اضافة مراجعة",
+  "Review submitted successfully!": "تم ارسال المراجعة بنجاح!",
+  "Review updated successfully!": "تم تعديل المراجعة بنجاح!",
+  "Review deleted successfully!": "تم حذف المراجعة بنجاح!",
+  "Delete Review": "حذف المراجعة",
 };

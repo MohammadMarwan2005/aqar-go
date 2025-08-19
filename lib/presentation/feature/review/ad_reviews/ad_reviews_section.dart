@@ -1,6 +1,9 @@
 import 'package:aqar_go/presentation/feature/review/ad_reviews/cubit/ad_reviews_cubit.dart';
 import 'package:aqar_go/presentation/helper/date_time_helper.dart';
+import 'package:aqar_go/presentation/helper/navigation_helper.dart';
 import 'package:aqar_go/presentation/lang/app_localization.dart';
+import 'package:aqar_go/presentation/routing/routes.dart';
+import 'package:aqar_go/presentation/widgets/app_button.dart';
 import 'package:aqar_go/presentation/widgets/loading_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,7 +22,9 @@ class AdReviewsSection extends StatelessWidget {
       builder:
           (context, state) => state.when(
             loading: () => LoadingScreen(),
-            success: (reviews) => _AdReviewsContent(reviews: reviews),
+            success:
+                (reviews, myReview) =>
+                    _AdReviewsContent(reviews: reviews, myReview: myReview),
             error:
                 (error) => ErrorMessage(
                   error: error,
@@ -33,35 +38,82 @@ class AdReviewsSection extends StatelessWidget {
 }
 
 class _AdReviewsContent extends StatelessWidget {
+  final Review? myReview;
   final List<Review> reviews;
 
-  const _AdReviewsContent({required this.reviews});
+  const _AdReviewsContent({required this.reviews, required this.myReview});
 
   @override
   Widget build(BuildContext context) {
-    if(reviews.isEmpty) {
-      return Center(child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 32),
-        child: Text("No reviews for this ad yet!".tr(context)),
-      ));
-    }
-    return ListView.builder(
-      itemCount: reviews.length,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemBuilder:
-          (context, index) => Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8),
-            child: _ReviewCard(review: reviews[index]),
+    final adReviewCubit = context.read<AdReviewsCubit>();
+    final adId = context.read<AdReviewsCubit>().adId;
+    if (reviews.isEmpty) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 32),
+          child: Column(
+            children: [
+              Text("No reviews for this ad yet!".tr(context)),
+              const SizedBox(height: 16),
+              _buildReviewButton(
+                context,
+                onPressed: () {
+                  _goToMyReview(context, adId, adReviewCubit);
+                },
+              ),
+            ],
           ),
+        ),
+      );
+    }
+    return Column(
+      children: [
+        ListView.builder(
+          itemCount: reviews.length,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemBuilder:
+              (context, index) => Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: _ReviewCard(
+                  review: reviews[index],
+                  isMine: myReview?.id == reviews[index].id,
+                  onEditPressed: () {
+                    _goToMyReview(context, adId, adReviewCubit);
+                  },
+                ),
+              ),
+        ),
+        if (myReview == null)
+          _buildReviewButton(
+            context,
+            onPressed: () {
+              _goToMyReview(context, adId, adReviewCubit);
+            },
+          ),
+      ],
     );
+  }
+
+  _goToMyReview(BuildContext context, int adId, AdReviewsCubit adReviewsCubit) {
+    context.pushRoute(Routes.getMyReview(adId), extra: adReviewsCubit);
+  }
+
+  Widget _buildReviewButton(context, {required void Function() onPressed}) {
+    return AppButton(onPressed: onPressed, text: "Add review".tr(context));
   }
 }
 
 class _ReviewCard extends StatelessWidget {
   final Review review;
+  final bool isMine;
+  final Function() onEditPressed;
 
-  const _ReviewCard({super.key, required this.review});
+  const _ReviewCard({
+    required this.review,
+    required this.isMine,
+    required this.onEditPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +129,16 @@ class _ReviewCard extends StatelessWidget {
               review.userProfile?.fullName ?? "Unknown User".tr(context),
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
+            if (isMine) ...[
+              Spacer(),
+              IconButton(
+                onPressed: onEditPressed,
+                icon: Icon(
+                  Icons.edit,
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
+              ),
+            ],
           ],
         ),
         Row(
@@ -88,7 +150,6 @@ class _ReviewCard extends StatelessWidget {
             ],
           ],
         ),
-        // if this comment is very long, we should show the first of it, with "see more", when the user clicks on the comment, it should expand
         if (review.comment != null) ...[
           const SizedBox(height: 2),
           ExpandableText(text: review.comment!),

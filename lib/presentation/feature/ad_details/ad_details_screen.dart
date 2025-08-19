@@ -156,6 +156,7 @@ class _AdDetailsContent extends StatelessWidget {
                 reportCubit.isSheetOpen = true;
               },
             ),
+            const SizedBox(height: 16),
           ],
         ),
       ),

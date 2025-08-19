@@ -154,6 +154,7 @@ class _ActivateAllButton extends StatelessWidget {
             context.showMyAlertDialog("Ads Activated".tr(context), [
               "All ads are activated successfully!".tr(context),
             ], false);
+            context.read<MyAdsCubit>().getMyAds();
           },
         );
       },

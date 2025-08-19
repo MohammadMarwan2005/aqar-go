@@ -18,8 +18,7 @@ class MyAdsCubit extends Cubit<MyAdsState> {
 
   void getMyAds() async {
     emit(const MyAdsState.loading());
-    // the list is 15 at max, so we don't need paging here...
-    final response = await _adRepo.getMyAds(page: 1, pageSize: 100);
+    final response = await _adRepo.getMyAds();
 
     response.when(
       onSuccess: (successData) {

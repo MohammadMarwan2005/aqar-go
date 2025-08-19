@@ -5,9 +5,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../../domain/model/review/review.dart';
 
-part 'ad_reviews_state.dart';
-
 part 'ad_reviews_cubit.freezed.dart';
+part 'ad_reviews_state.dart';
 
 class AdReviewsCubit extends Cubit<AdReviewsState> {
   final int adId;
@@ -21,9 +20,17 @@ class AdReviewsCubit extends Cubit<AdReviewsState> {
   Future<void> fetchReviews() async {
     emit(const AdReviewsState.loading());
     final result = await _reviewRepo.getReviewsByAdId(adId);
+    final myReview = await _reviewRepo.getMyReview(adId);
     result.when(
-      onSuccess: (successData) {
-        emit(AdReviewsState.success(successData));
+      onSuccess: (adReviews) {
+        myReview.when(
+          onSuccess: (myReview) {
+            emit(AdReviewsState.success(adReviews, myReview));
+          },
+          onError: (error) {
+            emit(AdReviewsState.error(error));
+          },
+        );
       },
       onError: (error) {
         emit(AdReviewsState.error(error));

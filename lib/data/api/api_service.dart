@@ -6,6 +6,7 @@ import 'package:aqar_go/data/model/near_to_you/near_to_you_request.dart';
 import 'package:aqar_go/data/model/paged_response.dart';
 import 'package:aqar_go/data/model/property/property_data.dart';
 import 'package:aqar_go/data/model/review/data_review.dart';
+import 'package:aqar_go/data/model/review/request/create_update_review_request.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
@@ -69,10 +70,7 @@ abstract class APIService {
   Future<APIResponse<AdData>> getAdById(@Path("id") int id);
 
   @POST(APIConstants.getUserAdsUrl)
-  Future<APIResponse<PagedResponse<AdData>>> getUserAds({
-    @Query("page") required int page,
-    @Body() required PageRequest request,
-  });
+  Future<APIResponse<List<AdData>>> getUserAds();
 
   @POST(APIConstants.searchAdsUrl)
   Future<APIResponse<PagedResponse<AdData>>> search(
@@ -88,6 +86,13 @@ abstract class APIService {
 
   @POST(APIConstants.getRecommendedAdsUrl)
   Future<APIResponse<PagedResponse<AdData>>> getRecommendedAds({
+    @Query("page") required int page,
+    @Body() required PageRequest request,
+  });
+
+  @POST("${APIConstants.getSimilarAdsUrl}/{id}")
+  Future<APIResponse<PagedResponse<AdData>>> getSimilarAds({
+    @Path("id") required int adId,
     @Query("page") required int page,
     @Body() required PageRequest request,
   });
@@ -130,6 +135,20 @@ abstract class APIService {
   @GET(APIConstants.getReviewByIdUrl)
   Future<APIResponse<DataReview>> getReviewById(@Path("id") int reviewId);
 
-  @POST(APIConstants.createReviewUrl)
-  Future<APIResponse<DataReview>> createReview(@Body() DataReview body);
+  @POST(APIConstants.reviewUrl)
+  Future<APIResponse<DataReview>> createReview(
+    @Body() CreateUpdateReviewRequest body,
+  );
+
+  @PUT("${APIConstants.reviewUrl}/{id}")
+  Future<APIResponse<DataReview>> updateReview(
+    @Body() CreateUpdateReviewRequest body,
+    @Path("id") int reviewId,
+  );
+
+  @GET(APIConstants.getMyReviewUrl)
+  Future<APIResponse<List<DataReview>>> getMyReview(@Path("id") int adId);
+
+  @DELETE("${APIConstants.reviewUrl}/{id}")
+  Future<APIResponse<dynamic>> deleteReview(@Path("id") int reviewId);
 }

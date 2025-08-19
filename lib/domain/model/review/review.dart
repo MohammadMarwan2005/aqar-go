@@ -2,7 +2,7 @@ import '../profile/user_profile.dart';
 
 class Review {
   final int id;
-  final int propertyId;
+  final int adId;
   final int userId;
   final double rating;
   final String? comment;
@@ -12,7 +12,7 @@ class Review {
 
   Review({
     required this.id,
-    required this.propertyId,
+    required this.adId,
     required this.userId,
     required this.rating,
     required this.comment,

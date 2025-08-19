@@ -1,5 +1,6 @@
 import 'package:aqar_go/data/api/api_service.dart';
 import 'package:aqar_go/data/model/review/data_review.dart';
+import 'package:aqar_go/data/model/review/request/create_update_review_request.dart';
 import 'package:aqar_go/domain/model/resource.dart';
 import 'package:aqar_go/domain/model/review/review.dart';
 
@@ -14,15 +15,56 @@ class ReviewRepoImpl extends ReviewRepo {
   ReviewRepoImpl(this._apiService, this._safeAPICaller);
 
   @override
-  Future<Resource<Review>> createReview(Review review) {
-    // TODO: implement createReview
-    throw UnimplementedError();
+  Future<Resource<Review>> createReview({
+    required double rating,
+    required String comment,
+    required int adId,
+  }) {
+    final request = CreateUpdateReviewRequest(
+      adId: adId,
+      rating: rating.toString(),
+      comment: comment,
+    );
+    return _safeAPICaller.call<Review, APIResponse<DataReview>>(
+      apiCall: () {
+        return _apiService.createReview(request);
+      },
+      dataToDomain: (data) {
+        return data.data.toDomain();
+      },
+    );
+  }
+
+  @override
+  Future<Resource<Review>> updateReview({
+    required double rating,
+    required String comment,
+    required int reviewId,
+  }) {
+    final request = CreateUpdateReviewRequest(
+      rating: rating.toString(),
+      comment: comment,
+    );
+    return _safeAPICaller.call<Review, APIResponse<DataReview>>(
+      apiCall: () {
+        return _apiService.updateReview(request, reviewId);
+      },
+      dataToDomain: (data) {
+        return data.data.toDomain();
+      },
+    );
   }
 
   @override
   Future<Resource<void>> deleteReview(int reviewId) {
-    // TODO: implement deleteReview
-    throw UnimplementedError();
+    return _safeAPICaller.call<void, APIResponse<dynamic>>(
+      apiCall: () {
+        return _apiService.deleteReview(reviewId);
+      },
+      dataToDomain: (data) {
+        return;
+      },
+    );
   }
 
   @override
@@ -38,9 +80,14 @@ class ReviewRepoImpl extends ReviewRepo {
   }
 
   @override
-  Future<Resource<Review>> updateReview(Review review) {
-    // TODO: implement updateReview
-    throw UnimplementedError();
+  Future<Resource<Review?>> getMyReview(int adId) async {
+    return _safeAPICaller.call<Review?, APIResponse<List<DataReview>>>(
+      apiCall: () {
+        return _apiService.getMyReview(adId);
+      },
+      dataToDomain: (data) {
+        return data.data.firstOrNull?.toDomain();
+      },
+    );
   }
-
 }

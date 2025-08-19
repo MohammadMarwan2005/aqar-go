@@ -8,8 +8,8 @@ part 'data_review.g.dart';
 @JsonSerializable()
 class DataReview {
   final int id;
-  @JsonKey(name: 'property_id')
-  final int propertyId;
+  @JsonKey(name: 'ad_id')
+  final int adId;
   @JsonKey(name: 'user_id')
   final int userId;
   final String rating;
@@ -23,7 +23,7 @@ class DataReview {
 
   DataReview({
     required this.id,
-    required this.propertyId,
+    required this.adId,
     required this.userId,
     required this.rating,
     this.comment,
@@ -39,7 +39,7 @@ class DataReview {
 
   Review toDomain() => Review(
     id: id,
-    propertyId: propertyId,
+    adId: adId,
     userId: userId,
     comment: comment,
     userProfile: user?.toDomain(),

@@ -8,7 +8,7 @@ part of 'data_review.dart';
 
 DataReview _$DataReviewFromJson(Map<String, dynamic> json) => DataReview(
   id: (json['id'] as num).toInt(),
-  propertyId: (json['property_id'] as num).toInt(),
+  adId: (json['ad_id'] as num).toInt(),
   userId: (json['user_id'] as num).toInt(),
   rating: json['rating'] as String,
   comment: json['comment'] as String?,
@@ -23,7 +23,7 @@ DataReview _$DataReviewFromJson(Map<String, dynamic> json) => DataReview(
 Map<String, dynamic> _$DataReviewToJson(DataReview instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'property_id': instance.propertyId,
+      'ad_id': instance.adId,
       'user_id': instance.userId,
       'rating': instance.rating,
       'comment': instance.comment,

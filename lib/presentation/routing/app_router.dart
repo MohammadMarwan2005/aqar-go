@@ -15,6 +15,8 @@ import 'package:aqar_go/presentation/feature/my_ad_details/my_ad_details_cubit/m
 import 'package:aqar_go/presentation/feature/my_ads/activate_ads_cubit/activate_ads_cubit.dart';
 import 'package:aqar_go/presentation/feature/my_properties/my_properties_screen.dart';
 import 'package:aqar_go/presentation/feature/review/ad_reviews/cubit/ad_reviews_cubit.dart';
+import 'package:aqar_go/presentation/feature/review/my_review/cubit/my_review_cubit.dart';
+import 'package:aqar_go/presentation/feature/review/my_review/my_review_screen.dart';
 import 'package:aqar_go/presentation/feature/search/filter/search_filter_screen.dart';
 import 'package:aqar_go/presentation/feature/verify_email/verify_instruction.dart';
 import 'package:aqar_go/presentation/helper/navigation_helper.dart';
@@ -184,6 +186,22 @@ final appRouter = GoRouter(
             BlocProvider.value(value: profileCubit),
           ],
           child: UpdateProfileScreen(),
+        );
+      },
+    ),
+    GoRoute(
+      path: Routes.myReview,
+      builder: (context, state) {
+        final adId = state.extractIdParam("id");
+        final adReviewsCubit = state.extra as AdReviewsCubit;
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider<MyReviewCubit>(
+              create: (context) => MyReviewCubit(adId, getIt()),
+            ),
+            BlocProvider.value(value: adReviewsCubit),
+          ],
+          child: MyReviewScreen(),
         );
       },
     ),
