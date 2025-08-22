@@ -143,7 +143,7 @@ const Map<String, String> _arLangMap = {
   "Ads Activated": "تم تنشيط الإعلانات",
   "All ads are activated successfully!": "تم تنشيط كل الإعلانات بنجاح!",
   "Are you sure you want to remove this image?":
-      "هل أنت متأكد من حذف هذا الصورة؟",
+      "هل أنت متأكد من إزالة هذا الصورة؟",
   "Are you sure you want to delete this ad?":
       "هل أنت متأكد من حذف هذا الإعلان؟",
   "Ad Deleted": "تم حذف الإعلان",
@@ -336,4 +336,7 @@ const Map<String, String> _arLangMap = {
   "Review updated successfully!": "تم تعديل المراجعة بنجاح!",
   "Review deleted successfully!": "تم حذف المراجعة بنجاح!",
   "Delete Review": "حذف المراجعة",
+  "Remove Image?": "إزالة الصورة",
+  "Remove": "إزالة",
+
 };
