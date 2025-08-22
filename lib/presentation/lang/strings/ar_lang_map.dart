@@ -338,5 +338,5 @@ const Map<String, String> _arLangMap = {
   "Delete Review": "حذف المراجعة",
   "Remove Image?": "إزالة الصورة",
   "Remove": "إزالة",
-
+  "Doesn't Matter": "لا يهم"
 };
