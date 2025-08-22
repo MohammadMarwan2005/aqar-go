@@ -11,7 +11,7 @@ import '../routing/guest_mode/post_login_instruction.dart';
 final LocalDataRepo userDataRepo = getIt();
 
 extension NavigationHelper on BuildContext {
-  void _showYouNeedToLoginAlertDialog(String route, {Object? extra}) {
+  void showYouNeedToLoginAlertDialog(String route, {Object? extra}) {
     showMyAlertDialog(
       "Log in First".tr(this),
       ["Please log in to continue and access all features.".tr(this)],
@@ -35,9 +35,11 @@ extension NavigationHelper on BuildContext {
     );
   }
 
+
+
   void pushRoute(String route, {Object? extra}) {
     if (userDataRepo.isGuest() && !Routes.isAllowed(route)) {
-      _showYouNeedToLoginAlertDialog(route, extra: extra);
+      showYouNeedToLoginAlertDialog(route, extra: extra);
       return;
     }
     push(route, extra: extra);
@@ -46,7 +48,7 @@ extension NavigationHelper on BuildContext {
   void goRoute(String route, {Object? extra}) {
     if (userDataRepo.isGuest() && !Routes.isAllowed(route)) {
       if (userDataRepo.isGuest() && !Routes.isAllowed(route)) {
-        _showYouNeedToLoginAlertDialog(route, extra: extra);
+        showYouNeedToLoginAlertDialog(route, extra: extra);
         return;
       }
       return;

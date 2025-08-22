@@ -52,6 +52,7 @@ class AdDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<AdDetailsCubit>();
     return Scaffold(
       appBar: AppBar(
         leading: _buildWhenReport(
@@ -90,7 +91,8 @@ class AdDetailsScreen extends StatelessWidget {
                       context.read<AdDetailsCubit>().fetchAd();
                     },
                   ),
-              success: (ad) => _AdDetailsContent(ad: ad),
+              success:
+                  (ad) => _AdDetailsContent(ad: ad, isGuest: cubit.isGuest),
             );
           },
         ),
@@ -101,8 +103,9 @@ class AdDetailsScreen extends StatelessWidget {
 
 class _AdDetailsContent extends StatelessWidget {
   final Ad ad;
+  final bool isGuest;
 
-  const _AdDetailsContent({required this.ad});
+  const _AdDetailsContent({required this.ad, required this.isGuest});
 
   @override
   Widget build(BuildContext context) {
@@ -136,24 +139,30 @@ class _AdDetailsContent extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8),
-            ScreenPadding(child: AdReviewsSection()),
+            ScreenPadding(child: AdReviewsSection(isGuest: isGuest)),
             const SizedBox(height: 48),
             AuthSuggestion(
               suggestionText: "Inappropriate content?".tr(context),
               buttonLabel: "Report Ad".tr(context),
               onClick: () {
-                final controller = showBottomSheet(
-                  context: context,
-                  builder:
-                      (context) => BlocProvider.value(
-                        value: reportCubit,
-                        child: ReportBottomSheet(),
-                      ),
-                );
-                controller.closed.then((_) {
-                  reportCubit.isSheetOpen = false;
-                });
-                reportCubit.isSheetOpen = true;
+                if (isGuest) {
+                  context.showYouNeedToLoginAlertDialog(
+                      Routes.getViewAd(ad.id)
+                  );
+                } else {
+                  final controller = showBottomSheet(
+                    context: context,
+                    builder:
+                        (context) => BlocProvider.value(
+                          value: reportCubit,
+                          child: ReportBottomSheet(),
+                        ),
+                  );
+                  controller.closed.then((_) {
+                    reportCubit.isSheetOpen = false;
+                  });
+                  reportCubit.isSheetOpen = true;
+                }
               },
             ),
             const SizedBox(height: 16),
