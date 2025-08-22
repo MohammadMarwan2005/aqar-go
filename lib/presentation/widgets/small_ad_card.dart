@@ -80,7 +80,7 @@ class SmallAdCard extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(12.0),
-                child: AdPrimaryInfo(ad: ad, showPropertyType: false),
+                child: AdPrimaryInfo(ad: ad, showPropertyType: false, isDescClickable: false, trimLength: 50),
               ),
             ],
           ),

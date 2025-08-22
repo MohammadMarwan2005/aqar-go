@@ -11,12 +11,16 @@ class AdPrimaryInfo extends StatelessWidget {
   final Ad ad;
   final bool showPropertyType;
   final bool isLocationLink;
+  final bool isDescClickable;
+  final int trimLength;
 
   const AdPrimaryInfo({
     super.key,
     required this.ad,
     this.showPropertyType = true,
     this.isLocationLink = false,
+    this.isDescClickable = true,
+    this.trimLength = 100,
   });
 
   @override
@@ -31,7 +35,9 @@ class AdPrimaryInfo extends StatelessWidget {
         ),
         SizedBox(height: 4),
         ExpandableText(
+          isClickable: isDescClickable,
           text: ad.property.description,
+          trimLength: trimLength,
           style: TextStyle(fontSize: 14, color: Colors.grey[700]),
         ),
         SizedBox(height: 8),
