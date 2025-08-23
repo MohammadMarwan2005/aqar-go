@@ -14,7 +14,9 @@ import '../../../widgets/expandable_text.dart';
 import '../../ad_details/ad_details_screen.dart';
 
 class AdReviewsSection extends StatelessWidget {
-  const AdReviewsSection({super.key});
+  final bool isGuest;
+
+  const AdReviewsSection({super.key, required this.isGuest});
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +25,11 @@ class AdReviewsSection extends StatelessWidget {
           (context, state) => state.when(
             loading: () => LoadingScreen(),
             success:
-                (reviews, myReview) =>
-                    _AdReviewsContent(reviews: reviews, myReview: myReview),
+                (reviews, myReview) => _AdReviewsContent(
+                  reviews: reviews,
+                  myReview: myReview,
+                  isGuest: isGuest,
+                ),
             error:
                 (error) => ErrorMessage(
                   error: error,
@@ -38,10 +43,15 @@ class AdReviewsSection extends StatelessWidget {
 }
 
 class _AdReviewsContent extends StatelessWidget {
+  final bool isGuest;
   final Review? myReview;
   final List<Review> reviews;
 
-  const _AdReviewsContent({required this.reviews, required this.myReview});
+  const _AdReviewsContent({
+    required this.reviews,
+    required this.myReview,
+    required this.isGuest,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +70,7 @@ class _AdReviewsContent extends StatelessWidget {
                 onPressed: () {
                   _goToMyReview(context, adId, adReviewCubit);
                 },
+                isGuest: isGuest,
               ),
             ],
           ),
@@ -90,6 +101,7 @@ class _AdReviewsContent extends StatelessWidget {
             onPressed: () {
               _goToMyReview(context, adId, adReviewCubit);
             },
+            isGuest: isGuest,
           ),
       ],
     );
@@ -99,8 +111,22 @@ class _AdReviewsContent extends StatelessWidget {
     context.pushRoute(Routes.getMyReview(adId), extra: adReviewsCubit);
   }
 
-  Widget _buildReviewButton(context, {required void Function() onPressed}) {
-    return AppButton(onPressed: onPressed, text: "Add review".tr(context));
+  Widget _buildReviewButton(
+    context, {
+    required void Function() onPressed,
+    bool isGuest = false,
+  }) {
+    return AppButton(
+      onPressed: () {
+        if (isGuest) {
+          final adId = context.read<AdReviewsCubit>().adId;
+          context.showYouNeedToLoginAlertDialog(Routes.getViewAd(adId));
+        } else {
+          onPressed();
+        }
+      },
+      text: "Add review".tr(context),
+    );
   }
 }
 

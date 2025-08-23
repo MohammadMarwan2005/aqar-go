@@ -1,10 +1,12 @@
 import 'package:aqar_go/common/helpers/logging_helper.dart';
 import 'package:aqar_go/data/model/activate_selected_ads/activate_selected_ads_request.dart';
 import 'package:aqar_go/data/model/ad/ad_data.dart';
+import 'package:aqar_go/data/model/favorite/favorite_ad_data.dart';
 import 'package:aqar_go/data/model/near_to_you/near_to_you_request.dart';
 import 'package:aqar_go/data/model/paged_response.dart';
 import 'package:aqar_go/data/model/search/data_search_filter_settings.dart';
 import 'package:aqar_go/domain/model/ad/ad.dart';
+import 'package:aqar_go/domain/model/domain_error.dart';
 import 'package:aqar_go/domain/model/report/report_reason.dart';
 import 'package:aqar_go/domain/model/resource.dart';
 
@@ -156,7 +158,11 @@ class AdRepoImpl extends AdRepo {
     final request = PageRequest(pageSize: pageSize);
     return _safeAPICaller.call<List<Ad>, APIResponse<PagedResponse<AdData>>>(
       apiCall: () {
-        return _apiService.getSimilarAds(page: page, request: request, adId: adId);
+        return _apiService.getSimilarAds(
+          page: page,
+          request: request,
+          adId: adId,
+        );
       },
       dataToDomain: (data) {
         return data.data.data.map((adData) => adData.toDomain()).toList();
@@ -214,5 +220,47 @@ class AdRepoImpl extends AdRepo {
     await Future.delayed(const Duration(seconds: 1));
     return Success(null);
     // return Error(DomainError.unknownError);
+  }
+
+  @override
+  Future<Resource<void>> addToFavourite(int adId) async {
+    return _safeAPICaller.call<void, APIResponse<dynamic>>(
+      apiCall: () {
+        return _apiService.addToFavorites(adId);
+      },
+      dataToDomain: (data) {
+        return;
+      },
+    );
+  }
+
+  @override
+  Future<Resource<List<Ad>>> getFavouriteAds({
+    required int page,
+    required int pageSize,
+  }) async {
+    return _safeAPICaller
+        .call<List<Ad>, APIResponse<PagedResponse<FavoriteAdData>>>(
+          apiCall: () {
+            return _apiService.getFavoriteAds(page: page, pageSize: pageSize);
+          },
+          dataToDomain: (data) {
+            return data.data.data
+                .map((favoriteAdData) => favoriteAdData.ad.toDomain())
+                .toList();
+          },
+        );
+  }
+
+  @override
+  Future<Resource<void>> removeFromFavourite(int adId) async {
+    return _safeAPICaller.call<void, APIResponse<dynamic>>(
+      apiCall: () {
+        return _apiService.removeFromFavorites(adId);
+      },
+      dataToDomain: (data) {
+        return;
+      },
+    );
   }
 }

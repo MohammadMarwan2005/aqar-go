@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../../data/repo/auth_repo.dart';
+import '../../../../domain/repo/auth_repo.dart';
 import '../../../../domain/model/domain_error.dart';
 
 part 'reset_password_state.dart';

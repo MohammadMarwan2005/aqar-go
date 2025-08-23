@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:aqar_go/common/helpers/logging_helper.dart';
 import 'package:dio/dio.dart';
 
 import '../../domain/model/resource.dart';
@@ -17,9 +18,11 @@ class SafeAPICaller {
       final domain = dataToDomain(data);
       return Success(domain);
     } on DioException catch (dioError) {
+      debugLog(dioError.stackTrace.toString());
       final error = mapDioExceptionToDomainError(dioError);
       return Error(error);
     } on TypeError catch (typeError) {
+      debugLog(typeError.stackTrace.toString());
       return Error(DomainError.getUnexpectedError(typeError.toString()));
     } catch (e) {
       return Error(DomainError(message: 'Unexpected error: $e'));

@@ -36,7 +36,7 @@ class SearchFilterScreen extends StatelessWidget {
         child: Row(
           children: [
             Flexible(
-              flex: 2,
+              flex: 3,
               child: AppButton(
                 isSecondary: true,
                 onPressed: () {
@@ -61,7 +61,7 @@ class SearchFilterScreen extends StatelessWidget {
             ),
             SizedBox(width: 8),
             Flexible(
-              flex: 3,
+              flex: 4,
               child: AppButton(
                 onPressed: () {
                   final isValid = _formKey.currentState?.validate();

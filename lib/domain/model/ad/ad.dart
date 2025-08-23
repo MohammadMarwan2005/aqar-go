@@ -7,8 +7,9 @@ class Ad {
   final DateTime creationDateUTC;
   final DateTime expirationDateUTC;
   final Property property;
+  final bool? isFavorite; // nullable because it's Guest
 
-  Ad({required this.id, required this.isActive, required this.views, required this.creationDateUTC, required this.expirationDateUTC, required this.property});
+  Ad({required this.id, required this.isActive, required this.views, required this.creationDateUTC, required this.expirationDateUTC, required this.property, required this.isFavorite});
 
   bool get isExpired => !isActive;
 }

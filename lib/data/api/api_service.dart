@@ -2,6 +2,7 @@ import 'package:aqar_go/data/model/ad/ad_data.dart';
 import 'package:aqar_go/data/model/ad/request/create_ad_request.dart';
 import 'package:aqar_go/data/model/api_response.dart';
 import 'package:aqar_go/data/model/auth/auth_response_data.dart';
+import 'package:aqar_go/data/model/favorite/favorite_ad_data.dart';
 import 'package:aqar_go/data/model/near_to_you/near_to_you_request.dart';
 import 'package:aqar_go/data/model/paged_response.dart';
 import 'package:aqar_go/data/model/property/property_data.dart';
@@ -151,4 +152,22 @@ abstract class APIService {
 
   @DELETE("${APIConstants.reviewUrl}/{id}")
   Future<APIResponse<dynamic>> deleteReview(@Path("id") int reviewId);
+
+  @POST(APIConstants.addDeleteToFavoritesUrl)
+  Future<APIResponse<dynamic>> addToFavorites(@Path('id') int adId);
+
+  @DELETE(APIConstants.addDeleteToFavoritesUrl)
+  Future<APIResponse<dynamic>> removeFromFavorites(@Path('id') int adId);
+
+  @GET(APIConstants.getFavoriteAdsUrl)
+  Future<APIResponse<PagedResponse<FavoriteAdData>>> getFavoriteAds({
+    @Query("page") required int page,
+    @Query("num") required int pageSize,
+  });
+
+  @GET(APIConstants.upgradeToPremiumUrl)
+  Future<APIResponse<dynamic>> upgradeToPremium();
+
+  @GET(APIConstants.downgradeUrl)
+  Future<APIResponse<dynamic>> downgrade();
 }

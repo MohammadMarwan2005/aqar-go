@@ -50,4 +50,13 @@ abstract class AdRepo {
   });
 
   Future<Resource<void>> notifyMe(SearchFilterSettings searchFilterSettings);
+
+  Future<Resource<void>> addToFavourite(int adId);
+
+  Future<Resource<void>> removeFromFavourite(int adId);
+
+  Future<Resource<List<Ad>>> getFavouriteAds({
+    required int page,
+    required int pageSize,
+  });
 }

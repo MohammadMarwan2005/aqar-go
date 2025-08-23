@@ -57,6 +57,7 @@ class AppButton extends StatelessWidget {
             style: Theme.of(
               context,
             ).textTheme.labelLarge?.copyWith(color: foregroundColor),
+            overflow: TextOverflow.ellipsis,
           ),
           if (isLoading)
             SizedBox(

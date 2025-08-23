@@ -10,12 +10,12 @@ DataUser _$DataUserFromJson(Map<String, dynamic> json) => DataUser(
   id: (json['id'] as num).toInt(),
   emailVerifiedAt: json['email_verified_at'] as String?,
   profile: DataUserProfile.fromJson(json['profile'] as Map<String, dynamic>),
-  isPremium: json['is_premium'] as bool? ?? false,
+  isPremium: (json['has_active_subscription'] as num?)?.toInt() ?? 0,
 );
 
 Map<String, dynamic> _$DataUserToJson(DataUser instance) => <String, dynamic>{
   'id': instance.id,
   'email_verified_at': instance.emailVerifiedAt,
-  'is_premium': instance.isPremium,
+  'has_active_subscription': instance.isPremium,
   'profile': instance.profile,
 };

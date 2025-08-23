@@ -92,7 +92,7 @@ class ImagePickerWidget extends StatelessWidget {
                               onPressed: () {
                                 context.pop();
                               },
-                              child: Text("Cancel"),
+                              child: Text("Cancel".tr(context)),
                             ),
                           );
                         },

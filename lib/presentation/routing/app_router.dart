@@ -1,6 +1,15 @@
 import 'package:aqar_go/presentation/feature/ad_details/ad_details_screen.dart';
 import 'package:aqar_go/presentation/feature/ad_details/cubit/ad_details_cubit.dart';
 import 'package:aqar_go/presentation/feature/check_password_otp/check_password_otp_screen.dart';
+import 'package:aqar_go/presentation/feature/favorite/ad/cubit/ad_favorite_cubit.dart';
+import 'package:aqar_go/presentation/feature/favorite/ads/cubit/favorite_ads_cubit.dart';
+import 'package:aqar_go/presentation/feature/favorite/ads/favorite_ads_screen.dart';
+import 'package:aqar_go/presentation/feature/maps/cubit/maps_cubit.dart';
+import 'package:aqar_go/presentation/feature/media_picker/media_picker_cubit.dart';
+import 'package:aqar_go/presentation/feature/my_ad_details/my_ad_actions_cubit/my_ad_actions_cubit.dart';
+import 'package:aqar_go/presentation/feature/my_ad_details/my_ad_details_cubit/my_ad_details_cubit.dart';
+import 'package:aqar_go/presentation/feature/my_ads/activate_ads_cubit/activate_ads_cubit.dart';
+import 'package:aqar_go/presentation/feature/my_properties/my_properties_screen.dart';
 import 'package:aqar_go/presentation/feature/near_to_you/cubit/near_to_you_cubit.dart';
 import 'package:aqar_go/presentation/feature/near_to_you/near_to_you_screen.dart';
 import 'package:aqar_go/presentation/feature/notify_me/cubit/notify_me_cubit.dart';
@@ -8,12 +17,6 @@ import 'package:aqar_go/presentation/feature/plans/plans_screen.dart';
 import 'package:aqar_go/presentation/feature/profile/show/profile_cubit.dart';
 import 'package:aqar_go/presentation/feature/report/cubit/report_cubit.dart';
 import 'package:aqar_go/presentation/feature/reset_password/reset_password_screen.dart';
-import 'package:aqar_go/presentation/feature/maps/cubit/maps_cubit.dart';
-import 'package:aqar_go/presentation/feature/media_picker/media_picker_cubit.dart';
-import 'package:aqar_go/presentation/feature/my_ad_details/my_ad_actions_cubit/my_ad_actions_cubit.dart';
-import 'package:aqar_go/presentation/feature/my_ad_details/my_ad_details_cubit/my_ad_details_cubit.dart';
-import 'package:aqar_go/presentation/feature/my_ads/activate_ads_cubit/activate_ads_cubit.dart';
-import 'package:aqar_go/presentation/feature/my_properties/my_properties_screen.dart';
 import 'package:aqar_go/presentation/feature/review/ad_reviews/cubit/ad_reviews_cubit.dart';
 import 'package:aqar_go/presentation/feature/review/my_review/cubit/my_review_cubit.dart';
 import 'package:aqar_go/presentation/feature/review/my_review/my_review_screen.dart';
@@ -82,9 +85,15 @@ final appRouter = GoRouter(
     GoRoute(
       path: Routes.plans,
       builder: (context, state) {
-        final isPremium = state.extra as bool;
-        return BlocProvider<PlansCubit>(
-          create: (context) => PlansCubit(isPremium: isPremium),
+        final args = state.extra as PlansScreenArgs;
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider<PlansCubit>(
+              create:
+                  (context) => PlansCubit(getIt(), isPremium: args.isPremium),
+            ),
+            BlocProvider.value(value: args.profileCubit),
+          ],
           child: PlansScreen(),
         );
       },
@@ -104,6 +113,15 @@ final appRouter = GoRouter(
         return BlocProvider<RecommendedAdsCubit>(
           create: (context) => RecommendedAdsCubit(getIt()),
           child: RecommendedAdsScreen(),
+        );
+      },
+    ),
+    GoRoute(
+      path: Routes.favoriteAds,
+      builder: (context, state) {
+        return BlocProvider<FavoriteAdsCubit>(
+          create: (context) => FavoriteAdsCubit(getIt()),
+          child: FavoriteAdsScreen(),
         );
       },
     ),
@@ -283,7 +301,7 @@ final appRouter = GoRouter(
         return MultiBlocProvider(
           providers: [
             BlocProvider<AdDetailsCubit>(
-              create: (context) => AdDetailsCubit(id, getIt()),
+              create: (context) => AdDetailsCubit(id, getIt(), getIt()),
             ),
             BlocProvider<ReportCubit>(
               create: (context) => ReportCubit(id, getIt()),
@@ -293,6 +311,9 @@ final appRouter = GoRouter(
             ),
             BlocProvider<AdReviewsCubit>(
               create: (context) => AdReviewsCubit(id, getIt()),
+            ),
+            BlocProvider<AdFavoriteCubit>(
+              create: (context) => AdFavoriteCubit(getIt(), id),
             ),
           ],
           child: AdDetailsScreen(),

@@ -1,14 +1,13 @@
-import 'package:aqar_go/data/repo/local_data_repo.dart';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../domain/model/domain_error.dart';
 import '../../../../domain/model/search/search_filter_settings.dart';
 import '../../../../domain/repo/ad_repo.dart';
-
-part 'notify_me_state.dart';
+import '../../../../domain/repo/local_data_repo.dart';
 
 part 'notify_me_cubit.freezed.dart';
+part 'notify_me_state.dart';
 
 class NotifyMeCubit extends Cubit<NotifyMeState> {
   final AdRepo _adRepo;
@@ -16,8 +15,8 @@ class NotifyMeCubit extends Cubit<NotifyMeState> {
 
   NotifyMeCubit(
     this._adRepo,
-      this.searchFilterSettings,
-    LocalDataRepo _localDataRepo,
+    this.searchFilterSettings,
+      LocalDataRepo _localDataRepo,
   ) : super(NotifyMeState.initial(_localDataRepo.isGuest()));
 
   notifyMe() async {

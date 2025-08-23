@@ -20,7 +20,7 @@ class BooleanFiledWithTitle extends StatelessWidget {
       children: [
         Text(title, style: Theme.of(context).textTheme.titleMedium),
         SizedBox(height: 4),
-        BooleanField(value: value, onChanged: onChanged),
+        BooleanField(value: value, onChanged: onChanged, falseLabelId: null),
       ],
     );
   }
@@ -29,15 +29,15 @@ class BooleanFiledWithTitle extends StatelessWidget {
 class BooleanField extends StatelessWidget {
   final bool? value;
   final void Function(bool newValue) onChanged;
-  final String? trueLabel;
-  final String? falseLabel;
+  final String? trueLabelId;
+  final String? falseLabelId;
 
   const BooleanField({
     super.key,
     required this.value,
     required this.onChanged,
-    this.trueLabel,
-    this.falseLabel,
+    this.trueLabelId,
+    this.falseLabelId = "Doesn't Matter",
   });
 
   @override
@@ -46,14 +46,14 @@ class BooleanField extends StatelessWidget {
     final isNoSelected = value == false;
     // else: null, no chips is selected
     final yesContentColor =
-    (isYesSelected)
-        ? Theme.of(context).colorScheme.onPrimary
-        : Theme.of(context).colorScheme.onSurface;
+        (isYesSelected)
+            ? Theme.of(context).colorScheme.onPrimary
+            : Theme.of(context).colorScheme.onSurface;
 
     final noContentColor =
-    (isNoSelected)
-        ? Theme.of(context).colorScheme.onPrimary
-        : Theme.of(context).colorScheme.onSurface;
+        (isNoSelected)
+            ? Theme.of(context).colorScheme.onPrimary
+            : Theme.of(context).colorScheme.onSurface;
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -62,7 +62,7 @@ class BooleanField extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 4),
             child: ChoiceChip(
-              label: Text(trueLabel ?? "Yes".tr(context)),
+              label: Text(trueLabelId?.tr(context) ?? "Yes".tr(context)),
               selected: isYesSelected,
               onSelected: (_) {
                 onChanged(true);
@@ -74,7 +74,7 @@ class BooleanField extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 4),
             child: ChoiceChip(
-              label: Text(falseLabel ?? "No".tr(context)),
+              label: Text(falseLabelId?.tr(context) ?? "No".tr(context)),
               selected: isNoSelected,
               onSelected: (_) {
                 onChanged(false);

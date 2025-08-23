@@ -1,4 +1,5 @@
 import 'package:aqar_go/presentation/feature/auth/widgets/auth_suggestion.dart';
+import 'package:aqar_go/presentation/feature/favorite/ad/ad_favorite_icon.dart';
 import 'package:aqar_go/presentation/feature/report/report_bottom_sheet.dart';
 import 'package:aqar_go/presentation/feature/review/ad_reviews/ad_reviews_section.dart';
 import 'package:aqar_go/presentation/helper/navigation_helper.dart';
@@ -23,6 +24,7 @@ import '../../routing/routes.dart';
 import '../../widgets/error_message.dart';
 import '../../widgets/loading_screen.dart';
 import '../../widgets/small_ad_card.dart';
+import '../favorite/ad/cubit/ad_favorite_cubit.dart';
 import '../paging_base/cubit/paging_cubit.dart';
 import '../paging_base/paged_list_view.dart';
 import '../report/cubit/report_cubit.dart';
@@ -52,6 +54,7 @@ class AdDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<AdDetailsCubit>();
     return Scaffold(
       appBar: AppBar(
         leading: _buildWhenReport(
@@ -79,7 +82,16 @@ class AdDetailsScreen extends StatelessWidget {
         ],
       ),
       body: SafeArea(
-        child: BlocBuilder<AdDetailsCubit, AdDetailsState>(
+        child: BlocConsumer<AdDetailsCubit, AdDetailsState>(
+          listener: (context, state) {
+            state.when(
+              loading: () {},
+              error: (domainError) {},
+              success: (ad) {
+                context.read<AdFavoriteCubit>().loadInitial(ad.isFavorite);
+              },
+            );
+          },
           builder: (context, state) {
             return state.when(
               loading: () => LoadingScreen(),
@@ -90,7 +102,8 @@ class AdDetailsScreen extends StatelessWidget {
                       context.read<AdDetailsCubit>().fetchAd();
                     },
                   ),
-              success: (ad) => _AdDetailsContent(ad: ad),
+              success:
+                  (ad) => _AdDetailsContent(ad: ad, isGuest: cubit.isGuest),
             );
           },
         ),
@@ -101,8 +114,9 @@ class AdDetailsScreen extends StatelessWidget {
 
 class _AdDetailsContent extends StatelessWidget {
   final Ad ad;
+  final bool isGuest;
 
-  const _AdDetailsContent({required this.ad});
+  const _AdDetailsContent({required this.ad, required this.isGuest});
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +127,16 @@ class _AdDetailsContent extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ImagesSlider.fromFiles(files: ad.property.images),
+            Stack(
+              children: [
+                ImagesSlider.fromFiles(files: ad.property.images),
+                Positioned(
+                  top: 8,
+                  right: 16,
+                  child: AdFavoriteIcon(isGuest: isGuest),
+                ),
+              ],
+            ),
             const SizedBox(height: 12),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -136,24 +159,30 @@ class _AdDetailsContent extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8),
-            ScreenPadding(child: AdReviewsSection()),
+            ScreenPadding(child: AdReviewsSection(isGuest: isGuest)),
             const SizedBox(height: 48),
             AuthSuggestion(
               suggestionText: "Inappropriate content?".tr(context),
               buttonLabel: "Report Ad".tr(context),
               onClick: () {
-                final controller = showBottomSheet(
-                  context: context,
-                  builder:
-                      (context) => BlocProvider.value(
-                        value: reportCubit,
-                        child: ReportBottomSheet(),
-                      ),
-                );
-                controller.closed.then((_) {
-                  reportCubit.isSheetOpen = false;
-                });
-                reportCubit.isSheetOpen = true;
+                if (isGuest) {
+                  context.showYouNeedToLoginAlertDialog(
+                    Routes.getViewAd(ad.id),
+                  );
+                } else {
+                  final controller = showBottomSheet(
+                    context: context,
+                    builder:
+                        (context) => BlocProvider.value(
+                          value: reportCubit,
+                          child: ReportBottomSheet(),
+                        ),
+                  );
+                  controller.closed.then((_) {
+                    reportCubit.isSheetOpen = false;
+                  });
+                  reportCubit.isSheetOpen = true;
+                }
               },
             ),
             const SizedBox(height: 16),

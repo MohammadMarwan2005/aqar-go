@@ -20,4 +20,6 @@ const Map<String, String> _enLangMap = {
   "yes_has_warehouse": "Warehouse",
   "yes_has_ac": "AC",
   "yes_has_bathroom": "Bathroom",
+  "Discover Your Dream Property": "Discover Your \nDream Property",
+  "Find the perfect property with ease. Explore, compare and connect with trusted agents all in one app": "Find the perfect property with ease. Explore, compare and connect with trusted agents all in one app",
 };

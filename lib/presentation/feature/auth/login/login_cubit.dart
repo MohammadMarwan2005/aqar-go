@@ -1,16 +1,16 @@
 import 'package:aqar_go/data/model/auth/login_request.dart';
-import 'package:aqar_go/data/repo/auth_repo.dart';
-import 'package:aqar_go/data/repo/local_data_repo.dart';
+import 'package:aqar_go/domain/repo/auth_repo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../domain/repo/local_data_repo.dart';
 import '../auth_state.dart';
 
 class LoginCubit extends Cubit<AuthState> {
   final LocalDataRepo _localDataRepo;
   final AuthRepo _authRepo;
   final formKey = GlobalKey<FormState>();
-  final emailController = TextEditingController(text: "mohammadalaishat2005@gmail.com");
+  final emailController = TextEditingController(text: "test@test.test");
   final passwordController = TextEditingController(text: "password");
   final ValueNotifier<String> passwordNotifier = ValueNotifier("");
 

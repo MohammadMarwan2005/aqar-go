@@ -1,7 +1,10 @@
+import 'package:aqar_go/domain/model/resource.dart';
+import 'package:aqar_go/domain/repo/plan_repo.dart';
+import 'package:aqar_go/presentation/feature/profile/show/profile_cubit.dart';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:material_symbols_icons/symbols.dart';
 
+import '../../../../data/model/plan/plan_enum.dart';
 import '../../../../domain/model/domain_error.dart';
 import '../plan.dart';
 
@@ -9,78 +12,52 @@ part 'plans_cubit.freezed.dart';
 part 'plans_state.dart';
 
 class PlansCubit extends Cubit<PlansState> {
-  PlansCubit({required bool isPremium}) : super(PlansState.initial(isPremium));
+  final PlanRepo _planRepo;
 
-  goPremium() async {
-    _loadAndEmit(true);
+  PlansCubit(this._planRepo, {required bool isPremium})
+    : super(PlansState.initial(isPremium ? PlanEnum.premium : PlanEnum.free));
+
+  upgradeToPremium() async {
+    emit(PlansState.loading(state.planEnum));
+    final response = await _planRepo.upgradeToPremium();
+    _handleResponse(response);
   }
 
-  goFree() async {
-    _loadAndEmit(false);
+  downgrade() async {
+    emit(PlansState.loading(state.planEnum));
+    final response = await _planRepo.downgrade();
+    _handleResponse(response);
   }
 
+  _handleResponse(Resource<PlanEnum> response) {
+    response.when(
+      onSuccess: (successData) {
+        emit(PlansState.success(successData));
+      },
+      onError: (error) {
+        emit(PlansState.error(state.planEnum, error));
+      },
+    );
+  }
 
-  _loadAndEmit(bool isPremium) async {
-    emit(PlansState.loading(isPremium));
+  _loadAndEmit(PlanEnum planEnum) async {
+    emit(PlansState.loading(planEnum));
     await Future.delayed(const Duration(seconds: 2));
-    emit(PlansState.success(isPremium));
+    emit(PlansState.success(planEnum));
   }
 
   makeError() async {
-    emit(PlansState.loading(state.isPremium));
+    emit(PlansState.loading(state.planEnum));
     await Future.delayed(const Duration(seconds: 2));
-    emit(PlansState.error(state.isPremium, DomainError.unknownError));
+    emit(PlansState.error(state.planEnum, DomainError.unknownError));
   }
 
-  static List<Plan> plans = [
-    Plan(
-      nameId: "Free",
-      isPremium: false,
-      priceInDollar: 0,
-      features: [
-        PlanFeature(
-          nameId: "3 ads maximum",
-          isAvailable: true,
-          iconData: Symbols.ad_off,
-        ),
-        PlanFeature(
-          nameId: "Standard ad reach",
-          isAvailable: true,
-          iconData: Symbols.search,
-        ),
-        PlanFeature(
-          nameId: "Basic support",
-          isAvailable: true,
-          iconData: Symbols.support,
-        ),
-      ],
-    ),
-    Plan(
-      nameId: "Premium",
-      isPremium: true,
-      priceInDollar: 4.99,
-      features: [
-        PlanFeature(
-          nameId: "Up to 15 ads",
-          isAvailable: true,
-          iconData: Symbols.all_inclusive,
-        ),
-        PlanFeature(
-          nameId: "Priority ad reach",
-          isAvailable: true,
-          iconData: Symbols.query_stats,
-        ),
-        PlanFeature(
-          nameId: "24/7 Premium support",
-          isAvailable: true,
-          iconData: Symbols.support_agent,
-        ),
-        PlanFeature(
-          nameId: "More...",
-          isAvailable: true,
-          iconData: Symbols.diamond,
-        ),
-      ],
-    ),
-  ];
+  static List<Plan> plans = [Plan.free, Plan.premium];
+}
+
+class PlansScreenArgs {
+  final bool isPremium;
+  final ProfileCubit profileCubit;
+
+  PlansScreenArgs({required this.isPremium, required this.profileCubit});
 }

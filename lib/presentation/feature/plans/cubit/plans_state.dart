@@ -2,38 +2,42 @@ part of 'plans_cubit.dart';
 
 @freezed
 sealed class PlansState with _$PlansState {
-  const factory PlansState.initial(bool isPremium) = _Initial;
+  const factory PlansState.initial(PlanEnum planEnum) = _Initial;
 
-  const factory PlansState.loading(bool isPremium) = _Loading;
+  const factory PlansState.loading(PlanEnum planEnum) = _Loading;
 
-  const factory PlansState.error(bool isPremium, DomainError error) = _Error;
+  const factory PlansState.error(PlanEnum planEnum, DomainError error) = _Error;
 
-  const factory PlansState.success(bool isPremium) = _Success;
+  const factory PlansState.success(PlanEnum planEnum) = _Success;
 }
 
 extension PlansStateX on PlansState {
-  bool get isPremium => when(
-    initial: (bool isPremium) => isPremium,
-    loading: (bool isPremium) => isPremium,
-    error: (bool isPremium, DomainError error) => isPremium,
-    success: (bool isPremium) => isPremium,
+  PlanEnum get planEnum => when(
+    initial: (PlanEnum planEnum) => planEnum,
+    loading: (PlanEnum planEnum) => planEnum,
+    error: (PlanEnum planEnum, DomainError error) => planEnum,
+    success: (PlanEnum planEnum) => planEnum,
   );
 
+  bool get isPremium => this.planEnum == PlanEnum.premium;
+
   R when<R>({
-    required R Function(bool isPremium) initial,
-    required R Function(bool isPremium) loading,
-    required R Function(bool isPremium, DomainError error) error,
-    required R Function(bool isPremium) success,
+    required R Function(PlanEnum planEnum) initial,
+    required R Function(PlanEnum planEnum) loading,
+    required R Function(PlanEnum planEnum, DomainError error) error,
+    required R Function(PlanEnum planEnum) success,
   }) {
     switch (this) {
-      case _Initial(isPremium: var isPremium):
-        return initial(isPremium);
-      case _Loading(isPremium: var isPremium):
-        return loading(isPremium);
-      case _Error(isPremium: var isPremium, error: var domainError):
-        return error(isPremium, domainError);
-      case _Success(isPremium: var isPremium):
-        return success(isPremium);
+      case _Initial(planEnum: var planEnum):
+        return initial(planEnum);
+      case _Loading(planEnum: var planEnum):
+        return loading(planEnum);
+      case _Error(planEnum: var planEnum, error: var domainError):
+        return error(planEnum, domainError);
+      case _Success(planEnum: var planEnum):
+        return success(planEnum);
     }
   }
+
+  bool get isSuccess => this is _Success;
 }

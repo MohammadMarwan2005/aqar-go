@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../data/repo/auth_repo.dart';
+import '../../../../domain/repo/auth_repo.dart';
 import '../../../../domain/model/media_file.dart';
 import '../../../../domain/model/profile/user_profile.dart';
 import '../../../../domain/model/resource.dart';

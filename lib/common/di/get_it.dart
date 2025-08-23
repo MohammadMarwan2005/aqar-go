@@ -1,6 +1,6 @@
-import 'package:aqar_go/data/repo/auth_repo.dart';
 import 'package:aqar_go/data/repo/property_repo_impl.dart';
 import 'package:aqar_go/domain/repo/ad_repo.dart';
+import 'package:aqar_go/domain/repo/auth_repo.dart';
 import 'package:aqar_go/domain/usecase/search_ads_usecase.dart';
 import 'package:aqar_go/presentation/feature/auth/register/register_cubit.dart';
 import 'package:aqar_go/presentation/feature/maps/cubit/maps_cubit.dart';
@@ -18,8 +18,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../data/api/api_service.dart';
 import '../../data/api/safe_api_caller.dart';
 import '../../data/repo/ad_repo_impl.dart';
-import '../../data/repo/local_data_repo.dart';
+import '../../data/repo/plan_repo_impl.dart';
 import '../../data/repo/review_repo_impl.dart';
+import '../../domain/repo/local_data_repo.dart';
+import '../../domain/repo/plan_repo.dart';
 import '../../domain/repo/property_repo.dart';
 import '../../domain/repo/review_repo.dart';
 import '../../domain/usecase/create_property_usecase.dart';
@@ -89,14 +91,19 @@ Future<void> di() async {
     () => PropertyRepoImpl(getIt(), getIt()),
   );
   getIt.registerLazySingleton<AdRepo>(() => AdRepoImpl(getIt(), getIt()));
-  getIt.registerLazySingleton<ReviewRepo>(() => ReviewRepoImpl(getIt(), getIt()));
+  getIt.registerLazySingleton<ReviewRepo>(
+    () => ReviewRepoImpl(getIt(), getIt()),
+  );
+  getIt.registerLazySingleton<PlanRepo>(() => PlanRepoImpl(getIt(), getIt()));
 
   getIt.registerLazySingleton<LocationManager>(() => LocationManager());
   getIt.registerLazySingleton<SharePlus>(() => SharePlus.instance);
 
   // use cases:
   getIt.registerLazySingleton<RoutingUseCase>(() => RoutingUseCase(getIt()));
-  getIt.registerLazySingleton<SearchAdsUsecase>(() => SearchAdsUsecase(getIt()));
+  getIt.registerLazySingleton<SearchAdsUsecase>(
+    () => SearchAdsUsecase(getIt()),
+  );
   getIt.registerLazySingleton<CreateUpdatePropertyUsecase>(
     () => CreateUpdatePropertyUsecase(getIt()),
   );

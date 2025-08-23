@@ -1,10 +1,9 @@
-import 'package:aqar_go/data/repo/local_data_repo.dart';
 import 'package:aqar_go/presentation/lang/app_localization.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../assets/assets.gen.dart';
+import '../../../domain/repo/local_data_repo.dart';
 import '../dark_blue_theme.dart';
 
 part 'theme_cubit.freezed.dart';

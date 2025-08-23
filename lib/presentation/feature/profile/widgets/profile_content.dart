@@ -1,3 +1,4 @@
+import 'package:aqar_go/presentation/feature/plans/cubit/plans_cubit.dart';
 import 'package:aqar_go/presentation/feature/profile/show/profile_cubit.dart';
 import 'package:aqar_go/presentation/feature/profile/widgets/profile_avatar.dart';
 import 'package:aqar_go/presentation/feature/profile/widgets/settings_list_item.dart';
@@ -53,6 +54,13 @@ class ProfileContent extends StatelessWidget {
           },
         ),
         SettingsListItem(
+          iconData: Icons.favorite_border,
+          title: "Favorites".tr(context),
+          onTap: () {
+            context.pushRoute(Routes.favoriteAds);
+          },
+        ),
+        SettingsListItem(
           iconAsset: Assets.svgs.notificationSettings.path,
           title: "Notification Preferences".tr(context),
           onTap: () {},
@@ -62,14 +70,23 @@ class ProfileContent extends StatelessWidget {
             iconAsset: Assets.svgs.markEmailRead.path,
             title: "Email Verification".tr(context),
             onTap: () {
-              context.pushRoute(Routes.verifyEmail, extra: VerifyInstruction(afterLogin: false));
+              context.pushRoute(
+                Routes.verifyEmail,
+                extra: VerifyInstruction(afterLogin: false),
+              );
             },
           ),
         SettingsListItem(
           iconAsset: Assets.svgs.diamond.path,
           title: "Free & Paid Plans".tr(context),
           onTap: () {
-            context.pushRoute(Routes.plans, extra: userProfile.isPremium);
+            context.pushRoute(
+              Routes.plans,
+              extra: PlansScreenArgs(
+                isPremium: userProfile.isPremium,
+                profileCubit: context.read<ProfileCubit>(),
+              ),
+            );
           },
         ),
         SettingsListItem(
@@ -116,7 +133,10 @@ class ProfileContent extends StatelessWidget {
         "Email not verified yet".tr(context),
         action: TextButton(
           onPressed: () {
-            context.pushRoute(Routes.verifyEmail, extra: VerifyInstruction(afterLogin: false));
+            context.pushRoute(
+              Routes.verifyEmail,
+              extra: VerifyInstruction(afterLogin: false),
+            );
           },
           child: Text("Verify".tr(context)),
         ),

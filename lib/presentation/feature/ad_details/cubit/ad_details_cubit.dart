@@ -4,19 +4,22 @@ import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../domain/model/ad/ad.dart';
-
-part 'ad_details_state.dart';
+import '../../../../domain/repo/local_data_repo.dart';
 
 part 'ad_details_cubit.freezed.dart';
+part 'ad_details_state.dart';
 
 class AdDetailsCubit extends Cubit<AdDetailsState> {
   final int id;
   final AdRepo _adRepo;
+  final LocalDataRepo _localDataRepo;
 
-  AdDetailsCubit(this.id, this._adRepo)
+  AdDetailsCubit(this.id, this._adRepo, this._localDataRepo)
     : super(const AdDetailsState.loading()) {
     fetchAd();
   }
+
+  bool get isGuest => _localDataRepo.isGuest();
 
   fetchAd() async {
     emit(const AdDetailsState.loading());

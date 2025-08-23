@@ -63,7 +63,7 @@ class ProfileAvatar extends StatelessWidget {
             ),
           ),
 
-          if (isPremium || true) ...[
+          if (isPremium) ...[
             Positioned(
               top: 16,
               left: 16,
