@@ -344,7 +344,9 @@ const Map<String, String> _arLangMap = {
   "Favorites Ads": "الإعلانات المفضلة",
   "No favorites ads found": "لم يتم العثور على إعلانات في المفضلة",
   "Favorites": "المفضلة",
-
+  "Discover Your Dream Property": "اكتشف \nعقار أحلامك",
+  "Find the perfect property with ease. Explore, compare and connect with trusted agents all in one app":
+      "اعثر على العقار المثالي بسهولة. استكشف، قارن، وتواصل مع وكلاء عقارات موثوقين — كل ذلك في تطبيق واحد",
 
   // BackEnd:
   "The selected code is invalid.": "الرمز المدخل غير صحيح",
@@ -354,7 +356,7 @@ const Map<String, String> _arLangMap = {
   "users retrieved successfully": "تم جلب المستخدمين بنجاح",
   "user not found": "المستخدم غير موجود",
   "user can not be created, try again later":
-  "لا يمكن إنشاء المستخدم، حاول مرة أخرى لاحقاً",
+      "لا يمكن إنشاء المستخدم، حاول مرة أخرى لاحقاً",
   "user created successfully": "تم إنشاء المستخدم بنجاح",
   "you are not allowed to do this action": "غير مسموح لك بتنفيذ هذا الإجراء",
   "user updated successfully": "تم تحديث المستخدم بنجاح",
@@ -363,7 +365,7 @@ const Map<String, String> _arLangMap = {
   "user permissions assigned successfully": "تم تعيين صلاحيات المستخدم بنجاح",
 
   "Active Subscriptions Retrieved Successfully":
-  "تم جلب الاشتراكات الفعّالة بنجاح",
+      "تم جلب الاشتراكات الفعّالة بنجاح",
   "Subscription not found": "الاشتراك غير موجود",
   "Subscription deactivated successfully": "تم إلغاء تفعيل الاشتراك بنجاح",
   "Subscriptions retrieved successfully": "تم جلب الاشتراكات بنجاح",
@@ -374,7 +376,7 @@ const Map<String, String> _arLangMap = {
   "Subscription created successfully": "تم إنشاء الاشتراك بنجاح",
   "subscription expired": "انتهت صلاحية الاشتراك",
   "{plan_name} subscription will expire in {diff} days":
-  "اشتراك {plan_name} سينتهي خلال {diff} يوم",
+      "اشتراك {plan_name} سينتهي خلال {diff} يوم",
 
   "Unauthorized": "غير مصرح",
   "u haven't created profile yet ": "لم تقم بإنشاء ملف شخصي بعد",
@@ -393,21 +395,21 @@ const Map<String, String> _arLangMap = {
   "reports sent successfully": "تم إرسال الابلاغات بنجاح",
   "your report not found": "ابلاغك غير موجود",
   "your reports on this ad sent successfully":
-  "تم إرسال الابلاغات حول هذا الإعلان بنجاح",
+      "تم إرسال الابلاغات حول هذا الإعلان بنجاح",
   "this report ignored successfully": "تم تجاهل الابلاغ بنجاح",
 
   "reviews retrieved successfully": "تم جلب التقييمات بنجاح",
   "review can not be created, try again later":
-  "لا يمكن إنشاء التقييم، حاول مرة أخرى لاحقاً",
+      "لا يمكن إنشاء التقييم، حاول مرة أخرى لاحقاً",
   "review created successfully": "تم إنشاء التقييم بنجاح",
   "review not found": "التقييم غير موجود",
   "review retrieved successfully": "تم جلب التقييم بنجاح",
   "you are not authorized to update this review":
-  "غير مصرح لك بتحديث هذا التقييم",
+      "غير مصرح لك بتحديث هذا التقييم",
   "review updated successfully": "تم تحديث التقييم بنجاح",
   "review deleted successfully": "تم حذف التقييم بنجاح",
   "you are not authorized to delete this review":
-  "غير مصرح لك بحذف هذا التقييم",
+      "غير مصرح لك بحذف هذا التقييم",
   "the Ad ID is not exist": "معرّف الإعلان غير موجود",
   "Ad ID is not exist": "معرّف الإعلان غير موجود",
 
@@ -415,7 +417,7 @@ const Map<String, String> _arLangMap = {
   "plan not found": "الخطة غير موجودة",
   "plan retrieved successfully": "تم جلب الخطة بنجاح",
   "plan can not be created, try again later":
-  "لا يمكن إنشاء الخطة، حاول مرة أخرى لاحقاً",
+      "لا يمكن إنشاء الخطة، حاول مرة أخرى لاحقاً",
   "plan updated successfully": "تم تحديث الخطة بنجاح",
   "plan created successfully": "تم إنشاء الخطة بنجاح",
   "plan deleted successfully": "تم حذف الخطة بنجاح",
@@ -423,7 +425,7 @@ const Map<String, String> _arLangMap = {
   "Ad not found in favorites": "الإعلان غير موجود في المفضلة",
   "Ad found in favorites": "الإعلان موجود في المفضلة",
   "Ad removed from favorites successfully":
-  "تمت إزالة الإعلان من المفضلة بنجاح",
+      "تمت إزالة الإعلان من المفضلة بنجاح",
   "Ad added to favorites successfully": "تمت إضافة الإعلان إلى المفضلة بنجاح",
   "Ad already added to favorites": "الإعلان مضاف مسبقاً إلى المفضلة",
   "Ad not found": "الإعلان غير موجود",
@@ -442,12 +444,12 @@ const Map<String, String> _arLangMap = {
   "ad not found": "الإعلان غير موجود",
   "add retrieved successfully": "تم جلب الإعلان بنجاح",
   "you have to upgrade your acount to have +3 ads activated":
-  "يجب ترقية حسابك لتتمكن من تفعيل أكثر من 3 إعلانات",
+      "يجب ترقية حسابك لتتمكن من تفعيل أكثر من 3 إعلانات",
   "u cant have +25 ads activated": "لا يمكنك تفعيل أكثر من 25 إعلان",
   "ad created successfully": "تم إنشاء الإعلان بنجاح",
   "the ad does not published yet": "الإعلان لم يتم نشره بعد",
   "u have to upgrade your acount to have +3 ads activated":
-  "يجب ترقية حسابك لتتمكن من تفعيل أكثر من 3 إعلانات",
+      "يجب ترقية حسابك لتتمكن من تفعيل أكثر من 3 إعلانات",
   "ad activated successfully": "تم تفعيل الإعلان بنجاح",
   "Invalid property type: ": "نوع العقار غير صالح: ",
   "Get {type} ads": "جلب إعلانات {type}",
@@ -469,7 +471,7 @@ const Map<String, String> _arLangMap = {
   "something went wrong,try again later": "حدث خطأ ما، حاول مرة أخرى لاحقاً",
   "user registered successfully": "تم تسجيل المستخدم بنجاح",
   "your email or password is wrong":
-  "البريد الإلكتروني أو كلمة المرور غير صحيحة",
+      "البريد الإلكتروني أو كلمة المرور غير صحيحة",
   "User logged in successfully": "تم تسجيل الدخول بنجاح",
   "user logged out successfully": "تم تسجيل الخروج بنجاح",
   "invalid token": "رمز الدخول غير صالح",
@@ -477,7 +479,7 @@ const Map<String, String> _arLangMap = {
   "User Token refreshed successfully": "تم تحديث رمز الدخول بنجاح",
   "Token invalid or expired": "رمز الدخول غير صالح أو منتهي الصلاحية",
   "we send you an email,check your mails":
-  "لقد أرسلنا لك بريداً إلكترونياً، تحقق من بريدك",
+      "لقد أرسلنا لك بريداً إلكترونياً، تحقق من بريدك",
   "code has expired": "انتهت صلاحية الكود",
   "code is valid": "الكود صالح",
   "email not found": "البريد الإلكتروني غير موجود",
@@ -488,7 +490,7 @@ const Map<String, String> _arLangMap = {
   "properties retrieved successfully": "تم جلب العقارات بنجاح",
   "property created successfully": "تم إنشاء العقار بنجاح",
   "Property type is not compatible with the type u send":
-  "نوع العقار غير متوافق مع النوع المُرسل",
+      "نوع العقار غير متوافق مع النوع المُرسل",
   "Property updated successfully": "تم تحديث العقار بنجاح",
   "property not found": "العقار غير موجود",
   "Property deleted successfully": "تم حذف العقار بنجاح",

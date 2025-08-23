@@ -15,12 +15,15 @@ import 'package:vector_graphics/vector_graphics.dart' as _vg;
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/onboard.png
+  AssetGenImage get onboard => const AssetGenImage('assets/images/onboard.png');
+
   /// File path: assets/images/profile_image_placeholder.png
   AssetGenImage get profileImagePlaceholder =>
       const AssetGenImage('assets/images/profile_image_placeholder.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [profileImagePlaceholder];
+  List<AssetGenImage> get values => [onboard, profileImagePlaceholder];
 }
 
 class $AssetsSvgsGen {
