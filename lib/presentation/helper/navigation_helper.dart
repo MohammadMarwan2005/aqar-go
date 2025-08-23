@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../common/di/get_it.dart';
-import '../../data/repo/local_data_repo.dart';
+import '../../domain/repo/local_data_repo.dart';
 import '../routing/guest_mode/post_login_instruction.dart';
 
 final LocalDataRepo userDataRepo = getIt();
@@ -34,8 +34,6 @@ extension NavigationHelper on BuildContext {
       ),
     );
   }
-
-
 
   void pushRoute(String route, {Object? extra}) {
     if (userDataRepo.isGuest() && !Routes.isAllowed(route)) {

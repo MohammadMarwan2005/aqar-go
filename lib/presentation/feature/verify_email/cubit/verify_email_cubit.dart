@@ -4,7 +4,7 @@ import 'package:aqar_go/presentation/routing/guest_mode/post_login_instruction.d
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../../data/repo/auth_repo.dart';
+import '../../../../domain/repo/auth_repo.dart';
 
 part 'verify_email_state.dart';
 

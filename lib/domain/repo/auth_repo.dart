@@ -9,9 +9,9 @@ import 'package:aqar_go/domain/model/media_file.dart';
 import 'package:aqar_go/domain/model/profile/user_profile.dart';
 import 'package:aqar_go/domain/model/resource.dart';
 
-import '../model/profile/user/data_user.dart';
-import '../model/reset_password/reset/reset_password_request.dart';
-import '../model/reset_password/send_email/send_reset_password_email_request.dart';
+import '../../data/model/profile/user/data_user.dart';
+import '../../data/model/reset_password/reset/reset_password_request.dart';
+import '../../data/model/reset_password/send_email/send_reset_password_email_request.dart';
 
 class AuthRepo {
   final APIService _apiService;

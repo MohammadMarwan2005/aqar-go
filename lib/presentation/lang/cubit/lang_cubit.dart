@@ -4,12 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../common/helpers/logging_helper.dart';
-import '../../../data/repo/local_data_repo.dart';
+import '../../../domain/repo/local_data_repo.dart';
 
 part 'lang_cubit.freezed.dart';
 part 'lang_state.dart';
-
-
 
 class LangCubit extends Cubit<LangState> {
   final LocalDataRepo _userDataRepo;
@@ -18,7 +16,6 @@ class LangCubit extends Cubit<LangState> {
     debugLog('LangCubit : Creation...');
     loadLang();
   }
-
 
   loadLang() async {
     // en, ar, null
@@ -34,12 +31,12 @@ class LangCubit extends Cubit<LangState> {
     final currentLang = getCurrentLang(context);
     var value = currentLang;
     if (currentLang == "en") value = "ar";
-    if(currentLang == "ar") value = "en";
+    if (currentLang == "ar") value = "en";
     _saveAndEmitLang(value);
   }
 
   _saveAndEmitLang(String? langCode) {
-    if(langCode == null) {
+    if (langCode == null) {
       _userDataRepo.removeString(DataAccessKeys.langCodeKey);
     } else {
       _userDataRepo.setString(langCode, DataAccessKeys.langCodeKey);

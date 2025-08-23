@@ -1,5 +1,6 @@
-import 'package:aqar_go/data/repo/local_data_repo.dart';
 import 'package:aqar_go/presentation/routing/routes.dart';
+
+import '../../domain/repo/local_data_repo.dart';
 
 class RoutingUseCase {
   final LocalDataRepo _localDataRepo;
@@ -8,7 +9,7 @@ class RoutingUseCase {
 
   Future<String> getFirstRoute() async {
     final onboarded = _localDataRepo.hasOnboarded();
-    if(!onboarded) return Routes.onboarding;
+    if (!onboarded) return Routes.onboarding;
     return Routes.home;
   }
 }

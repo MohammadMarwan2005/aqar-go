@@ -1,10 +1,10 @@
-import 'package:aqar_go/data/repo/local_data_repo.dart';
 import 'package:aqar_go/domain/model/domain_error.dart';
 import 'package:aqar_go/domain/repo/ad_repo.dart';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../domain/model/ad/ad.dart';
+import '../../../../domain/repo/local_data_repo.dart';
 
 part 'ad_details_cubit.freezed.dart';
 part 'ad_details_state.dart';

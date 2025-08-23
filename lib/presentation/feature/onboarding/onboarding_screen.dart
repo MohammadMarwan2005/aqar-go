@@ -6,7 +6,7 @@ import 'package:aqar_go/presentation/widgets/app_button.dart';
 import 'package:aqar_go/presentation/widgets/screen_horizontal_padding.dart';
 import 'package:flutter/material.dart';
 
-import '../../../data/repo/local_data_repo.dart';
+import '../../../domain/repo/local_data_repo.dart';
 
 class OnboardingScreen extends StatelessWidget {
   final LocalDataRepo localDataRepo;

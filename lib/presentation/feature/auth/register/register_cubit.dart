@@ -1,10 +1,9 @@
-import 'package:aqar_go/common/helpers/validation_helper.dart';
 import 'package:aqar_go/data/model/auth/register_request.dart';
-import 'package:aqar_go/data/repo/auth_repo.dart';
-import 'package:aqar_go/data/repo/local_data_repo.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:aqar_go/domain/repo/auth_repo.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../domain/repo/local_data_repo.dart';
 import '../auth_state.dart';
 
 class RegisterCubit extends Cubit<AuthState> {
