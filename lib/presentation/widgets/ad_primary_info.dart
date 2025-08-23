@@ -118,7 +118,11 @@ class _TitleAndIcon extends StatelessWidget {
       children: [
         icon,
         SizedBox(width: 4),
-        Text(title, style: TextStyle(color: titleColor)),
+        Text(
+          title,
+          style: TextStyle(color: titleColor),
+          overflow: TextOverflow.ellipsis,
+        ),
       ],
     );
   }

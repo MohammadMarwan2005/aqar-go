@@ -18,7 +18,7 @@ class SmallAdCard extends StatelessWidget {
   });
 
   static double getHeight(BuildContext context) => MediaQuery.of(context).size.height * 0.4;
-  static double getWidth(BuildContext context) => MediaQuery.of(context).size.width * 0.7;
+  static double getWidth(BuildContext context) => MediaQuery.of(context).size.width * 0.8;
 
   @override
   Widget build(BuildContext context) {
