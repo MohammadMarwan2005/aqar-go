@@ -342,6 +342,9 @@ const Map<String, String> _arLangMap = {
   "Ad added to the favorites successfully": "تمت إضافة الإعلان إلى المفضلة",
   "Ad removed from the favorites successfully": "تمت إزالة الإعلان من المفضلة",
   "Favorites Ads": "الإعلانات المفضلة",
+  "No favorites ads found": "لم يتم العثور على إعلانات في المفضلة",
+  "Favorites": "المفضلة",
+
 
   // BackEnd:
   "The selected code is invalid.": "الرمز المدخل غير صحيح",

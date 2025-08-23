@@ -21,6 +21,14 @@ class FavoriteAdsScreen extends StatelessWidget {
           child: BlocBuilder<FavoriteAdsCubit, PagingState<Ad>>(
             builder: (context, state) {
               return PagedListView(
+                noMoreItemsPlaceholder: (state) {
+                  if (state.getCurrentLoadedItems().isEmpty) {
+                    return Center(
+                      child: Text("No favorites ads found".tr(context)),
+                    );
+                  }
+                  return SizedBox.shrink();
+                },
                 scrollDirection: Axis.vertical,
                 state: state,
                 itemBuilder: (ad) {

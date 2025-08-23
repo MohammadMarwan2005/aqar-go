@@ -54,6 +54,13 @@ class ProfileContent extends StatelessWidget {
           },
         ),
         SettingsListItem(
+          iconData: Icons.favorite_border,
+          title: "Favorites".tr(context),
+          onTap: () {
+            context.pushRoute(Routes.favoriteAds);
+          },
+        ),
+        SettingsListItem(
           iconAsset: Assets.svgs.notificationSettings.path,
           title: "Notification Preferences".tr(context),
           onTap: () {},

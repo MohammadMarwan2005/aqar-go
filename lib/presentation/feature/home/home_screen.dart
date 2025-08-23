@@ -23,12 +23,14 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text("AqarGo".tr(context)),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.favorite_border),
-            onPressed: () {
-              context.pushRoute(Routes.favoriteAds);
-            },
-          ),
+          // if we keep this, we will need to add a badge when the user add new favorites
+          // solution: lets remove it :)
+          // IconButton(
+          //   icon: const Icon(Icons.favorite_border),
+          //   onPressed: () {
+          //     context.pushRoute(Routes.favoriteAds);
+          //   },
+          // ),
           IconButton(
             icon: const Icon(Icons.search),
             onPressed: () {
