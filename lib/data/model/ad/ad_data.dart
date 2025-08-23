@@ -16,6 +16,9 @@ class AdData {
 
   final int views;
 
+  @JsonKey(name: 'Is_favorite')
+  final bool? isFavorite;
+
   @JsonKey(name: 'start_date')
   final String startDate;
 
@@ -37,6 +40,7 @@ class AdData {
     required this.propertyData,
     required this.isActive,
     required this.views,
+    required this.isFavorite,
     required this.startDate,
     required this.endDate,
     required this.createdAt,
@@ -56,6 +60,7 @@ class AdData {
       creationDateUTC: DateTime.tryParse(startDate) ?? DateTime.now(),
       expirationDateUTC: DateTime.tryParse(endDate) ?? DateTime.now(),
       property: propertyData.toDomain(),
+      isFavorite: isFavorite,
     );
   }
 }

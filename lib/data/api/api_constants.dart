@@ -26,4 +26,5 @@ class APIConstants {
   static const String getAdReviewsUrl = "$baseUrl/ad/{id}/reviews";
   static const String reviewUrl = "$baseUrl/reviews";
   static const String getMyReviewUrl = "$baseUrl/user/ad/{id}/reviews";
+  static const String addDeleteToFavoritesUrl = "$baseUrl/favorites/{id}";
 }

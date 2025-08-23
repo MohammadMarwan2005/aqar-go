@@ -10,15 +10,15 @@ class DataUser {
   final int id;
   @JsonKey(name: 'email_verified_at')
   final String? emailVerifiedAt;
-  @JsonKey(name: 'is_premium')
-  final bool? isPremium;
+  @JsonKey(name: 'has_active_subscription')
+  final int? isPremium;
   final DataUserProfile profile;
 
   DataUser({
     required this.id,
     required this.emailVerifiedAt,
     required this.profile,
-    this.isPremium = false,
+    this.isPremium = 0,
   });
 
   factory DataUser.fromJson(Map<String, dynamic> json) =>
@@ -33,7 +33,7 @@ class DataUser {
     phoneNumber: profile.phoneNumber,
     imageUrl: profile.imageUrl,
     isVerified: emailVerifiedAt != null,
-    isPremium: isPremium == true,
+    isPremium: isPremium == 1,
   );
 
   factory DataUser.fromDomain(UserProfile domainProfile) {

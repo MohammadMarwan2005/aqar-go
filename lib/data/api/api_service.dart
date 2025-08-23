@@ -151,4 +151,10 @@ abstract class APIService {
 
   @DELETE("${APIConstants.reviewUrl}/{id}")
   Future<APIResponse<dynamic>> deleteReview(@Path("id") int reviewId);
+
+  @POST(APIConstants.addDeleteToFavoritesUrl)
+  Future<APIResponse<dynamic>> addToFavorites(@Path('id') int adId);
+
+  @DELETE(APIConstants.addDeleteToFavoritesUrl)
+  Future<APIResponse<dynamic>> removeFromFavorites(@Path('id') int adId);
 }

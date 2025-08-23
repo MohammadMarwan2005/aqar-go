@@ -12,10 +12,14 @@ APIError _$APIErrorFromJson(Map<String, dynamic> json) => APIError(
   (json['data'] as Map<String, dynamic>?)?.map(
     (k, e) => MapEntry(k, e as List<dynamic>),
   ),
+  (json['params'] as Map<String, dynamic>?)?.map(
+    (k, e) => MapEntry(k, e as String),
+  ),
 );
 
 Map<String, dynamic> _$APIErrorToJson(APIError instance) => <String, dynamic>{
   'message': instance.message,
   'status': instance.status,
   'data': instance.data,
+  'params': instance.params,
 };
