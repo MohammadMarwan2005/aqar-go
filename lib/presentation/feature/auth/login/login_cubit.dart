@@ -10,7 +10,7 @@ class LoginCubit extends Cubit<AuthState> {
   final LocalDataRepo _localDataRepo;
   final AuthRepo _authRepo;
   final formKey = GlobalKey<FormState>();
-  final emailController = TextEditingController(text: "mohammedmarwansyr@gmail.com");
+  final emailController = TextEditingController(text: "test@test.test");
   final passwordController = TextEditingController(text: "password");
   final ValueNotifier<String> passwordNotifier = ValueNotifier("");
 

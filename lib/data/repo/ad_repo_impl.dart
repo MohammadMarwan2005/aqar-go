@@ -1,6 +1,7 @@
 import 'package:aqar_go/common/helpers/logging_helper.dart';
 import 'package:aqar_go/data/model/activate_selected_ads/activate_selected_ads_request.dart';
 import 'package:aqar_go/data/model/ad/ad_data.dart';
+import 'package:aqar_go/data/model/favorite/favorite_ad_data.dart';
 import 'package:aqar_go/data/model/near_to_you/near_to_you_request.dart';
 import 'package:aqar_go/data/model/paged_response.dart';
 import 'package:aqar_go/data/model/search/data_search_filter_settings.dart';
@@ -238,7 +239,17 @@ class AdRepoImpl extends AdRepo {
     required int page,
     required int pageSize,
   }) async {
-    return Error(DomainError.unknownError);
+    return _safeAPICaller
+        .call<List<Ad>, APIResponse<PagedResponse<FavoriteAdData>>>(
+          apiCall: () {
+            return _apiService.getFavoriteAds(page: page, pageSize: pageSize);
+          },
+          dataToDomain: (data) {
+            return data.data.data
+                .map((favoriteAdData) => favoriteAdData.ad.toDomain())
+                .toList();
+          },
+        );
   }
 
   @override

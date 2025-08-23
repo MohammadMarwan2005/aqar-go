@@ -24,6 +24,12 @@ class HomeScreen extends StatelessWidget {
         title: Text("AqarGo".tr(context)),
         actions: [
           IconButton(
+            icon: const Icon(Icons.favorite_border),
+            onPressed: () {
+              context.pushRoute(Routes.favoriteAds);
+            },
+          ),
+          IconButton(
             icon: const Icon(Icons.search),
             onPressed: () {
               context.pushRoute(Routes.searchFilters);

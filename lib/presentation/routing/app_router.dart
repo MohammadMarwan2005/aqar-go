@@ -2,6 +2,8 @@ import 'package:aqar_go/presentation/feature/ad_details/ad_details_screen.dart';
 import 'package:aqar_go/presentation/feature/ad_details/cubit/ad_details_cubit.dart';
 import 'package:aqar_go/presentation/feature/check_password_otp/check_password_otp_screen.dart';
 import 'package:aqar_go/presentation/feature/favorite/ad/cubit/ad_favorite_cubit.dart';
+import 'package:aqar_go/presentation/feature/favorite/ads/cubit/favorite_ads_cubit.dart';
+import 'package:aqar_go/presentation/feature/favorite/ads/favorite_ads_screen.dart';
 import 'package:aqar_go/presentation/feature/maps/cubit/maps_cubit.dart';
 import 'package:aqar_go/presentation/feature/media_picker/media_picker_cubit.dart';
 import 'package:aqar_go/presentation/feature/my_ad_details/my_ad_actions_cubit/my_ad_actions_cubit.dart';
@@ -105,6 +107,15 @@ final appRouter = GoRouter(
         return BlocProvider<RecommendedAdsCubit>(
           create: (context) => RecommendedAdsCubit(getIt()),
           child: RecommendedAdsScreen(),
+        );
+      },
+    ),
+    GoRoute(
+      path: Routes.favoriteAds,
+      builder: (context, state) {
+        return BlocProvider<FavoriteAdsCubit>(
+          create: (context) => FavoriteAdsCubit(getIt()),
+          child: FavoriteAdsScreen(),
         );
       },
     ),

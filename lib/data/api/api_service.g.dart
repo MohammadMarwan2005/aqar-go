@@ -978,6 +978,42 @@ class _APIService implements APIService {
     return _value;
   }
 
+  @override
+  Future<APIResponse<PagedResponse<FavoriteAdData>>> getFavoriteAds({
+    required int page,
+    required int pageSize,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'page': page, r'num': pageSize};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<APIResponse<PagedResponse<FavoriteAdData>>>(
+      Options(method: 'GET', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            'http://116.203.254.150:8001/api/favorites',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late APIResponse<PagedResponse<FavoriteAdData>> _value;
+    try {
+      _value = APIResponse<PagedResponse<FavoriteAdData>>.fromJson(
+        _result.data!,
+        (json) => PagedResponse<FavoriteAdData>.fromJson(
+          json as Map<String, dynamic>,
+          (json) => FavoriteAdData.fromJson(json as Map<String, dynamic>),
+        ),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||
