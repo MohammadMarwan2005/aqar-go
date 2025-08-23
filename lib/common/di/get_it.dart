@@ -18,8 +18,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../data/api/api_service.dart';
 import '../../data/api/safe_api_caller.dart';
 import '../../data/repo/ad_repo_impl.dart';
+import '../../data/repo/plan_repo_impl.dart';
 import '../../data/repo/review_repo_impl.dart';
 import '../../domain/repo/local_data_repo.dart';
+import '../../domain/repo/plan_repo.dart';
 import '../../domain/repo/property_repo.dart';
 import '../../domain/repo/review_repo.dart';
 import '../../domain/usecase/create_property_usecase.dart';
@@ -92,6 +94,7 @@ Future<void> di() async {
   getIt.registerLazySingleton<ReviewRepo>(
     () => ReviewRepoImpl(getIt(), getIt()),
   );
+  getIt.registerLazySingleton<PlanRepo>(() => PlanRepoImpl(getIt(), getIt()));
 
   getIt.registerLazySingleton<LocationManager>(() => LocationManager());
   getIt.registerLazySingleton<SharePlus>(() => SharePlus.instance);

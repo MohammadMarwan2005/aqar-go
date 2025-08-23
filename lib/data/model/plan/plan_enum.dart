@@ -1,0 +1,1 @@
+enum PlanEnum { free, premium }

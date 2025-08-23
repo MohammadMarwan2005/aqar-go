@@ -1,4 +1,5 @@
 import 'package:aqar_go/presentation/feature/plans/plan.dart';
+import 'package:aqar_go/presentation/feature/profile/show/profile_cubit.dart';
 import 'package:aqar_go/presentation/lang/app_localization.dart';
 import 'package:aqar_go/presentation/widgets/app_button.dart';
 import 'package:aqar_go/presentation/widgets/error_message.dart';
@@ -28,7 +29,12 @@ class PlansScreen extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 32),
-            BlocBuilder<PlansCubit, PlansState>(
+            BlocConsumer<PlansCubit, PlansState>(
+              listener: (context, state) {
+                if (state.isSuccess) {
+                  context.read<ProfileCubit>().fetchProfile();
+                }
+              },
               builder: (context, state) {
                 final widget = state.when(
                   initial: (isPremium) => null,
@@ -74,15 +80,18 @@ class _PlanWidget extends StatelessWidget {
     final isPremiumCard = plan.isPremium;
 
     Color getPremiumOrDefault(Color? fallback) =>
-        isPremiumCard ? theme.colorScheme.primary : (fallback ?? theme.hintColor);
+        isPremiumCard
+            ? theme.colorScheme.primary
+            : (fallback ?? theme.hintColor);
 
     return Card(
       elevation: 4,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
-        side: isCurrentPlan
-            ? BorderSide(color: theme.colorScheme.primary, width: 2)
-            : BorderSide.none,
+        side:
+            isCurrentPlan
+                ? BorderSide(color: theme.colorScheme.primary, width: 2)
+                : BorderSide.none,
       ),
       child: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -142,7 +151,7 @@ class _PlanWidget extends StatelessWidget {
 
             /// Features
             ...plan.features.map(
-                  (feature) => _FeatureItem(
+              (feature) => _FeatureItem(
                 iconData: feature.iconData,
                 label: feature.nameId.tr(context),
                 highlight: isPremiumCard,
@@ -155,16 +164,19 @@ class _PlanWidget extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: AppButton(
-                onPressed: isCurrentPlan
-                    ? null
-                    : () {
-                  if (cubit.state.isPremium) {
-                    cubit.goFree();
-                  } else {
-                    cubit.goPremium();
-                  }
-                },
-                text: (isCurrentPlan ? "Current Plan" : "Get Started").tr(context),
+                onPressed:
+                    isCurrentPlan
+                        ? null
+                        : () {
+                          if (cubit.state.isPremium) {
+                            cubit.downgrade();
+                          } else {
+                            cubit.upgradeToPremium();
+                          }
+                        },
+                text: (isCurrentPlan ? "Current Plan" : "Get Started").tr(
+                  context,
+                ),
               ),
             ),
           ],
@@ -196,10 +208,7 @@ class _Badge extends StatelessWidget {
       ),
       child: Text(
         text,
-        style: TextStyle(
-          color: foreground,
-          fontWeight: FontWeight.w500,
-        ),
+        style: TextStyle(color: foreground, fontWeight: FontWeight.w500),
       ),
     );
   }
@@ -228,17 +237,19 @@ class _FeatureItem extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(6),
             decoration: BoxDecoration(
-              color: highlight
-                  ? theme.colorScheme.primary.withOpacity(0.1)
-                  : theme.colorScheme.surfaceContainerHigh,
+              color:
+                  highlight
+                      ? theme.colorScheme.primary.withOpacity(0.1)
+                      : theme.colorScheme.surfaceContainerHigh,
               shape: BoxShape.circle,
             ),
             child: Icon(
               iconData,
               size: 16,
-              color: highlight
-                  ? theme.colorScheme.primary
-                  : theme.colorScheme.onSurfaceVariant,
+              color:
+                  highlight
+                      ? theme.colorScheme.primary
+                      : theme.colorScheme.onSurfaceVariant,
             ),
           ),
           const SizedBox(width: 12),
@@ -255,4 +266,3 @@ class _FeatureItem extends StatelessWidget {
     );
   }
 }
-

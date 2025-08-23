@@ -85,9 +85,15 @@ final appRouter = GoRouter(
     GoRoute(
       path: Routes.plans,
       builder: (context, state) {
-        final isPremium = state.extra as bool;
-        return BlocProvider<PlansCubit>(
-          create: (context) => PlansCubit(isPremium: isPremium),
+        final args = state.extra as PlansScreenArgs;
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider<PlansCubit>(
+              create:
+                  (context) => PlansCubit(getIt(), isPremium: args.isPremium),
+            ),
+            BlocProvider.value(value: args.profileCubit),
+          ],
           child: PlansScreen(),
         );
       },

@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PlansState {
 
- bool get isPremium;
+ PlanEnum get planEnum;
 /// Create a copy of PlansState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $PlansStateCopyWith<PlansState> get copyWith => _$PlansStateCopyWithImpl<PlansSt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PlansState&&(identical(other.isPremium, isPremium) || other.isPremium == isPremium));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PlansState&&(identical(other.planEnum, planEnum) || other.planEnum == planEnum));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isPremium);
+int get hashCode => Object.hash(runtimeType,planEnum);
 
 @override
 String toString() {
-  return 'PlansState(isPremium: $isPremium)';
+  return 'PlansState(planEnum: $planEnum)';
 }
 
 
@@ -46,7 +46,7 @@ abstract mixin class $PlansStateCopyWith<$Res>  {
   factory $PlansStateCopyWith(PlansState value, $Res Function(PlansState) _then) = _$PlansStateCopyWithImpl;
 @useResult
 $Res call({
- bool isPremium
+ PlanEnum planEnum
 });
 
 
@@ -63,10 +63,10 @@ class _$PlansStateCopyWithImpl<$Res>
 
 /// Create a copy of PlansState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? isPremium = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? planEnum = null,}) {
   return _then(_self.copyWith(
-isPremium: null == isPremium ? _self.isPremium : isPremium // ignore: cast_nullable_to_non_nullable
-as bool,
+planEnum: null == planEnum ? _self.planEnum : planEnum // ignore: cast_nullable_to_non_nullable
+as PlanEnum,
   ));
 }
 
@@ -77,10 +77,10 @@ as bool,
 
 
 class _Initial implements PlansState {
-  const _Initial(this.isPremium);
+  const _Initial(this.planEnum);
   
 
-@override final  bool isPremium;
+@override final  PlanEnum planEnum;
 
 /// Create a copy of PlansState
 /// with the given fields replaced by the non-null parameter values.
@@ -92,16 +92,16 @@ _$InitialCopyWith<_Initial> get copyWith => __$InitialCopyWithImpl<_Initial>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Initial&&(identical(other.isPremium, isPremium) || other.isPremium == isPremium));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Initial&&(identical(other.planEnum, planEnum) || other.planEnum == planEnum));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isPremium);
+int get hashCode => Object.hash(runtimeType,planEnum);
 
 @override
 String toString() {
-  return 'PlansState.initial(isPremium: $isPremium)';
+  return 'PlansState.initial(planEnum: $planEnum)';
 }
 
 
@@ -112,7 +112,7 @@ abstract mixin class _$InitialCopyWith<$Res> implements $PlansStateCopyWith<$Res
   factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) = __$InitialCopyWithImpl;
 @override @useResult
 $Res call({
- bool isPremium
+ PlanEnum planEnum
 });
 
 
@@ -129,10 +129,10 @@ class __$InitialCopyWithImpl<$Res>
 
 /// Create a copy of PlansState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? isPremium = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? planEnum = null,}) {
   return _then(_Initial(
-null == isPremium ? _self.isPremium : isPremium // ignore: cast_nullable_to_non_nullable
-as bool,
+null == planEnum ? _self.planEnum : planEnum // ignore: cast_nullable_to_non_nullable
+as PlanEnum,
   ));
 }
 
@@ -143,10 +143,10 @@ as bool,
 
 
 class _Loading implements PlansState {
-  const _Loading(this.isPremium);
+  const _Loading(this.planEnum);
   
 
-@override final  bool isPremium;
+@override final  PlanEnum planEnum;
 
 /// Create a copy of PlansState
 /// with the given fields replaced by the non-null parameter values.
@@ -158,16 +158,16 @@ _$LoadingCopyWith<_Loading> get copyWith => __$LoadingCopyWithImpl<_Loading>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loading&&(identical(other.isPremium, isPremium) || other.isPremium == isPremium));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loading&&(identical(other.planEnum, planEnum) || other.planEnum == planEnum));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isPremium);
+int get hashCode => Object.hash(runtimeType,planEnum);
 
 @override
 String toString() {
-  return 'PlansState.loading(isPremium: $isPremium)';
+  return 'PlansState.loading(planEnum: $planEnum)';
 }
 
 
@@ -178,7 +178,7 @@ abstract mixin class _$LoadingCopyWith<$Res> implements $PlansStateCopyWith<$Res
   factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) _then) = __$LoadingCopyWithImpl;
 @override @useResult
 $Res call({
- bool isPremium
+ PlanEnum planEnum
 });
 
 
@@ -195,10 +195,10 @@ class __$LoadingCopyWithImpl<$Res>
 
 /// Create a copy of PlansState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? isPremium = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? planEnum = null,}) {
   return _then(_Loading(
-null == isPremium ? _self.isPremium : isPremium // ignore: cast_nullable_to_non_nullable
-as bool,
+null == planEnum ? _self.planEnum : planEnum // ignore: cast_nullable_to_non_nullable
+as PlanEnum,
   ));
 }
 
@@ -209,10 +209,10 @@ as bool,
 
 
 class _Error implements PlansState {
-  const _Error(this.isPremium, this.error);
+  const _Error(this.planEnum, this.error);
   
 
-@override final  bool isPremium;
+@override final  PlanEnum planEnum;
  final  DomainError error;
 
 /// Create a copy of PlansState
@@ -225,16 +225,16 @@ _$ErrorCopyWith<_Error> get copyWith => __$ErrorCopyWithImpl<_Error>(this, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Error&&(identical(other.isPremium, isPremium) || other.isPremium == isPremium)&&(identical(other.error, error) || other.error == error));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Error&&(identical(other.planEnum, planEnum) || other.planEnum == planEnum)&&(identical(other.error, error) || other.error == error));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isPremium,error);
+int get hashCode => Object.hash(runtimeType,planEnum,error);
 
 @override
 String toString() {
-  return 'PlansState.error(isPremium: $isPremium, error: $error)';
+  return 'PlansState.error(planEnum: $planEnum, error: $error)';
 }
 
 
@@ -245,7 +245,7 @@ abstract mixin class _$ErrorCopyWith<$Res> implements $PlansStateCopyWith<$Res> 
   factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) = __$ErrorCopyWithImpl;
 @override @useResult
 $Res call({
- bool isPremium, DomainError error
+ PlanEnum planEnum, DomainError error
 });
 
 
@@ -262,10 +262,10 @@ class __$ErrorCopyWithImpl<$Res>
 
 /// Create a copy of PlansState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? isPremium = null,Object? error = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? planEnum = null,Object? error = null,}) {
   return _then(_Error(
-null == isPremium ? _self.isPremium : isPremium // ignore: cast_nullable_to_non_nullable
-as bool,null == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
+null == planEnum ? _self.planEnum : planEnum // ignore: cast_nullable_to_non_nullable
+as PlanEnum,null == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
 as DomainError,
   ));
 }
@@ -277,10 +277,10 @@ as DomainError,
 
 
 class _Success implements PlansState {
-  const _Success(this.isPremium);
+  const _Success(this.planEnum);
   
 
-@override final  bool isPremium;
+@override final  PlanEnum planEnum;
 
 /// Create a copy of PlansState
 /// with the given fields replaced by the non-null parameter values.
@@ -292,16 +292,16 @@ _$SuccessCopyWith<_Success> get copyWith => __$SuccessCopyWithImpl<_Success>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Success&&(identical(other.isPremium, isPremium) || other.isPremium == isPremium));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Success&&(identical(other.planEnum, planEnum) || other.planEnum == planEnum));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isPremium);
+int get hashCode => Object.hash(runtimeType,planEnum);
 
 @override
 String toString() {
-  return 'PlansState.success(isPremium: $isPremium)';
+  return 'PlansState.success(planEnum: $planEnum)';
 }
 
 
@@ -312,7 +312,7 @@ abstract mixin class _$SuccessCopyWith<$Res> implements $PlansStateCopyWith<$Res
   factory _$SuccessCopyWith(_Success value, $Res Function(_Success) _then) = __$SuccessCopyWithImpl;
 @override @useResult
 $Res call({
- bool isPremium
+ PlanEnum planEnum
 });
 
 
@@ -329,10 +329,10 @@ class __$SuccessCopyWithImpl<$Res>
 
 /// Create a copy of PlansState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? isPremium = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? planEnum = null,}) {
   return _then(_Success(
-null == isPremium ? _self.isPremium : isPremium // ignore: cast_nullable_to_non_nullable
-as bool,
+null == planEnum ? _self.planEnum : planEnum // ignore: cast_nullable_to_non_nullable
+as PlanEnum,
   ));
 }
 

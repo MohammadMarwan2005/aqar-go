@@ -164,4 +164,10 @@ abstract class APIService {
     @Query("page") required int page,
     @Query("num") required int pageSize,
   });
+
+  @GET(APIConstants.upgradeToPremiumUrl)
+  Future<APIResponse<dynamic>> upgradeToPremium();
+
+  @GET(APIConstants.downgradeUrl)
+  Future<APIResponse<dynamic>> downgrade();
 }
