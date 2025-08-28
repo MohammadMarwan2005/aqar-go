@@ -58,17 +58,20 @@ class SearchResultsScreen extends StatelessWidget {
                                 ),
                           ),
                       noMoreItemsPlaceholder: (state) {
-                        if (state.getCurrentLoadedItems().isEmpty) {
-                          return Center(
-                            child: Text(
-                              "No results found for your search".tr(context),
-                            ),
-                          );
-                        }
-                        if (state.getCurrentLoadedItems().length <= 10) {
-                          return _NotifyMeWidget();
-                        }
-                        return SizedBox.shrink();
+                        return Column(
+                          children: [
+                            if (state.getCurrentLoadedItems().isEmpty)
+                              Center(
+                                child: Text(
+                                  "No results found for your search".tr(
+                                    context,
+                                  ),
+                                ),
+                              ),
+                            if (state.getCurrentLoadedItems().length <= 10)
+                              _NotifyMeWidget(),
+                          ],
+                        );
                       },
                     );
                   },

@@ -79,6 +79,11 @@ abstract class APIService {
     @Body() DataSearchFilterSettings dataSearchFilterSettings,
   );
 
+  @POST(APIConstants.searchAdsUrl)
+  Future<APIResponse<dynamic>> notifyMe(
+    @Body() DataSearchFilterSettings dataSearchFilterSettings,
+  );
+
   @POST(APIConstants.getNearToYouAdsUrl)
   Future<APIResponse<PagedResponse<AdData>>> getNearToYouAds({
     @Query("page") required int page,

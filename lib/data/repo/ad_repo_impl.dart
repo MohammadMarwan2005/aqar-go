@@ -217,9 +217,16 @@ class AdRepoImpl extends AdRepo {
   Future<Resource<void>> notifyMe(
     SearchFilterSettings searchFilterSettings,
   ) async {
-    await Future.delayed(const Duration(seconds: 1));
-    return Success(null);
-    // return Error(DomainError.unknownError);
+    return _safeAPICaller.call<void, APIResponse<dynamic>>(
+      apiCall: () {
+        return _apiService.notifyMe(
+          DataSearchFilterSettings.fromDomain(searchFilterSettings, 1),
+        );
+      },
+      dataToDomain: (data) {
+        return;
+      },
+    );
   }
 
   @override
