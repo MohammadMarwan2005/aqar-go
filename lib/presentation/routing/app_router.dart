@@ -12,6 +12,8 @@ import 'package:aqar_go/presentation/feature/my_ads/activate_ads_cubit/activate_
 import 'package:aqar_go/presentation/feature/my_properties/my_properties_screen.dart';
 import 'package:aqar_go/presentation/feature/near_to_you/cubit/near_to_you_cubit.dart';
 import 'package:aqar_go/presentation/feature/near_to_you/near_to_you_screen.dart';
+import 'package:aqar_go/presentation/feature/notification/cubit/notification_cubit.dart';
+import 'package:aqar_go/presentation/feature/notification/notification_screen.dart';
 import 'package:aqar_go/presentation/feature/notify_me/cubit/notify_me_cubit.dart';
 import 'package:aqar_go/presentation/feature/plans/plans_screen.dart';
 import 'package:aqar_go/presentation/feature/profile/show/profile_cubit.dart';
@@ -344,6 +346,19 @@ final appRouter = GoRouter(
         return BlocProvider<SearchFilterCubit>(
           create: (context) => SearchFilterCubit(passedSettings),
           child: SearchFilterScreen(),
+        );
+      },
+    ),
+    GoRoute(
+      path: Routes.notifications,
+      builder: (context, state) {
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider<NotificationCubit>(
+              create: (context) => NotificationCubit(getIt()),
+            ),
+          ],
+          child: NotificationScreen(),
         );
       },
     ),

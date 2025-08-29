@@ -349,6 +349,8 @@ const Map<String, String> _arLangMap = {
       "اعثر على العقار المثالي بسهولة. استكشف، قارن، وتواصل مع وكلاء عقارات موثوقين — كل ذلك في تطبيق واحد",
 
   "Invalid input.": "إدخال غير صالح",
+  "Notifications": "الإشعارات",
+  "Failed to load notifications": "فشل تحميل الإشعارات غير المقروءة",
 
   // BackEnd:
   "The selected code is invalid.": "الرمز المدخل غير صحيح",

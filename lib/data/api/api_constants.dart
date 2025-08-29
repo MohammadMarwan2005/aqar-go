@@ -30,6 +30,8 @@ class APIConstants {
   static const String getFavoriteAdsUrl = "$baseUrl/favorites";
   static const String upgradeToPremiumUrl = "$baseUrl/user/upgrade";
   static const String downgradeUrl = "$baseUrl/user/downgrade";
+  static const String getUnreadNotificationsCountUrl = "$baseUrl/fcm/notifications/unread-count";
+  static const String getNotificationsUrl = "$baseUrl/fcm/notifications";
 
   static const int unprocessableEntityCode = 422; // validation error
 }
