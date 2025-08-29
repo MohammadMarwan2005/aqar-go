@@ -1,4 +1,6 @@
 import 'package:aqar_go/domain/model/domain_error.dart';
+import 'package:aqar_go/domain/model/resource.dart';
+import 'package:aqar_go/domain/repo/local_data_repo.dart';
 import 'package:aqar_go/domain/repo/review_repo.dart';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -11,8 +13,9 @@ part 'ad_reviews_state.dart';
 class AdReviewsCubit extends Cubit<AdReviewsState> {
   final int adId;
   final ReviewRepo _reviewRepo;
+  final LocalDataRepo _localDataRepo;
 
-  AdReviewsCubit(this.adId, this._reviewRepo)
+  AdReviewsCubit(this.adId, this._reviewRepo, this._localDataRepo)
     : super(const AdReviewsState.loading()) {
     fetchReviews();
   }
@@ -20,7 +23,7 @@ class AdReviewsCubit extends Cubit<AdReviewsState> {
   Future<void> fetchReviews() async {
     emit(const AdReviewsState.loading());
     final result = await _reviewRepo.getReviewsByAdId(adId);
-    final myReview = await _reviewRepo.getMyReview(adId);
+    final myReview = (_localDataRepo.isGuest()) ? Success(null) : await _reviewRepo.getMyReview(adId);
     result.when(
       onSuccess: (adReviews) {
         myReview.when(

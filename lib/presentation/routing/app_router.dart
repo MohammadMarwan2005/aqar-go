@@ -312,7 +312,7 @@ final appRouter = GoRouter(
               create: (context) => SimilarAdsCubit(id, getIt()),
             ),
             BlocProvider<AdReviewsCubit>(
-              create: (context) => AdReviewsCubit(id, getIt()),
+              create: (context) => AdReviewsCubit(id, getIt(), getIt()),
             ),
             BlocProvider<AdFavoriteCubit>(
               create: (context) => AdFavoriteCubit(getIt(), id),

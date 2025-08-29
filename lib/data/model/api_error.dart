@@ -6,7 +6,7 @@ part 'api_error.g.dart';
 @JsonSerializable()
 class APIError {
   final String message; // "the store {store_name} not found"
-  final int status;
+  final int? status;
   final Map<String, List<dynamic>>? data;
   final Map<String, String>? params; // { "store_name": "adidas" }
 

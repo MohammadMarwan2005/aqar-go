@@ -8,6 +8,8 @@ const Map<String, String> _enLangMap = {
   "Location permission is denied. Please allow location access and try again.":
       "Location permission is denied. \nPlease allow location access and try again.",
   "sexualContent": "Sexual Content",
+  "your account has been blocked": "Your account has been blocked, please contact us for more details.",
+  "Token not valid": "You are Unauthorized. Please logout and login again.",
   "harassment": "Harassment",
   "spam": "Spam",
   "hateSpeech": "Hate Speech",

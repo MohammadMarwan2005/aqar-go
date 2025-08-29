@@ -351,10 +351,12 @@ const Map<String, String> _arLangMap = {
   "Invalid input.": "إدخال غير صالح",
   "Notifications": "الإشعارات",
   "Failed to load notifications": "فشل تحميل الإشعارات غير المقروءة",
+  "you do not have the authorization to access this page.": "ليس لديك صلاحية للوصول لهذه الصفحة",
 
   // BackEnd:
   "The selected code is invalid.": "الرمز المدخل غير صحيح",
-
+  "your account has been blocked": "تم حظر حسابك، يرجى التواصل معنا لمرفة التفاصيل.",
+  "Token not valid": "انتهت صلاحية الجلسة، يرجى تسجيل الخروج وتسجيل الدخول مرة اخرى",
   "email not exist or invalid": "الإيميل غير موجود أو غير صالح",
   "user retrieved successfully": "تم جلب المستخدم بنجاح",
   "users retrieved successfully": "تم جلب المستخدمين بنجاح",
