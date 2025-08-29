@@ -20,10 +20,11 @@ class APIError {
 
 extension X on APIError {
   DomainError toDomainError() {
-    final List<String> details =
+    List<String>? details =
         (data?.values ?? {})
             .expand((element) => element.map((e) => e.toString()))
             .toList();
+    if(details.isEmpty) details = null;
     return DomainError(
       message: message,
       details: details,
