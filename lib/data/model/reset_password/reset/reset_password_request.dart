@@ -10,11 +10,14 @@ class ResetPasswordRequest {
   final String passwordConfirmation;
   @JsonKey(name: "code")
   final String code;
+  @JsonKey(name: 'fcm_token')
+  final String? fcmToken;
 
   ResetPasswordRequest({
     required this.password,
     required this.passwordConfirmation,
     required this.code,
+    this.fcmToken,
   });
 
   factory ResetPasswordRequest.fromJson(Map<String, dynamic> json) =>

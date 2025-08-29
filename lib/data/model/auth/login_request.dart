@@ -8,11 +8,14 @@ class LoginRequest {
   final String password;
   @JsonKey(name: "password_confirmation")
   final String passwordConfirmation;
+  @JsonKey(name: 'fcm_token')
+  final String? fcmToken;
 
   LoginRequest({
     required this.email,
     required this.password,
     required this.passwordConfirmation,
+    this.fcmToken,
   });
 
   factory LoginRequest.fromJson(Map<String, dynamic> json) =>

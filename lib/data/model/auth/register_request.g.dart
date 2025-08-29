@@ -14,7 +14,7 @@ RegisterRequest _$RegisterRequestFromJson(Map<String, dynamic> json) =>
       passwordConfirmation: json['password_confirmation'] as String?,
       firstName: json['first_name'] as String?,
       lastName: json['last_name'] as String?,
-      fcmToken: json['fcmToken'] as String?,
+      fcmToken: json['fcm_token'] as String?,
     );
 
 Map<String, dynamic> _$RegisterRequestToJson(RegisterRequest instance) =>
@@ -25,5 +25,5 @@ Map<String, dynamic> _$RegisterRequestToJson(RegisterRequest instance) =>
       'password_confirmation': instance.passwordConfirmation,
       'first_name': instance.firstName,
       'last_name': instance.lastName,
-      'fcmToken': instance.fcmToken,
+      'fcm_token': instance.fcmToken,
     };

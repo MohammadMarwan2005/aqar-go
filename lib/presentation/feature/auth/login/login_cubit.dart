@@ -38,6 +38,7 @@ class LoginCubit extends Cubit<AuthState> {
         email: emailController.text,
         password: passwordController.text,
         passwordConfirmation: passwordController.text,
+        fcmToken: "Some token"
       ),
     );
     res.when(

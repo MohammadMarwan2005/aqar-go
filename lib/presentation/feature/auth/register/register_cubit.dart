@@ -53,6 +53,7 @@ class RegisterCubit extends Cubit<AuthState> {
         phoneNumber: phoneNumber,
         password: password,
         passwordConfirmation: passwordConfirmation,
+        fcmToken: "Some token",
       ),
     );
     res.when(

@@ -15,6 +15,7 @@ class RegisterRequest {
   final String? firstName;
   @JsonKey(name: 'last_name')
   final String? lastName;
+  @JsonKey(name: "fcm_token")
   final String? fcmToken;
 
   RegisterRequest({

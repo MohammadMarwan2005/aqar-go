@@ -12,6 +12,7 @@ ResetPasswordRequest _$ResetPasswordRequestFromJson(
   password: json['password'] as String,
   passwordConfirmation: json['password_confirmation'] as String,
   code: json['code'] as String,
+  fcmToken: json['fcm_token'] as String?,
 );
 
 Map<String, dynamic> _$ResetPasswordRequestToJson(
@@ -20,4 +21,5 @@ Map<String, dynamic> _$ResetPasswordRequestToJson(
   'password': instance.password,
   'password_confirmation': instance.passwordConfirmation,
   'code': instance.code,
+  'fcm_token': instance.fcmToken,
 };
