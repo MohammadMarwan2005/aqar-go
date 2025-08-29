@@ -363,7 +363,7 @@ class _APIService implements APIService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://116.203.254.150:8001/api/ad/search',
+            'http://116.203.254.150:8001/api/ad/notifyme',
             queryParameters: queryParameters,
             data: _data,
           )

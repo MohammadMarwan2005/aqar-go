@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../domain/model/ad/ad.dart';
 import '../../../../domain/model/search/search_filter_settings.dart';
+import '../../../routing/routes.dart';
 import '../../../widgets/ad_card.dart';
 import '../../../widgets/screen_horizontal_padding.dart';
 import '../../notify_me/cubit/notify_me_cubit.dart';
@@ -175,6 +176,7 @@ class _NotifyMeWidget extends StatelessWidget {
             );
           },
           builder: (BuildContext context, NotifyMeState state) {
+            final notifyMeCubit = context.read<NotifyMeCubit>();
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -182,28 +184,35 @@ class _NotifyMeWidget extends StatelessWidget {
                   "No more results!".tr(context),
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
-                switch (state.isGuest) {
-                  false => Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(height: 16),
-                      if (!state.isSuccess())
-                        AppButton(
-                          isLoading: state.isLoading(),
-                          onPressed:
-                              (state.isSuccess())
-                                  ? null
-                                  : () {
-                                    context.read<NotifyMeCubit>().notifyMe();
-                                  },
-                          text: "Notify Me".tr(context),
-                        ),
-                      const SizedBox(height: 4),
-                      _NotifyMeInfo(isSuccess: state.isSuccess()),
-                    ],
-                  ),
-                  true => SizedBox.shrink(),
-                },
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(height: 16),
+                    if (!state.isSuccess())
+                      AppButton(
+                        isLoading: state.isLoading(),
+                        onPressed:
+                            (state.isSuccess())
+                                ? null
+                                : () {
+                                  if (notifyMeCubit.isGuest()) {
+                                    context.showYouNeedToLoginAlertDialog(
+                                      Routes.searchResults,
+                                      extra:
+                                          context
+                                              .read<SearchResultsCubit>()
+                                              .searchFilterSettings,
+                                    );
+                                  } else {
+                                    notifyMeCubit.notifyMe();
+                                  }
+                                },
+                        text: "Notify Me".tr(context),
+                      ),
+                    const SizedBox(height: 4),
+                    _NotifyMeInfo(isSuccess: state.isSuccess()),
+                  ],
+                ),
               ],
             );
           },

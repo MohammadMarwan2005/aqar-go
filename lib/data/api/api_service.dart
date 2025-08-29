@@ -81,7 +81,7 @@ abstract class APIService {
     @Body() DataSearchFilterSettings dataSearchFilterSettings,
   );
 
-  @POST(APIConstants.searchAdsUrl)
+  @POST(APIConstants.notifyMeUrl)
   Future<APIResponse<dynamic>> notifyMe(
     @Body() DataSearchFilterSettings dataSearchFilterSettings,
   );
