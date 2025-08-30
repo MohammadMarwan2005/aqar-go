@@ -3,6 +3,7 @@ import 'package:aqar_go/domain/model/resource.dart';
 import 'package:aqar_go/domain/repo/ad_repo.dart';
 import 'package:aqar_go/presentation/feature/paging_base/cubit/paging_cubit.dart';
 import 'package:aqar_go/presentation/helper/location_permission_manager.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class NearToYouCubit extends PagingCubit<Ad> {
   final LocationManager _locationPermissionManager;
@@ -13,6 +14,7 @@ class NearToYouCubit extends PagingCubit<Ad> {
 
   @override
   Future<Resource<List<Ad>>> getItems(int page) async {
+    // await requestAndroidNotificationPermission();
     final locationStatus =
         await _locationPermissionManager.requestLocationPermission();
 
@@ -31,6 +33,14 @@ class NearToYouCubit extends PagingCubit<Ad> {
       },
     );
   }
+
+  Future<void> requestAndroidNotificationPermission() async {
+    if (!await Permission.notification.isGranted) {
+      await Permission.notification.request();
+    }
+  }
+
+
 
   @override
   int pageSize = 5;

@@ -79,6 +79,7 @@ dependencies:
   share_plus: 11.1.0
   firebase_messaging: ^16.0.0
   firebase_core: ^4.0.0
+  permission_handler: ^12.0.1
 #  flutter_local_notifications: ^19.4.1
 
 #  geocoding: ^4.0.0
