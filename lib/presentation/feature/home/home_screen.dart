@@ -15,8 +15,8 @@ import '../paging_base/cubit/paging_cubit.dart';
 import '../paging_base/paged_list_view.dart';
 import '../recommended_ads/cubit/recommended_ads_cubit.dart';
 
-class _NearToYouWidget extends StatelessWidget {
-  const _NearToYouWidget();
+class _RecommendedAndNearToYouWidget extends StatelessWidget {
+  const _RecommendedAndNearToYouWidget();
 
   @override
   Widget build(BuildContext context) {
@@ -24,38 +24,6 @@ class _NearToYouWidget extends StatelessWidget {
     final cardHeight = SmallAdCard.getHeight(context);
     return Column(
       children: [
-        TitleWithSeeAll(
-          title: "Near To You".tr(context),
-          onSeeAllClick: () {
-            context.pushRoute(Routes.nearToYou);
-          },
-        ),
-        SizedBox(height: 8),
-        BlocBuilder<NearToYouCubit, PagingState<Ad>>(
-          builder: (context, state) {
-            return PagedListView(
-              height: cardHeight,
-              scrollDirection: Axis.horizontal,
-              state: state,
-              itemBuilder: (item) {
-                return SmallAdCard(
-                  width: cardWidth,
-                  height: cardHeight,
-                  ad: item,
-                  onTap: () {
-                    context.pushRoute(Routes.getViewAd(item.id));
-                  },
-                );
-              },
-              fetchNextPage: () {
-                context.read<NearToYouCubit>().fetchNextPageItems();
-              },
-              onRefresh: () {
-                context.read<NearToYouCubit>().resetState();
-              },
-            );
-          },
-        ),
         TitleWithSeeAll(
           title: "Recommended".tr(context),
           onSeeAllClick: () {
@@ -84,6 +52,38 @@ class _NearToYouWidget extends StatelessWidget {
               },
               onRefresh: () {
                 context.read<RecommendedAdsCubit>().resetState();
+              },
+            );
+          },
+        ),
+        TitleWithSeeAll(
+          title: "Near To You".tr(context),
+          onSeeAllClick: () {
+            context.pushRoute(Routes.nearToYou);
+          },
+        ),
+        SizedBox(height: 8),
+        BlocBuilder<NearToYouCubit, PagingState<Ad>>(
+          builder: (context, state) {
+            return PagedListView(
+              height: cardHeight,
+              scrollDirection: Axis.horizontal,
+              state: state,
+              itemBuilder: (item) {
+                return SmallAdCard(
+                  width: cardWidth,
+                  height: cardHeight,
+                  ad: item,
+                  onTap: () {
+                    context.pushRoute(Routes.getViewAd(item.id));
+                  },
+                );
+              },
+              fetchNextPage: () {
+                context.read<NearToYouCubit>().fetchNextPageItems();
+              },
+              onRefresh: () {
+                context.read<NearToYouCubit>().resetState();
               },
             );
           },
@@ -263,7 +263,7 @@ class HomeScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: const [
                           SizedBox(height: 8),
-                          _NearToYouWidget(),
+                          _RecommendedAndNearToYouWidget(),
                           SizedBox(height: 32),
                           Center(child: SwitchLangLabel()),
                         ],
@@ -364,7 +364,7 @@ class BadHomeScreen extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 8),
-                  _NearToYouWidget(),
+                  _RecommendedAndNearToYouWidget(),
                   const SizedBox(height: 32),
                   SwitchLangLabel(),
                 ],
