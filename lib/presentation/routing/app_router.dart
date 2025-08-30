@@ -186,6 +186,7 @@ final appRouter = GoRouter(
                   (context) => CheckPasswordOtpCubit(
                     getIt(),
                     getIt(),
+                    getIt(),
                     checkPasswordOtpArgs: checkPasswordOtpArgs,
                   ),
             ),

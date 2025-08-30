@@ -4,17 +4,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../domain/repo/local_data_repo.dart';
+import '../../../fcm/push_notification_service.dart';
 import '../auth_state.dart';
 
 class LoginCubit extends Cubit<AuthState> {
   final LocalDataRepo _localDataRepo;
   final AuthRepo _authRepo;
+  final PushNotificationService _pushNotificationService;
+
   final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController(text: "test@test.test");
   final passwordController = TextEditingController(text: "password");
   final ValueNotifier<String> passwordNotifier = ValueNotifier("");
 
-  LoginCubit(this._authRepo, this._localDataRepo)
+  LoginCubit(this._authRepo, this._localDataRepo, this._pushNotificationService)
     : super(const AuthState.initial()) {
     passwordController.addListener(() {
       passwordNotifier.value = passwordController.text;
@@ -38,7 +41,7 @@ class LoginCubit extends Cubit<AuthState> {
         email: emailController.text,
         password: passwordController.text,
         passwordConfirmation: passwordController.text,
-        fcmToken: "Some token"
+        fcmToken: await _pushNotificationService.getDeviceToken()
       ),
     );
     res.when(

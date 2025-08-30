@@ -354,6 +354,9 @@ const Map<String, String> _arLangMap = {
   "you do not have the authorization to access this page.": "ليس لديك صلاحية للوصول لهذه الصفحة",
 
   // BackEnd:
+  "New property matches your search": "عقار جديد يوافق بحثك",
+  "Some one added a property that matches your previous search.": "أحدهم قام بإضافة عقار يوافق بحثك الذي بحثت سابقاً",
+  "ad that you we looking for ": "تمت إضافة عقار يوافق بحثك سابقا.",
   "The selected code is invalid.": "الرمز المدخل غير صحيح",
   "your account has been blocked": "تم حظر حسابك، يرجى التواصل معنا لمرفة التفاصيل.",
   "Token not valid": "انتهت صلاحية الجلسة، يرجى تسجيل الخروج وتسجيل الدخول مرة اخرى",

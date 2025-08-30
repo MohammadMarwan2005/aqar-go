@@ -18,7 +18,7 @@ class NotificationCard extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        context.pushRoute(Routes.getViewAd(notification.id));
+        context.pushRoute(Routes.getViewAd(notification.adId));
       },
       borderRadius: BorderRadius.circular(12),
       child: Container(

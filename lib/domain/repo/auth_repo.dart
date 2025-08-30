@@ -97,12 +97,14 @@ class AuthRepo {
 
   Future<Resource<AuthResponseData>> resetPassword(
     String password,
-    String code,
-  ) async {
+    String code, {
+    String? fcmToken,
+  }) async {
     final resetPasswordRequest = ResetPasswordRequest(
       password: password,
       passwordConfirmation: password,
       code: code,
+      fcmToken: fcmToken,
     );
     return _safeAPICaller.call<AuthResponseData, APIResponse<AuthResponseData>>(
       apiCall: () {

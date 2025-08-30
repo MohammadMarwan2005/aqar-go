@@ -4,11 +4,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../domain/repo/local_data_repo.dart';
+import '../../../fcm/push_notification_service.dart';
 import '../auth_state.dart';
 
 class RegisterCubit extends Cubit<AuthState> {
   final LocalDataRepo _localDataRepo;
   final AuthRepo _authRepo;
+  final PushNotificationService _pushNotificationService;
+
+
   final formKey = GlobalKey<FormState>();
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
@@ -18,7 +22,7 @@ class RegisterCubit extends Cubit<AuthState> {
   final ValueNotifier<String> passwordNotifier = ValueNotifier("");
   final passwordConfirmationController = TextEditingController();
 
-  RegisterCubit(this._authRepo, this._localDataRepo)
+  RegisterCubit(this._authRepo, this._localDataRepo, this._pushNotificationService)
     : super(const AuthState.initial()) {
     passwordController.addListener(() {
       passwordNotifier.value = passwordController.text;
@@ -53,7 +57,7 @@ class RegisterCubit extends Cubit<AuthState> {
         phoneNumber: phoneNumber,
         password: password,
         passwordConfirmation: passwordConfirmation,
-        fcmToken: "Some token",
+        fcmToken: await _pushNotificationService.getDeviceToken(),
       ),
     );
     res.when(

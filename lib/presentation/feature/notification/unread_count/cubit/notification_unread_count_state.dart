@@ -25,7 +25,7 @@ extension NotificationUnreadCountStateExtension
 
   bool get isSuccess => this is _Success;
 
-  bool get isLabelVisible => _getCurrentCount() == null && _getCurrentCount() != 0;
+  bool get isLabelVisible => _getCurrentCount() != null && _getCurrentCount() != 0;
 
   String getCountLabel() {
     return _getCurrentCount()?.toString() ?? "";

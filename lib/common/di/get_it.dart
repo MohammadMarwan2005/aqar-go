@@ -1,3 +1,4 @@
+import 'package:aqar_go/common/helpers/logging_helper.dart';
 import 'package:aqar_go/data/repo/property_repo_impl.dart';
 import 'package:aqar_go/domain/repo/ad_repo.dart';
 import 'package:aqar_go/domain/repo/auth_repo.dart';
@@ -9,6 +10,8 @@ import 'package:aqar_go/presentation/feature/media_picker/media_picker_cubit.dar
 import 'package:aqar_go/presentation/helper/location_permission_manager.dart';
 import 'package:aqar_go/presentation/routing/routing_use_case.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
@@ -27,6 +30,7 @@ import '../../domain/repo/plan_repo.dart';
 import '../../domain/repo/property_repo.dart';
 import '../../domain/repo/review_repo.dart';
 import '../../domain/usecase/create_property_usecase.dart';
+import '../../presentation/fcm/push_notification_service.dart';
 import '../../presentation/feature/auth/login/login_cubit.dart';
 import '../../presentation/feature/create_update_post/cubit/create_update_post_cubit.dart';
 import '../../presentation/feature/my_ads/activate_ads_cubit/activate_ads_cubit.dart';
@@ -45,6 +49,15 @@ Future<void> di() async {
   final localDataRepo = LocalDataRepo(
     sharedPrefs: sharedPrefs,
     storage: storage,
+  );
+  await Firebase.initializeApp();
+  final firebaseMessaging = FirebaseMessaging.instance;
+  final pushNotificationService = PushNotificationService(firebaseMessaging);
+  final token = await pushNotificationService.getDeviceToken();
+  debugLog(token.toString());
+
+  getIt.registerLazySingleton<PushNotificationService>(
+    () => pushNotificationService,
   );
 
   getIt.registerLazySingleton<LocalDataRepo>(() => localDataRepo);
@@ -97,7 +110,9 @@ Future<void> di() async {
     () => ReviewRepoImpl(getIt(), getIt()),
   );
   getIt.registerLazySingleton<PlanRepo>(() => PlanRepoImpl(getIt(), getIt()));
-  getIt.registerLazySingleton<NotificationRepo>(() => NotificationRepoImpl(getIt(), getIt()));
+  getIt.registerLazySingleton<NotificationRepo>(
+    () => NotificationRepoImpl(getIt(), getIt()),
+  );
 
   getIt.registerLazySingleton<LocationManager>(() => LocationManager());
   getIt.registerLazySingleton<SharePlus>(() => SharePlus.instance);
@@ -113,8 +128,8 @@ Future<void> di() async {
 
   // cubits:
   getIt.registerFactory<LangCubit>(() => LangCubit(getIt()));
-  getIt.registerFactory<LoginCubit>(() => LoginCubit(getIt(), getIt()));
-  getIt.registerFactory<RegisterCubit>(() => RegisterCubit(getIt(), getIt()));
+  getIt.registerFactory<LoginCubit>(() => LoginCubit(getIt(), getIt(), getIt()));
+  getIt.registerFactory<RegisterCubit>(() => RegisterCubit(getIt(), getIt(), getIt()));
 
   getIt.registerFactory<CreateUpdatePostCubit>(
     () => CreateUpdatePostCubit(getIt(), getIt()),

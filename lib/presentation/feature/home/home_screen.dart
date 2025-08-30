@@ -312,6 +312,7 @@ class BadHomeScreen extends StatelessWidget {
             onRefresh: () async {
               context.read<NearToYouCubit>().resetState();
               context.read<RecommendedAdsCubit>().resetState();
+              context.read<NotificationUnreadCountCubit>().fetchCount();
             },
             child: SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
