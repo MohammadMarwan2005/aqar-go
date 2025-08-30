@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:aqar_go/common/helpers/logging_helper.dart';
+import 'package:aqar_go/data/api/api_constants.dart';
 import 'package:dio/dio.dart';
 
 import '../../domain/model/resource.dart';
@@ -39,10 +40,16 @@ class SafeAPICaller {
       case DioExceptionType.badResponse:
         final statusCode = dioError.response?.statusCode;
         final responseData = dioError.response?.data;
+        final code = dioError.response?.statusCode;
 
         if (statusCode != null && responseData != null) {
           try {
-            return APIError.fromJson(responseData).toDomainError();
+            final backendError = APIError.fromJson(responseData);
+            if (code == APIConstants.unprocessableEntityCode) {
+              debugLog("backendError.data: ${backendError.data}");
+              return DomainError.getInvalidInputError(backendError.data);
+            }
+            return backendError.toDomainError();
           } catch (_) {
             return DomainError.getUnexpectedError(responseData.toString());
           }

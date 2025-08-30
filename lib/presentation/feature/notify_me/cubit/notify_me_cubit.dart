@@ -12,12 +12,15 @@ part 'notify_me_state.dart';
 class NotifyMeCubit extends Cubit<NotifyMeState> {
   final AdRepo _adRepo;
   final SearchFilterSettings searchFilterSettings;
+  final LocalDataRepo _localDataRepo;
 
   NotifyMeCubit(
     this._adRepo,
     this.searchFilterSettings,
-      LocalDataRepo _localDataRepo,
+      this._localDataRepo,
   ) : super(NotifyMeState.initial(_localDataRepo.isGuest()));
+
+  bool isGuest() => _localDataRepo.isGuest();
 
   notifyMe() async {
     emit(NotifyMeState.loading(state.isGuest));

@@ -1,3 +1,4 @@
+import 'package:aqar_go/presentation/feature/notification/unread_count/notification_icon.dart';
 import 'package:aqar_go/presentation/helper/navigation_helper.dart';
 import 'package:aqar_go/presentation/lang/app_localization.dart';
 import 'package:flutter/material.dart';
@@ -9,12 +10,13 @@ import '../../routing/routes.dart';
 import '../../widgets/screen_horizontal_padding.dart';
 import '../../widgets/small_ad_card.dart';
 import '../near_to_you/cubit/near_to_you_cubit.dart';
+import '../notification/unread_count/cubit/notification_unread_count_cubit.dart';
 import '../paging_base/cubit/paging_cubit.dart';
 import '../paging_base/paged_list_view.dart';
 import '../recommended_ads/cubit/recommended_ads_cubit.dart';
 
-class _NearToYouWidget extends StatelessWidget {
-  const _NearToYouWidget();
+class _RecommendedAndNearToYouWidget extends StatelessWidget {
+  const _RecommendedAndNearToYouWidget();
 
   @override
   Widget build(BuildContext context) {
@@ -22,38 +24,6 @@ class _NearToYouWidget extends StatelessWidget {
     final cardHeight = SmallAdCard.getHeight(context);
     return Column(
       children: [
-        TitleWithSeeAll(
-          title: "Near To You".tr(context),
-          onSeeAllClick: () {
-            context.pushRoute(Routes.nearToYou);
-          },
-        ),
-        SizedBox(height: 8),
-        BlocBuilder<NearToYouCubit, PagingState<Ad>>(
-          builder: (context, state) {
-            return PagedListView(
-              height: cardHeight,
-              scrollDirection: Axis.horizontal,
-              state: state,
-              itemBuilder: (item) {
-                return SmallAdCard(
-                  width: cardWidth,
-                  height: cardHeight,
-                  ad: item,
-                  onTap: () {
-                    context.pushRoute(Routes.getViewAd(item.id));
-                  },
-                );
-              },
-              fetchNextPage: () {
-                context.read<NearToYouCubit>().fetchNextPageItems();
-              },
-              onRefresh: () {
-                context.read<NearToYouCubit>().resetState();
-              },
-            );
-          },
-        ),
         TitleWithSeeAll(
           title: "Recommended".tr(context),
           onSeeAllClick: () {
@@ -82,6 +52,38 @@ class _NearToYouWidget extends StatelessWidget {
               },
               onRefresh: () {
                 context.read<RecommendedAdsCubit>().resetState();
+              },
+            );
+          },
+        ),
+        TitleWithSeeAll(
+          title: "Near To You".tr(context),
+          onSeeAllClick: () {
+            context.pushRoute(Routes.nearToYou);
+          },
+        ),
+        SizedBox(height: 8),
+        BlocBuilder<NearToYouCubit, PagingState<Ad>>(
+          builder: (context, state) {
+            return PagedListView(
+              height: cardHeight,
+              scrollDirection: Axis.horizontal,
+              state: state,
+              itemBuilder: (item) {
+                return SmallAdCard(
+                  width: cardWidth,
+                  height: cardHeight,
+                  ad: item,
+                  onTap: () {
+                    context.pushRoute(Routes.getViewAd(item.id));
+                  },
+                );
+              },
+              fetchNextPage: () {
+                context.read<NearToYouCubit>().fetchNextPageItems();
+              },
+              onRefresh: () {
+                context.read<NearToYouCubit>().resetState();
               },
             );
           },
@@ -175,13 +177,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   const Spacer(),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.notifications_none,
-                      color: foregroundOnPrimary,
-                    ),
-                  ),
+                  NotificationIcon(color: foregroundOnPrimary),
                 ],
               ),
             ),
@@ -257,6 +253,7 @@ class HomeScreen extends StatelessWidget {
                   onRefresh: () async {
                     context.read<NearToYouCubit>().resetState();
                     context.read<RecommendedAdsCubit>().resetState();
+                    context.read<NotificationUnreadCountCubit>().fetchCount();
                   },
                   child: ScreenPadding(
                     horizontal: 16,
@@ -266,7 +263,7 @@ class HomeScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: const [
                           SizedBox(height: 8),
-                          _NearToYouWidget(),
+                          _RecommendedAndNearToYouWidget(),
                           SizedBox(height: 32),
                           Center(child: SwitchLangLabel()),
                         ],
@@ -282,7 +279,6 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-
 
 class BadHomeScreen extends StatelessWidget {
   const BadHomeScreen({super.key});
@@ -316,6 +312,7 @@ class BadHomeScreen extends StatelessWidget {
             onRefresh: () async {
               context.read<NearToYouCubit>().resetState();
               context.read<RecommendedAdsCubit>().resetState();
+              context.read<NotificationUnreadCountCubit>().fetchCount();
             },
             child: SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
@@ -357,7 +354,7 @@ class BadHomeScreen extends StatelessWidget {
                       const SizedBox(width: 8),
                       CircleAvatar(
                         backgroundColor:
-                        Theme.of(context).colorScheme.inversePrimary,
+                            Theme.of(context).colorScheme.inversePrimary,
                         child: IconButton(
                           onPressed: () {
                             context.pushRoute(Routes.searchFilters);
@@ -368,7 +365,7 @@ class BadHomeScreen extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 8),
-                  _NearToYouWidget(),
+                  _RecommendedAndNearToYouWidget(),
                   const SizedBox(height: 32),
                   SwitchLangLabel(),
                 ],

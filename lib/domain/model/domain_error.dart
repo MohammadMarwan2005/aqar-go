@@ -6,12 +6,15 @@ class DomainError {
   final String? messageId;
   final Map<String, String>? params;
   final List<String>? details;
+  final Map<String, List<String>>?
+  validationErrors; // ex: {"password": [required, min]}
 
   DomainError({
     required this.message,
     this.messageId,
     this.params,
     this.details,
+    this.validationErrors,
   });
 
   static final _timeoutErrorMessage = "Request timed out. Please try again.";
@@ -27,6 +30,8 @@ class DomainError {
       "Can't get your location. Please enable location and try again.";
   static final _locationPermissionIsDeniedErrorMessage =
       "Location permission is denied. Please allow location access and try again.";
+
+  static final _invalidInputErrorMessage = "Invalid input.";
 
   /// Indicates a connection error, which can occur due to no internet access
   /// or if the server is unreachable (e.g., the server is shut down or refused the connection).
@@ -53,6 +58,17 @@ class DomainError {
     );
   }
 
+  // errors example: {password: [required]}
+  static DomainError getInvalidInputError(Map<String, List<dynamic>>? errors) {
+    return DomainError(
+      messageId: _invalidInputErrorMessage,
+      message: _invalidInputErrorMessage,
+      validationErrors: errors?.map(
+        (key, value) => MapEntry(key, value.map((e) => e.toString()).toList()),
+      ),
+    );
+  }
+
   static DomainError cancelledRequestError = DomainError(
     message: _cancelledRequestErrorMessage,
     messageId: _cancelledRequestErrorMessage,
@@ -75,5 +91,22 @@ class DomainError {
 extension X on DomainError {
   String getMessage(BuildContext context) {
     return messageId?.tr(context, params: params) ?? message;
+  }
+
+  List<String>? getTranslatedDetailsOrValidationErrors(BuildContext context) {
+    if (details != null) return details!.map((e) => e.tr(context)).toList();
+
+    if (validationErrors != null) {
+      final List<String> messages = List.of([], growable: true);
+      validationErrors!.forEach((key, value) {
+        for (var element in value) {
+          messages.add(
+            element.tr(context, params: {"attribute": key.tr(context)}),
+          );
+        }
+      });
+      return messages;
+    }
+    return null;
   }
 }

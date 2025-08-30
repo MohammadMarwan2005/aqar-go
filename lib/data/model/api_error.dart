@@ -6,7 +6,7 @@ part 'api_error.g.dart';
 @JsonSerializable()
 class APIError {
   final String message; // "the store {store_name} not found"
-  final int status;
+  final int? status;
   final Map<String, List<dynamic>>? data;
   final Map<String, String>? params; // { "store_name": "adidas" }
 
@@ -20,10 +20,11 @@ class APIError {
 
 extension X on APIError {
   DomainError toDomainError() {
-    final List<String> details =
+    List<String>? details =
         (data?.values ?? {})
             .expand((element) => element.map((e) => e.toString()))
             .toList();
+    if(details.isEmpty) details = null;
     return DomainError(
       message: message,
       details: details,

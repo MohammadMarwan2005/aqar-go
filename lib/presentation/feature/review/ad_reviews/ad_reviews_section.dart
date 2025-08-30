@@ -71,6 +71,9 @@ class _AdReviewsContent extends StatelessWidget {
                   _goToMyReview(context, adId, adReviewCubit);
                 },
                 isGuest: isGuest,
+                onGuestPressed: () {
+                  context.showYouNeedToLoginAlertDialog(Routes.getViewAd(adId));
+                },
               ),
             ],
           ),
@@ -98,6 +101,9 @@ class _AdReviewsContent extends StatelessWidget {
         if (myReview == null)
           _buildReviewButton(
             context,
+            onGuestPressed: () {
+              context.showYouNeedToLoginAlertDialog(Routes.getViewAd(adId));
+            },
             onPressed: () {
               _goToMyReview(context, adId, adReviewCubit);
             },
@@ -114,13 +120,13 @@ class _AdReviewsContent extends StatelessWidget {
   Widget _buildReviewButton(
     context, {
     required void Function() onPressed,
+    required void Function() onGuestPressed,
     bool isGuest = false,
   }) {
     return AppButton(
       onPressed: () {
         if (isGuest) {
-          final adId = context.read<AdReviewsCubit>().adId;
-          context.showYouNeedToLoginAlertDialog(Routes.getViewAd(adId));
+          onGuestPressed();
         } else {
           onPressed();
         }

@@ -16,6 +16,7 @@ class PagedListView<T> extends StatefulWidget {
   errorPlaceholder;
   final Widget? loadingPlaceholder;
   final Widget Function(PagingState<T> state)? noMoreItemsPlaceholder;
+  final double itemPadding;
 
   const PagedListView({
     super.key,
@@ -29,6 +30,7 @@ class PagedListView<T> extends StatefulWidget {
     this.errorPlaceholder,
     this.loadingPlaceholder,
     this.noMoreItemsPlaceholder,
+    this.itemPadding = 16,
   });
 
   @override
@@ -78,7 +80,7 @@ class _PagedListViewState<T> extends State<PagedListView<T>> {
                 child: widget.state.when(
                   loaded: (items, page, hasReachedEnd) {
                     return Padding(
-                      padding: EdgeInsets.all(16.0),
+                      padding: EdgeInsets.all(0),
                       child:
                           (widget.noMoreItemsPlaceholder != null)
                               ? widget.noMoreItemsPlaceholder!(widget.state)

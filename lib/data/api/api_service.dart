@@ -4,6 +4,8 @@ import 'package:aqar_go/data/model/api_response.dart';
 import 'package:aqar_go/data/model/auth/auth_response_data.dart';
 import 'package:aqar_go/data/model/favorite/favorite_ad_data.dart';
 import 'package:aqar_go/data/model/near_to_you/near_to_you_request.dart';
+import 'package:aqar_go/data/model/notification/core/data_notification.dart';
+import 'package:aqar_go/data/model/notification/count_response/count_response.dart';
 import 'package:aqar_go/data/model/paged_response.dart';
 import 'package:aqar_go/data/model/property/property_data.dart';
 import 'package:aqar_go/data/model/review/data_review.dart';
@@ -76,6 +78,11 @@ abstract class APIService {
   @POST(APIConstants.searchAdsUrl)
   Future<APIResponse<PagedResponse<AdData>>> search(
     @Query("page") int page,
+    @Body() DataSearchFilterSettings dataSearchFilterSettings,
+  );
+
+  @POST(APIConstants.notifyMeUrl)
+  Future<APIResponse<dynamic>> notifyMe(
     @Body() DataSearchFilterSettings dataSearchFilterSettings,
   );
 
@@ -170,4 +177,13 @@ abstract class APIService {
 
   @GET(APIConstants.downgradeUrl)
   Future<APIResponse<dynamic>> downgrade();
+
+  @GET(APIConstants.getNotificationsUrl)
+  Future<APIResponse<PagedResponse<DataNotification>>> getNotifications({
+    @Query("page") required int page,
+    @Query("num") required int pageSize,
+  });
+
+  @GET(APIConstants.getUnreadNotificationsCountUrl)
+  Future<APIResponse<NotificationCountResponse>> getUnreadNotificationsCount();
 }

@@ -77,7 +77,7 @@ extension UiHelper on BuildContext {
     String? gotItPlaceholder,
     Widget? firstAction,
   }) {
-    var details = error.details;
+    var details = error.getTranslatedDetailsOrValidationErrors(this);
     var title = error.getMessage(this);
     if (details == null || details.isEmpty) {
       details = [title];

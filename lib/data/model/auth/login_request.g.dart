@@ -10,6 +10,7 @@ LoginRequest _$LoginRequestFromJson(Map<String, dynamic> json) => LoginRequest(
   email: json['email'] as String,
   password: json['password'] as String,
   passwordConfirmation: json['password_confirmation'] as String,
+  fcmToken: json['fcm_token'] as String?,
 );
 
 Map<String, dynamic> _$LoginRequestToJson(LoginRequest instance) =>
@@ -17,4 +18,5 @@ Map<String, dynamic> _$LoginRequestToJson(LoginRequest instance) =>
       'email': instance.email,
       'password': instance.password,
       'password_confirmation': instance.passwordConfirmation,
+      'fcm_token': instance.fcmToken,
     };

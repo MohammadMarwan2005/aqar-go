@@ -351,6 +351,39 @@ class _APIService implements APIService {
   }
 
   @override
+  Future<APIResponse<dynamic>> notifyMe(
+    DataSearchFilterSettings dataSearchFilterSettings,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(dataSearchFilterSettings.toJson());
+    final _options = _setStreamType<APIResponse<dynamic>>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            'http://116.203.254.150:8001/api/ad/notifyme',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late APIResponse<dynamic> _value;
+    try {
+      _value = APIResponse<dynamic>.fromJson(
+        _result.data!,
+        (json) => json as dynamic,
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
   Future<APIResponse<PagedResponse<AdData>>> getNearToYouAds({
     required int page,
     required NearToYouRequest request,
@@ -1066,6 +1099,77 @@ class _APIService implements APIService {
       _value = APIResponse<dynamic>.fromJson(
         _result.data!,
         (json) => json as dynamic,
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<APIResponse<PagedResponse<DataNotification>>> getNotifications({
+    required int page,
+    required int pageSize,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'page': page, r'num': pageSize};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options =
+        _setStreamType<APIResponse<PagedResponse<DataNotification>>>(
+          Options(method: 'GET', headers: _headers, extra: _extra)
+              .compose(
+                _dio.options,
+                'http://116.203.254.150:8001/api/fcm/notifications',
+                queryParameters: queryParameters,
+                data: _data,
+              )
+              .copyWith(
+                baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl),
+              ),
+        );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late APIResponse<PagedResponse<DataNotification>> _value;
+    try {
+      _value = APIResponse<PagedResponse<DataNotification>>.fromJson(
+        _result.data!,
+        (json) => PagedResponse<DataNotification>.fromJson(
+          json as Map<String, dynamic>,
+          (json) => DataNotification.fromJson(json as Map<String, dynamic>),
+        ),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<APIResponse<NotificationCountResponse>>
+  getUnreadNotificationsCount() async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<APIResponse<NotificationCountResponse>>(
+      Options(method: 'GET', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            'http://116.203.254.150:8001/api/fcm/notifications/unread-count',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late APIResponse<NotificationCountResponse> _value;
+    try {
+      _value = APIResponse<NotificationCountResponse>.fromJson(
+        _result.data!,
+        (json) =>
+            NotificationCountResponse.fromJson(json as Map<String, dynamic>),
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);

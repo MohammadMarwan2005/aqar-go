@@ -15,6 +15,7 @@ class APIConstants {
   static const String getAdByIdUrl = "$baseUrl/ad/show";
   static const String getUserAdsUrl = "$baseUrl/ad/getUserAds";
   static const String searchAdsUrl = "$baseUrl/ad/search";
+  static const String notifyMeUrl = "$baseUrl/ad/notifyme";
   static const String getNearToYouAdsUrl = "$baseUrl/ad/nearToYou";
   static const String getRecommendedAdsUrl = "$baseUrl/ad/recommend";
   static const String getSimilarAdsUrl = "$baseUrl/ad/similarTo";
@@ -30,4 +31,8 @@ class APIConstants {
   static const String getFavoriteAdsUrl = "$baseUrl/favorites";
   static const String upgradeToPremiumUrl = "$baseUrl/user/upgrade";
   static const String downgradeUrl = "$baseUrl/user/downgrade";
+  static const String getUnreadNotificationsCountUrl = "$baseUrl/fcm/notifications/unread-count";
+  static const String getNotificationsUrl = "$baseUrl/fcm/notifications";
+
+  static const int unprocessableEntityCode = 422; // validation error
 }

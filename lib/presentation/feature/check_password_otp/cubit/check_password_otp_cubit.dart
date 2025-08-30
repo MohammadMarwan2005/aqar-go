@@ -7,18 +7,23 @@ import '../../../../data/model/auth/auth_response_data.dart';
 import '../../../../domain/model/domain_error.dart';
 import '../../../../domain/repo/auth_repo.dart';
 import '../../../../domain/repo/local_data_repo.dart';
+import '../../../fcm/push_notification_service.dart';
 
 part 'check_password_otp_cubit.freezed.dart';
+
 part 'check_password_otp_state.dart';
 
 class CheckPasswordOtpCubit extends Cubit<CheckPasswordOtpState> {
-  final AuthRepo _authRepo;
   final LocalDataRepo _localDataRepo;
+  final AuthRepo _authRepo;
+  final PushNotificationService _pushNotificationService;
+
   final CheckPasswordOtpArgs checkPasswordOtpArgs;
 
   CheckPasswordOtpCubit(
+    this._localDataRepo,
     this._authRepo,
-    this._localDataRepo, {
+    this._pushNotificationService, {
     required this.checkPasswordOtpArgs,
   }) : super(const CheckPasswordOtpState.initial());
 
@@ -43,6 +48,7 @@ class CheckPasswordOtpCubit extends Cubit<CheckPasswordOtpState> {
     final response = await _authRepo.resetPassword(
       checkPasswordOtpArgs.password,
       otp,
+      fcmToken: await _pushNotificationService.getDeviceToken(),
     );
     response.when(
       onSuccess: (successData) async {

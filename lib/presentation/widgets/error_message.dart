@@ -24,13 +24,21 @@ class ErrorMessage extends StatelessWidget {
           children: [
             Text(error.getMessage(context)),
             _LocalizedSizedBox(),
-            if (error.details != null && detailsWidget != null) ...[
-              detailsWidget!(error.details!),
+            if (error.getTranslatedDetailsOrValidationErrors(context) != null &&
+                detailsWidget != null) ...[
+              detailsWidget!(
+                error.getTranslatedDetailsOrValidationErrors(context)!,
+              ),
             ],
             _LocalizedSizedBox(),
             ElevatedButton(
               onPressed: onTryAgain,
-              child: Center(child: Text("Try Again".tr(context), textAlign: TextAlign.center)),
+              child: Center(
+                child: Text(
+                  "Try Again".tr(context),
+                  textAlign: TextAlign.center,
+                ),
+              ),
             ),
           ],
         ),
@@ -47,4 +55,3 @@ class _LocalizedSizedBox extends StatelessWidget {
     return SizedBox(height: 8);
   }
 }
-

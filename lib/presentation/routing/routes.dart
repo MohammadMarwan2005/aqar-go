@@ -27,6 +27,7 @@ sealed class Routes {
   static const searchFilters = "/filter-search";
   static const profile = "/profile";
   static const myReview = "/review/:id";
+  static const notifications = "/notifications";
 
   static const _allowedRoutesForGuest = [onboarding, home, nearToYou, recommendedAds, searchFilters, searchResults, viewAd, login, register, forgotPassword, checkPasswordOTP];
 

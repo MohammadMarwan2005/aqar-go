@@ -1,4 +1,5 @@
 import 'package:aqar_go/presentation/feature/home/home_screen.dart';
+import 'package:aqar_go/presentation/feature/notification/unread_count/cubit/notification_unread_count_cubit.dart';
 import 'package:aqar_go/presentation/helper/navigation_helper.dart';
 import 'package:aqar_go/presentation/widgets/app_bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +44,9 @@ class UserNavShell extends StatelessWidget {
             ),
             BlocProvider<RecommendedAdsCubit>(
               create: (context) => RecommendedAdsCubit(getIt()),
+            ),
+            BlocProvider<NotificationUnreadCountCubit>(
+              create: (context) => NotificationUnreadCountCubit(getIt(), getIt()),
             ),
           ],
           child: HomeScreen(),
