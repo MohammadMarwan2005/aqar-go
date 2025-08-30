@@ -60,11 +60,11 @@ class ProfileContent extends StatelessWidget {
             context.pushRoute(Routes.favoriteAds);
           },
         ),
-        SettingsListItem(
-          iconAsset: Assets.svgs.notificationSettings.path,
-          title: "Notification Preferences".tr(context),
-          onTap: () {},
-        ),
+        // SettingsListItem(
+        //   iconAsset: Assets.svgs.notificationSettings.path,
+        //   title: "Notification Preferences".tr(context),
+        //   onTap: () {},
+        // ),
         if (!userProfile.isVerified)
           SettingsListItem(
             iconAsset: Assets.svgs.markEmailRead.path,

@@ -167,7 +167,7 @@ const Map<String, String> _arLangMap = {
   "deluxe": "ديلوكس",
   "superDeluxe": "سوبر ديلوكس",
   "luxury": "فاخر جدًا",
-  "Address": "العنوان",
+  "Address": "عنوان الموقع",
   "Notification Preferences": "تفضيلات الإشعارات",
   "Email Verification": "تأكيد الإيميل",
   "App Language": "لغة التطبيق",
