@@ -1,8 +1,8 @@
 import 'package:aqar_go/presentation/lang/app_localization.dart';
 import 'package:aqar_go/presentation/lang/cubit/lang_cubit.dart';
 import 'package:aqar_go/presentation/routing/app_router.dart';
+import 'package:aqar_go/presentation/theme/blue_theme.dart';
 import 'package:aqar_go/presentation/theme/cubit/theme_cubit.dart';
-import 'package:aqar_go/presentation/theme/dark_blue_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -39,8 +39,8 @@ class MyApp extends StatelessWidget {
                           GlobalCupertinoLocalizations.delegate,
                         ],
                         title: "AqarGo",
-                        theme: theme?.getThemeData() ?? DarkBlueTheme.light(),
-                        darkTheme: theme?.getThemeData() ?? DarkBlueTheme.dark(),
+                        theme: theme?.getThemeData() ?? BlueTheme.light(),
+                        darkTheme: theme?.getThemeData() ?? BlueTheme.dark(),
                         debugShowCheckedModeBanner: false,
                         routerConfig: appRouter,
                         localeResolutionCallback: (

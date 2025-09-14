@@ -17,6 +17,9 @@ class PagedListView<T> extends StatefulWidget {
   final Widget? loadingPlaceholder;
   final Widget Function(PagingState<T> state)? noMoreItemsPlaceholder;
   final double itemPadding;
+  final ScrollPhysics physics;
+  final bool shrinkWrap;
+  final Widget? leadingWidget;
 
   const PagedListView({
     super.key,
@@ -31,6 +34,9 @@ class PagedListView<T> extends StatefulWidget {
     this.loadingPlaceholder,
     this.noMoreItemsPlaceholder,
     this.itemPadding = 16,
+    this.physics = const AlwaysScrollableScrollPhysics(),
+    this.shrinkWrap = false,
+    this.leadingWidget,
   });
 
   @override
@@ -61,7 +67,10 @@ class _PagedListViewState<T> extends State<PagedListView<T>> {
   Widget build(BuildContext context) {
     final currentItems = widget.state.getCurrentLoadedItems();
 
-    // Create the list view content
+    final int baseCount = currentItems.length + 1; // +1 for loader/footer
+    final int totalCount =
+    widget.leadingWidget != null ? baseCount + 1 : baseCount;
+
     final listView = SizedBox(
       height: widget.height,
       width: widget.width,
@@ -70,33 +79,38 @@ class _PagedListViewState<T> extends State<PagedListView<T>> {
           widget.onRefresh();
         },
         child: ListView.builder(
-          physics: const AlwaysScrollableScrollPhysics(),
+          physics: widget.physics,
+          shrinkWrap: widget.shrinkWrap,
           scrollDirection: widget.scrollDirection,
           controller: scrollController,
-          itemCount: currentItems.length + 1,
+          itemCount: totalCount,
           itemBuilder: (context, index) {
-            if (index == currentItems.length) {
+            // Handle leading widget first
+            if (widget.leadingWidget != null && index == 0) {
+              return widget.leadingWidget!;
+            }
+
+            // Adjust index if leading widget exists
+            final adjustedIndex =
+            widget.leadingWidget != null ? index - 1 : index;
+
+            // Loader / No-more-items / Error placeholder
+            if (adjustedIndex == currentItems.length) {
               return Center(
                 child: widget.state.when(
                   loaded: (items, page, hasReachedEnd) {
                     return Padding(
-                      padding: EdgeInsets.all(0),
-                      child:
-                          (widget.noMoreItemsPlaceholder != null)
-                              ? widget.noMoreItemsPlaceholder!(widget.state)
-                              : Text("No more items".tr(context)),
+                      padding: EdgeInsets.zero,
+                      child: (widget.noMoreItemsPlaceholder != null)
+                          ? widget.noMoreItemsPlaceholder!(widget.state)
+                          : Text("No more items".tr(context)),
                     );
                   },
-                  loading:
-                      (oldData, page, hasReachedEnd) => Padding(
-                        padding: EdgeInsets.all(16.0),
-                        child: Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child:
-                              widget.loadingPlaceholder ??
-                              CircularProgressIndicator(strokeWidth: 3),
-                        ),
-                      ),
+                  loading: (oldData, page, hasReachedEnd) => Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: widget.loadingPlaceholder ??
+                        const CircularProgressIndicator(strokeWidth: 3),
+                  ),
                   error: (oldData, error, page, hasReachedEnd) {
                     if (widget.errorPlaceholder != null) {
                       return widget.errorPlaceholder!(
@@ -117,19 +131,19 @@ class _PagedListViewState<T> extends State<PagedListView<T>> {
                 ),
               );
             }
-            return widget.itemBuilder(currentItems[index]);
+
+            // Normal item
+            return widget.itemBuilder(currentItems[adjustedIndex]);
           },
         ),
       ),
     );
 
-    // Wrap with appropriate constraints based on scroll direction
     return widget.scrollDirection == Axis.horizontal
         ? SizedBox(
-          height: widget.height ?? 250, // Fixed height for horizontal scroll
-          child: listView,
-        )
-        :
-      listView;
+      height: widget.height ?? 250,
+      child: listView,
+    )
+        : listView;
   }
 }

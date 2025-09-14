@@ -353,8 +353,11 @@ const Map<String, String> _arLangMap = {
   "Failed to load notifications": "فشل تحميل الإشعارات غير المقروءة",
   "you do not have the authorization to access this page.": "ليس لديك صلاحية للوصول لهذه الصفحة",
 
-  // BackEnd:
-  "New property matches your search": "عقار جديد يوافق بحثك",
+  // backend:
+  "New property matches your search": "عقار جديد يوافق بحثك",
+  "A property was added that matches your previous search.": "تمت إضافة عقار جديد يوافق بحثك.",
+  "Your email address is not verified.": "لم يتم تأكيد بريدك الإلكتروني بعد.",
+  "unverified email": "يرجى تأكيد بريدك الإلكتروني أولا",
   "Some one added a property that matches your previous search.": "أحدهم قام بإضافة عقار يوافق بحثك الذي بحثت سابقاً",
   "ad that you we looking for ": "تمت إضافة عقار يوافق بحثك سابقا.",
   "The selected code is invalid.": "الرمز المدخل غير صحيح",

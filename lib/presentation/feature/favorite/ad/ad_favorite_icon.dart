@@ -37,29 +37,21 @@ class AdFavoriteIcon extends StatelessWidget {
         if (state.isFavorite == null || isGuest) return SizedBox.shrink();
         final blur = 2.0;
 
-        return ClipOval(
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur),
-            child: Container(
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomLeft,
-                  colors: [
-                    Colors.black.withAlpha(120), // lighter top-left
-                    Colors.white.withAlpha(15), // more transparent bottom-right
-                  ],
-                ),
-              ),
-              child: IconButton(
-                icon: Icon(
-                  state.isFavorite! ? Icons.favorite : Icons.favorite_border,
-                  color: state.isFavorite! ? Colors.red : Colors.white,
-                ),
-                onPressed: () {
-                  cubit.toggleFavorite();
-                },
+        return GestureDetector(
+          onTap: () {
+            cubit.toggleFavorite();
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white60,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(
+                size: 20,
+                state.isFavorite! ? Icons.favorite : Icons.favorite_border,
+                color: state.isFavorite! ? Colors.red : Colors.black,
               ),
             ),
           ),

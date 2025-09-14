@@ -80,16 +80,17 @@ class MyReviewCubit extends Cubit<MyReviewState> {
 
   review() async {
     emit(const MyReviewState.loading());
+    final comment = (commentController.text.isNotEmpty) ? commentController.text : "-";
     final response = await switch (cachedReview) {
       null => _reviewRepo.createReview(
         adId: adId,
         rating: myRatingValueNotifier.value,
-        comment: commentController.text,
+        comment: comment,
       ),
       Review review => _reviewRepo.updateReview(
         reviewId: review.id,
         rating: myRatingValueNotifier.value,
-        comment: commentController.text,
+        comment: comment,
       ),
     };
 

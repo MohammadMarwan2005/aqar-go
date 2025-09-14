@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../domain/repo/local_data_repo.dart';
+import '../blue_theme.dart';
 import '../dark_blue_theme.dart';
 
 part 'theme_cubit.freezed.dart';

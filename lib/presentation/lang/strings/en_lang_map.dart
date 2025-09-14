@@ -10,6 +10,7 @@ const Map<String, String> _enLangMap = {
   "sexualContent": "Sexual Content",
   "your account has been blocked": "Your account has been blocked, please contact us for more details.",
   "Token not valid": "You are Unauthorized. Please logout and login again.",
+  "unverified email": "Please verify your email address to continue.",
   "harassment": "Harassment",
   "spam": "Spam",
   "hateSpeech": "Hate Speech",

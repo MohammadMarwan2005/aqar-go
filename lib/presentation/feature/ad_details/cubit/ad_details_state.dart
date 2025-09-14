@@ -24,4 +24,19 @@ extension AdDetailsStateX on AdDetailsState {
         return success(ad);
     }
   }
+
+  R? whenOrNull<R>({
+    R Function()? loading,
+    R Function(DomainError domainError)? error,
+    R Function(Ad ads)? success,
+  }) {
+    switch (this) {
+      case _Loading():
+        return loading?.call();
+      case _Error(error: var domainError):
+        return error?.call(domainError);
+      case _Success(ad: var ad):
+        return success?.call(ad);
+    }
+  }
 }

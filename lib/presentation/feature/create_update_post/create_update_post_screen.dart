@@ -68,51 +68,6 @@ class CreateUpdatePostScreen extends StatelessWidget {
       },
       builder: (context, state) {
         return Scaffold(
-          bottomNavigationBar: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                AppButton(
-                  isSecondary: cubit.isUpdate ? true : false,
-                  isLoading: state is CreateUpdatePostLoading,
-                  onPressed: () {
-                    final images = context.read<MediaPickerCubit>().state.files;
-                    final mapsState = context.read<MapsCubit>().state;
-                    final long = mapsState.selectedMarker?.position.longitude;
-                    final late = mapsState.selectedMarker?.position.latitude;
-                    debugPrint("$long , $late");
-
-                    final toDeleteImagesIds =
-                        context
-                            .read<MediaPickerCubit>()
-                            .state
-                            .toDeleteImagesIds;
-                    cubit.createOrUpdatePost(
-                      images,
-                      toDeleteImagesIds,
-                      long,
-                      late,
-                    );
-                  },
-                  text:
-                      cubit.isUpdate
-                          ? "Update Property".tr(context)
-                          : "Create Property".tr(context),
-                ),
-                if (cubit.isUpdate && cubit.property?.isAd == false) ...[
-                  SizedBox(height: 8),
-                  AppButton(
-                    isLoading: state is CreateAdLoading,
-                    onPressed: () {
-                      cubit.createAd();
-                    },
-                    text: "Post Ad".tr(context),
-                  ),
-                ],
-              ],
-            ),
-          ),
           appBar: AppBar(
             title: Text(
               cubit.isUpdate
@@ -144,6 +99,51 @@ class CreateUpdatePostScreen extends StatelessWidget {
                       _LocalSizedBox(),
                       _PropertableFields(cubit: cubit, state: state),
                       SizedBox(height: 32),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            AppButton(
+                              isSecondary: cubit.isUpdate ? true : false,
+                              isLoading: state is CreateUpdatePostLoading,
+                              onPressed: () {
+                                final images = context.read<MediaPickerCubit>().state.files;
+                                final mapsState = context.read<MapsCubit>().state;
+                                final long = mapsState.selectedMarker?.position.longitude;
+                                final late = mapsState.selectedMarker?.position.latitude;
+                                debugPrint("$long , $late");
+
+                                final toDeleteImagesIds =
+                                    context
+                                        .read<MediaPickerCubit>()
+                                        .state
+                                        .toDeleteImagesIds;
+                                cubit.createOrUpdatePost(
+                                  images,
+                                  toDeleteImagesIds,
+                                  long,
+                                  late,
+                                );
+                              },
+                              text:
+                              cubit.isUpdate
+                                  ? "Update Property".tr(context)
+                                  : "Create Property".tr(context),
+                            ),
+                            if (cubit.isUpdate && cubit.property?.isAd == false) ...[
+                              SizedBox(height: 8),
+                              AppButton(
+                                isLoading: state is CreateAdLoading,
+                                onPressed: () {
+                                  cubit.createAd();
+                                },
+                                text: "Post Ad".tr(context),
+                              ),
+                            ],
+                          ],
+                        ),
+                      )
                     ],
                   ),
                 ),

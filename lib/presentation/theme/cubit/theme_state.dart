@@ -20,8 +20,8 @@ enum CubitTheme {
 
   ThemeData getThemeData() {
     return switch (this) {
-      CubitTheme.light => DarkBlueTheme.light(),
-      CubitTheme.dark => DarkBlueTheme.dark(),
+      CubitTheme.light => BlueTheme.light(),
+      CubitTheme.dark => BlueTheme.dark(),
     };
   }
 
