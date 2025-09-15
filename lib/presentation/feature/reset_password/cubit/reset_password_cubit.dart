@@ -20,10 +20,10 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
   }
 
   final formKey = GlobalKey<FormState>();
-  final TextEditingController emailController = TextEditingController(text: "alaishatmohammad@gmail.com");
-  final TextEditingController passwordController = TextEditingController(text: "password");
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   final TextEditingController passwordConfirmationController =
-      TextEditingController(text: "password");
+      TextEditingController();
   final ValueNotifier<String> passwordNotifier = ValueNotifier("");
 
   void sendPasswordResetEmail({bool validate = true}) async {

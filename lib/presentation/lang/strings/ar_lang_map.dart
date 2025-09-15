@@ -352,6 +352,7 @@ const Map<String, String> _arLangMap = {
   "Notifications": "الإشعارات",
   "Failed to load notifications": "فشل تحميل الإشعارات غير المقروءة",
   "you do not have the authorization to access this page.": "ليس لديك صلاحية للوصول لهذه الصفحة",
+  "Area is required": "حقل المساحة مطلوب",
 
   // backend:
   "New property matches your search": "عقار جديد يوافق بحثك",

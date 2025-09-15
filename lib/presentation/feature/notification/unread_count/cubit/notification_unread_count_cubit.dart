@@ -18,7 +18,7 @@ class NotificationUnreadCountCubit extends Cubit<NotificationUnreadCountState> {
   NotificationUnreadCountCubit(this._notificationRepo, this._localDataRepo)
     : super(const NotificationUnreadCountState.success(0)) {
     fetchCount();
-    _timer = Timer.periodic(const Duration(minutes: 2), (_) => fetchCount());
+    _timer = Timer.periodic(const Duration(seconds: 10), (_) => fetchCount());
   }
 
   Future<void> fetchCount() async {

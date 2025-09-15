@@ -13,8 +13,8 @@ class LoginCubit extends Cubit<AuthState> {
   final PushNotificationService _pushNotificationService;
 
   final formKey = GlobalKey<FormState>();
-  final emailController = TextEditingController(text: "test@test.test");
-  final passwordController = TextEditingController(text: "password");
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
   final ValueNotifier<String> passwordNotifier = ValueNotifier("");
 
   LoginCubit(this._authRepo, this._localDataRepo, this._pushNotificationService)

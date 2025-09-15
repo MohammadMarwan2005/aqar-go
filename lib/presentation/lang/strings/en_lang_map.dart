@@ -13,6 +13,7 @@ const Map<String, String> _enLangMap = {
   "unverified email": "Please verify your email address to continue.",
   "harassment": "Harassment",
   "spam": "Spam",
+  "superDeluxe": "super deluxe",
   "hateSpeech": "Hate Speech",
   "violence": "Violence",
   "scam": "Scam",

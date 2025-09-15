@@ -1,3 +1,4 @@
+import 'package:aqar_go/common/helpers/formating_helper.dart';
 import 'package:aqar_go/domain/model/property.dart';
 import 'package:aqar_go/presentation/lang/app_localization.dart';
 import 'package:aqar_go/presentation/widgets/expandable_text.dart';
@@ -61,7 +62,7 @@ class AdPrimaryInfo extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _TitleAndIcon(
-                  title: '${ad.property.price}',
+                  title: ad.property.price.formatWithCommas(),
                   icon: Icon(Icons.attach_money, size: 16, color: Colors.grey),
                 ),
                 _LocationWidget(

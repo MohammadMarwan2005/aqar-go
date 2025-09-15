@@ -46,10 +46,10 @@ class PostFormData extends Equatable {
   final FurnishedType apartmentFurnishedType;
 
   const PostFormData({
-    this.title = 'some title',
-    this.description = 'some desc',
-    this.area = '22',
-    this.price = '22',
+    this.title = '',
+    this.description = '',
+    this.area = '',
+    this.price = '',
     this.addressName = "",
     this.selectedPropertableEnum = PropertableEnum.land,
     this.floor = 0,

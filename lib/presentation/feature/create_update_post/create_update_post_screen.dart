@@ -541,6 +541,19 @@ class _PropertableFields extends StatelessWidget {
                 );
               },
             ),
+            SelectFieldWithTitle(
+              title: "Furnished Type".tr(context),
+              values: FurnishedType.values,
+              selectedValues: [state.formData.apartmentFurnishedType],
+              onSelect: (newValue) {
+                cubit.updateFormData(
+                      (currentFormData) => currentFormData.copyWith(
+                    apartmentFurnishedType: newValue,
+                  ),
+                );
+              },
+              enumToName: (enu) => enu.name.tr(context),
+            ),
             BooleanFiledWithTitle(
               title: "Has Elevator?".tr(context),
               value: state.formData.hasElevator,
@@ -570,19 +583,6 @@ class _PropertableFields extends StatelessWidget {
                       currentFormData.copyWith(hasGarage: newValue),
                 );
               },
-            ),
-            SelectFieldWithTitle(
-              title: "Furnished Type".tr(context),
-              values: FurnishedType.values,
-              selectedValues: [state.formData.apartmentFurnishedType],
-              onSelect: (newValue) {
-                cubit.updateFormData(
-                  (currentFormData) => currentFormData.copyWith(
-                    apartmentFurnishedType: newValue,
-                  ),
-                );
-              },
-              enumToName: (enu) => enu.name,
             ),
           ],
         );
