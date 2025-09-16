@@ -6,12 +6,8 @@ import '../cubit/lang_cubit.dart';
 class SwitchLangLabel extends StatelessWidget {
   const SwitchLangLabel({super.key});
 
-  final disableLanguages = false;
-
   @override
   Widget build(BuildContext context) {
-    if (disableLanguages) return const SizedBox.shrink();
-
     return BlocBuilder<LangCubit, LangState>(
       builder: (context, state) {
         if (state is LangLoaded) {
@@ -23,7 +19,7 @@ class SwitchLangLabel extends StatelessWidget {
                   onPressed: () {
                     context.read<LangCubit>().toggleLang(context);
                   },
-                  child: Text(state.getLabel())),
+                  child: Text(state.getLabel(context))),
             ],
           );
         } else {

@@ -14,7 +14,7 @@ class NotificationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final color =
-        (!notification.isRead) ? theme.colorScheme.primary : Colors.transparent;
+        (!notification.isRead) ? theme.colorScheme.primary.withOpacity(0.05) : Colors.transparent;
 
     return InkWell(
       onTap: () {
@@ -22,7 +22,7 @@ class NotificationCard extends StatelessWidget {
       },
       borderRadius: BorderRadius.circular(12),
       child: Container(
-        color: color.withOpacity(0.05),
+        color: color,
         child: Column(
           children: [
             ListTile(

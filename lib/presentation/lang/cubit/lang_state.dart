@@ -8,9 +8,10 @@ sealed class LangState with _$LangState {
 }
 
 extension LangLoadedX on LangLoaded {
-  String getLabel() {
-    if (lang == null || lang == "en") return "العربية";
-    return "English";
+  String getLabel(BuildContext context) {
+    if (lang == "en") return "العربية";
+    if(lang == "ar") return "English";
+    return "Switch Language".tr(context);
   }
 
   R when<R>({required R Function() initial, required R Function() loaded}) {

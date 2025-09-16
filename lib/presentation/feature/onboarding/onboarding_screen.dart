@@ -6,8 +6,10 @@ import 'package:aqar_go/presentation/theme/ui/switch_theme_widget.dart';
 import 'package:aqar_go/presentation/widgets/app_button.dart';
 import 'package:aqar_go/presentation/widgets/screen_horizontal_padding.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../../domain/repo/local_data_repo.dart';
+import '../../assets/assets.gen.dart';
 
 class OnboardingScreen extends StatelessWidget {
   final LocalDataRepo localDataRepo;
@@ -34,11 +36,19 @@ class OnboardingScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         CircleAvatar(
-                          radius: 15,
+                          radius: 20,
                           backgroundColor: theme.colorScheme.primary,
-                          child: Icon(
-                            Icons.home,
-                            color: theme.colorScheme.onPrimary,
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 8, top: 4),
+                            child: SvgPicture.asset(
+                              Assets.svgs.logo.path,
+                              // height: 32,
+                              // width: 32,
+                              colorFilter: ColorFilter.mode(
+                                theme.colorScheme.onPrimary,
+                                BlendMode.srcIn,
+                              ),
+                            ),
                           ),
                         ),
                         SizedBox(width: 8),
