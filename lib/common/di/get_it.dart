@@ -22,9 +22,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../data/api/api_service.dart';
 import '../../data/api/safe_api_caller.dart';
 import '../../data/repo/ad_repo_impl.dart';
+import '../../data/repo/contact_repo.dart';
 import '../../data/repo/notification_repo_impl.dart';
 import '../../data/repo/plan_repo_impl.dart';
 import '../../data/repo/review_repo_impl.dart';
+import '../../domain/repo/contact_repo.dart';
 import '../../domain/repo/local_data_repo.dart';
 import '../../domain/repo/plan_repo.dart';
 import '../../domain/repo/property_repo.dart';
@@ -39,6 +41,7 @@ import '../../presentation/feature/my_properties/cubit/my_properties_cubit.dart'
 import '../../presentation/feature/profile/show/profile_cubit.dart';
 import '../../presentation/feature/profile/update/update_profile_cubit.dart';
 import '../../presentation/feature/reset_password/cubit/reset_password_cubit.dart';
+import '../../presentation/feature/telegram_link/telegram_link_cubit.dart';
 import '../../presentation/lang/cubit/lang_cubit.dart';
 
 final getIt = GetIt.instance;
@@ -113,6 +116,9 @@ Future<void> di() async {
   getIt.registerLazySingleton<NotificationRepo>(
     () => NotificationRepoImpl(getIt(), getIt()),
   );
+  getIt.registerLazySingleton<ContactRepo>(
+    () => ContactRepoImpl(getIt(), getIt()),
+  );
 
   getIt.registerLazySingleton<LocationManager>(() => LocationManager());
   getIt.registerLazySingleton<SharePlus>(() => SharePlus.instance);
@@ -128,8 +134,12 @@ Future<void> di() async {
 
   // cubits:
   getIt.registerFactory<LangCubit>(() => LangCubit(getIt()));
-  getIt.registerFactory<LoginCubit>(() => LoginCubit(getIt(), getIt(), getIt()));
-  getIt.registerFactory<RegisterCubit>(() => RegisterCubit(getIt(), getIt(), getIt()));
+  getIt.registerFactory<LoginCubit>(
+    () => LoginCubit(getIt(), getIt(), getIt()),
+  );
+  getIt.registerFactory<RegisterCubit>(
+    () => RegisterCubit(getIt(), getIt(), getIt()),
+  );
 
   getIt.registerFactory<CreateUpdatePostCubit>(
     () => CreateUpdatePostCubit(getIt(), getIt()),
@@ -145,4 +155,5 @@ Future<void> di() async {
     () => MediaPickerCubit(ImagePicker()),
   );
   getIt.registerFactory<MapsCubit>(() => MapsCubit(getIt()));
+  getIt.registerFactory<TelegramLinkCubit>(() => TelegramLinkCubit(getIt()));
 }

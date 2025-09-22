@@ -186,4 +186,11 @@ abstract class APIService {
 
   @GET(APIConstants.getUnreadNotificationsCountUrl)
   Future<APIResponse<NotificationCountResponse>> getUnreadNotificationsCount();
+
+  @GET(APIConstants.getTelegramLinkUrl)
+  Future<APIResponse<String>> getTelegramLink();
+
+  @GET(APIConstants.getTelegramUsernameUrl)
+  Future<APIResponse<String>> getTelegramUsername();
+  
 }

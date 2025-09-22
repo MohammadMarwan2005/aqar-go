@@ -2,6 +2,7 @@ import 'package:aqar_go/presentation/feature/plans/cubit/plans_cubit.dart';
 import 'package:aqar_go/presentation/feature/profile/show/profile_cubit.dart';
 import 'package:aqar_go/presentation/feature/profile/widgets/profile_avatar.dart';
 import 'package:aqar_go/presentation/feature/profile/widgets/settings_list_item.dart';
+import 'package:aqar_go/presentation/feature/telegram_link/telegram_link_cubit.dart';
 import 'package:aqar_go/presentation/feature/verify_email/verify_instruction.dart';
 import 'package:aqar_go/presentation/helper/navigation_helper.dart';
 import 'package:aqar_go/presentation/helper/ui_helper.dart';
@@ -12,6 +13,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../domain/model/profile/user_profile.dart';
 import '../../../assets/assets.gen.dart';
+import '../../../helper/url_helper.dart';
 
 class ProfileContent extends StatelessWidget {
   final UserProfile userProfile;
@@ -108,6 +110,15 @@ class ProfileContent extends StatelessWidget {
           title: "Privacy Policy".tr(context),
           onTap: () {
             context.pushRoute(Routes.privacyPolicy);
+          },
+        ),
+        SettingsListItem(
+          iconAsset: Assets.svgs.telegram.path,
+          title: "Follow us on Telegram".tr(context),
+          onTap: () {
+            openUrl(context.read<TelegramLinkCubit>().state.getLink(), () {
+              context.showMySnackBar("Failed to open this link!".tr(context));
+            });
           },
         ),
       ],

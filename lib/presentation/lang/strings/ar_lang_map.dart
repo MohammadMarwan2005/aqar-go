@@ -354,6 +354,7 @@ const Map<String, String> _arLangMap = {
   "you do not have the authorization to access this page.": "ليس لديك صلاحية للوصول لهذه الصفحة",
   "Area is required": "حقل المساحة مطلوب",
   "Switch Language": "تغيير اللغة",
+  "Follow us on Telegram": "تابعنا على تيليجرام",
 
   // backend:
   "New property matches your search": "عقار جديد يوافق بحثك",

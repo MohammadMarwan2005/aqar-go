@@ -20,3 +20,5 @@ String getWhatsappUrl(String number) {
 }
 
 String getCallUrl(String number) => "tel:$number";
+
+String getTelegramUrl(String username) => "https://t.me/$username";

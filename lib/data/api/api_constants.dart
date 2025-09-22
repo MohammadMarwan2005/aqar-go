@@ -33,6 +33,8 @@ class APIConstants {
   static const String downgradeUrl = "$baseUrl/user/downgrade";
   static const String getUnreadNotificationsCountUrl = "$baseUrl/fcm/notifications/unread-count";
   static const String getNotificationsUrl = "$baseUrl/fcm/notifications";
+  static const String getTelegramLinkUrl = "$baseUrl/telegram/username";
+  static const String getTelegramUsernameUrl = "$baseUrl/telegram/link";
 
   static const int unprocessableEntityCode = 422; // validation error
 }

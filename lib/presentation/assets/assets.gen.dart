@@ -89,6 +89,9 @@ class $AssetsSvgsGen {
   /// File path: assets/svgs/shop.svg
   SvgGenImage get shop => const SvgGenImage('assets/svgs/shop.svg');
 
+  /// File path: assets/svgs/telegram.svg
+  SvgGenImage get telegram => const SvgGenImage('assets/svgs/telegram.svg');
+
   /// File path: assets/svgs/theme_contrast.svg
   SvgGenImage get themeContrast =>
       const SvgGenImage('assets/svgs/theme_contrast.svg');
@@ -115,6 +118,7 @@ class $AssetsSvgsGen {
     office,
     policy,
     shop,
+    telegram,
     themeContrast,
     whatsappLogo,
     whatsappLogo2,
