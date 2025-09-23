@@ -7,20 +7,25 @@ on:
   workflow_dispatch:
 
 env:
-  FLUTTER_VERSION: '3.29.3'
+  FLUTTER_VERSION: '3.35.1'
   NODE_VERSION: '20'
+  ANDROID_HOME: /usr/local/lib/android/sdk
+  NDK_VERSION: '29.0.13113456'
 
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
+      # Cache pub packages & build outputs
       - name: Cache Flutter packages
         uses: actions/cache@v3
         with:
-          path: ~/.pub-cache
+          path: |
+            ~/.pub-cache
+            build/
           key: ${{ runner.os }}-flutter-pub-cache-${{ hashFiles('**/pubspec.lock') }}
           restore-keys: ${{ runner.os }}-flutter-pub-cache-
 
@@ -32,18 +37,8 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Create .env file from GitHub secret
-        run: echo "${{ secrets.MY_ENV_FILE }}" > .env
-
-      - name: Build APK
-        run: flutter build apk --release
-
-      - name: Cache Node modules
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ env.NODE_VERSION }}-npm-cache
-          restore-keys: ${{ runner.os }}-node-
+      - name: Flutter doctor
+        run: flutter doctor -v
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -53,7 +48,41 @@ jobs:
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
 
+      - name: Decode Keystore and Setup key.properties
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+        run: |
+          echo "$KEYSTORE_BASE64" | base64 -d > ./my-release-key.keystore
+          echo -e "storePassword=$KEYSTORE_PASSWORD\nkeyPassword=$KEY_PASSWORD\nkeyAlias=$KEY_ALIAS\nstoreFile=$(pwd)/my-release-key.keystore" > android/key.properties
+          ls -l android/
+          cat android/key.properties
+
+      - name: Create .env file from GitHub secret
+        run: echo "${{ secrets.MY_ENV_FILE }}" > .env
+
+      # Install NDK + accept licenses
+      - name: Install required Android SDK components
+        run: |
+          yes | sdkmanager --licenses
+          sdkmanager "ndk;${NDK_VERSION}"
+        env:
+          PATH: $ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH
+
+      - name: Build APK
+        run: flutter build apk --release
+
+      - name: Upload APK as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
+          retention-days: 1
+
       - name: Authenticate and Deploy to Firebase App Distribution
+        if: github.ref == 'refs/heads/master'
         env:
           FIREBASE_CREDENTIALS: ${{ secrets.FIREBASE_CREDENTIALS }}
         run: |
@@ -62,4 +91,4 @@ jobs:
           firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk \
             --app "1:759335379864:android:6bed5dad18690c487401ed" \
             --groups "Team" \
-            --release-notes "🚀 New release from CI/CD"
+            --release-notes "🚀 New release from GitHub CI/CD"
