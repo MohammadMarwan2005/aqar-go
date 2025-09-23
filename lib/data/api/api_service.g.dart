@@ -1188,7 +1188,7 @@ class _APIService implements APIService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://116.203.254.150:8001/api/telegram/username',
+            'http://116.203.254.150:8001/api/telegram/link',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -1218,7 +1218,7 @@ class _APIService implements APIService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://116.203.254.150:8001/api/telegram/link',
+            'http://116.203.254.150:8001/api/telegram/username',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -1230,6 +1230,36 @@ class _APIService implements APIService {
       _value = APIResponse<String>.fromJson(
         _result.data!,
         (json) => json as String,
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<APIResponse<AqarGoLinks>> getAqarGoLinks() async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<APIResponse<AqarGoLinks>>(
+      Options(method: 'GET', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            'http://116.203.254.150:8001/api/links',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late APIResponse<AqarGoLinks> _value;
+    try {
+      _value = APIResponse<AqarGoLinks>.fromJson(
+        _result.data!,
+        (json) => AqarGoLinks.fromJson(json as Map<String, dynamic>),
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);

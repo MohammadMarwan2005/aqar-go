@@ -351,21 +351,27 @@ const Map<String, String> _arLangMap = {
   "Invalid input.": "إدخال غير صالح",
   "Notifications": "الإشعارات",
   "Failed to load notifications": "فشل تحميل الإشعارات غير المقروءة",
-  "you do not have the authorization to access this page.": "ليس لديك صلاحية للوصول لهذه الصفحة",
+  "you do not have the authorization to access this page.":
+      "ليس لديك صلاحية للوصول لهذه الصفحة",
   "Area is required": "حقل المساحة مطلوب",
   "Switch Language": "تغيير اللغة",
   "Follow us on Telegram": "تابعنا على تيليجرام",
+  "Follow us on Github": "تابعنا على جيتهاب",
 
   // backend:
   "New property matches your search": "عقار جديد يوافق بحثك",
-  "A property was added that matches your previous search.": "تمت إضافة عقار جديد يوافق بحثك.",
+  "A property was added that matches your previous search.":
+      "تمت إضافة عقار جديد يوافق بحثك.",
   "Your email address is not verified.": "لم يتم تأكيد بريدك الإلكتروني بعد.",
   "unverified email": "يرجى تأكيد بريدك الإلكتروني أولا",
-  "Some one added a property that matches your previous search.": "أحدهم قام بإضافة عقار يوافق بحثك الذي بحثت سابقاً",
+  "Some one added a property that matches your previous search.":
+      "أحدهم قام بإضافة عقار يوافق بحثك الذي بحثت سابقاً",
   "ad that you we looking for ": "تمت إضافة عقار يوافق بحثك سابقا.",
   "The selected code is invalid.": "الرمز المدخل غير صحيح",
-  "your account has been blocked": "تم حظر حسابك، يرجى التواصل معنا لمرفة التفاصيل.",
-  "Token not valid": "انتهت صلاحية الجلسة، يرجى تسجيل الخروج وتسجيل الدخول مرة اخرى",
+  "your account has been blocked":
+      "تم حظر حسابك، يرجى التواصل معنا لمرفة التفاصيل.",
+  "Token not valid":
+      "انتهت صلاحية الجلسة، يرجى تسجيل الخروج وتسجيل الدخول مرة اخرى",
   "email not exist or invalid": "الإيميل غير موجود أو غير صالح",
   "user retrieved successfully": "تم جلب المستخدم بنجاح",
   "users retrieved successfully": "تم جلب المستخدمين بنجاح",

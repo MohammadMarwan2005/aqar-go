@@ -78,10 +78,10 @@ String toString() {
 
 
 class _Success implements TelegramLinkState {
-  const _Success({required this.link});
+  const _Success({required this.links});
   
 
- final  String link;
+ final  AqarGoLinks links;
 
 /// Create a copy of TelegramLinkState
 /// with the given fields replaced by the non-null parameter values.
@@ -93,16 +93,16 @@ _$SuccessCopyWith<_Success> get copyWith => __$SuccessCopyWithImpl<_Success>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Success&&(identical(other.link, link) || other.link == link));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Success&&(identical(other.links, links) || other.links == links));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,link);
+int get hashCode => Object.hash(runtimeType,links);
 
 @override
 String toString() {
-  return 'TelegramLinkState.success(link: $link)';
+  return 'TelegramLinkState.success(links: $links)';
 }
 
 
@@ -113,7 +113,7 @@ abstract mixin class _$SuccessCopyWith<$Res> implements $TelegramLinkStateCopyWi
   factory _$SuccessCopyWith(_Success value, $Res Function(_Success) _then) = __$SuccessCopyWithImpl;
 @useResult
 $Res call({
- String link
+ AqarGoLinks links
 });
 
 
@@ -130,10 +130,10 @@ class __$SuccessCopyWithImpl<$Res>
 
 /// Create a copy of TelegramLinkState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? link = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? links = null,}) {
   return _then(_Success(
-link: null == link ? _self.link : link // ignore: cast_nullable_to_non_nullable
-as String,
+links: null == links ? _self.links : links // ignore: cast_nullable_to_non_nullable
+as AqarGoLinks,
   ));
 }
 

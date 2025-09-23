@@ -116,9 +116,30 @@ class ProfileContent extends StatelessWidget {
           iconAsset: Assets.svgs.telegram.path,
           title: "Follow us on Telegram".tr(context),
           onTap: () {
-            openUrl(context.read<TelegramLinkCubit>().state.getLink(), () {
-              context.showMySnackBar("Failed to open this link!".tr(context));
-            });
+            openUrl(
+              context.read<TelegramLinkCubit>().state.getLink().telegram,
+              () {
+                context.showMySnackBar("Failed to open this link!".tr(context));
+              },
+            );
+          },
+        ),
+
+        SettingsListItem(
+          iconAsset: Assets.svgs.github.path,
+          title: "Follow us on Github".tr(context),
+          onTap: () {
+            openUrl(
+              context.read<TelegramLinkCubit>().state.getLink().github,
+              () {
+                context.showMySnackBar("Failed to open this link!".tr(context));
+              },
+            );
+          },
+        ),
+        BlocBuilder<TelegramLinkCubit, TelegramLinkState>(
+          builder: (context, state) {
+            return SizedBox.shrink();
           },
         ),
       ],

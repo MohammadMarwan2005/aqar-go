@@ -16,6 +16,7 @@ It enables users to seamlessly search, view, and manage property ads — with su
 - **Google Maps Integration** – View properties on an interactive map.
 - **Near You & Recommendations** – Personalized property suggestions.
 - **Favorites & Reviews** – Save ads, leave reviews, and report inappropriate ads.
+- **Notify Me** - Get notified when a new ad that matches your search is added.
 - **Real-Time Notifications** – Powered by Firebase Messaging and database triggers.
 - **Deep Links** – Share property ads directly via links.
 - **Multi-language Support** – Full translation for front-end and back-end messages.

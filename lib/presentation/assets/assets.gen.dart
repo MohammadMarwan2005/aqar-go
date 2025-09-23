@@ -60,6 +60,9 @@ class $AssetsSvgsGen {
   /// File path: assets/svgs/diamond.svg
   SvgGenImage get diamond => const SvgGenImage('assets/svgs/diamond.svg');
 
+  /// File path: assets/svgs/github.svg
+  SvgGenImage get github => const SvgGenImage('assets/svgs/github.svg');
+
   /// File path: assets/svgs/land.svg
   SvgGenImage get land => const SvgGenImage('assets/svgs/land.svg');
 
@@ -109,6 +112,7 @@ class $AssetsSvgsGen {
     apartment,
     darkMode,
     diamond,
+    github,
     land,
     language,
     lightMode,

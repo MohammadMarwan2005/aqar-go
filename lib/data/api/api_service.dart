@@ -18,6 +18,7 @@ import '../model/activate_selected_ads/activate_selected_ads_request.dart';
 import '../model/ad/response/create_ad_response.dart';
 import '../model/auth/login_request.dart';
 import '../model/auth/register_request.dart';
+import '../model/links/aqar_go_links.dart';
 import '../model/profile/user/data_user.dart';
 import '../model/paging/page_request.dart';
 import '../model/report/create/create_report_request.dart';
@@ -192,5 +193,7 @@ abstract class APIService {
 
   @GET(APIConstants.getTelegramUsernameUrl)
   Future<APIResponse<String>> getTelegramUsername();
-  
+
+  @GET(APIConstants.getAqarGoLinksUrl)
+  Future<APIResponse<AqarGoLinks>> getAqarGoLinks();
 }

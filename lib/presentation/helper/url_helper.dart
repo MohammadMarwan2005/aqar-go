@@ -22,3 +22,5 @@ String getWhatsappUrl(String number) {
 String getCallUrl(String number) => "tel:$number";
 
 String getTelegramUrl(String username) => "https://t.me/$username";
+
+String getGithubRepoLink(String username, String repoName) => "https://github.com/$username/$repoName";
