@@ -47,7 +47,7 @@ class UserNavShell extends StatelessWidget {
               create: (context) => RecommendedAdsCubit(getIt()),
             ),
             BlocProvider<NotificationUnreadCountCubit>(
-              create: (context) => NotificationUnreadCountCubit(getIt(), getIt()),
+              create: (context) => NotificationUnreadCountCubit(getIt(), getIt(), getIt()),
             ),
           ],
           child: HomeScreen(),

@@ -7,11 +7,11 @@ part 'data_app_remote_config.g.dart';
 @JsonSerializable()
 class DataAppRemoteConfig {
   final String baseUrl;
-  final int? notificationFetchInterval;
+  final int notificationFetchInterval;
 
   const DataAppRemoteConfig({
     required this.baseUrl,
-    this.notificationFetchInterval,
+    required this.notificationFetchInterval,
   });
 
   factory DataAppRemoteConfig.fromJson(Map<String, dynamic> json) =>

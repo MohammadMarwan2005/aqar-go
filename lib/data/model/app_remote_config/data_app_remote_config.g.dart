@@ -10,7 +10,7 @@ DataAppRemoteConfig _$DataAppRemoteConfigFromJson(Map<String, dynamic> json) =>
     DataAppRemoteConfig(
       baseUrl: json['baseUrl'] as String,
       notificationFetchInterval:
-          (json['notificationFetchInterval'] as num?)?.toInt(),
+          (json['notificationFetchInterval'] as num).toInt(),
     );
 
 Map<String, dynamic> _$DataAppRemoteConfigToJson(

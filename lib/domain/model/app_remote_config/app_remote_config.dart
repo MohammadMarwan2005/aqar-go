@@ -1,6 +1,6 @@
 class AppRemoteConfig {
   final String baseUrl;
-  final int? notificationFetchInterval;
+  final int notificationFetchInterval;
 
   const AppRemoteConfig({
     required this.baseUrl,

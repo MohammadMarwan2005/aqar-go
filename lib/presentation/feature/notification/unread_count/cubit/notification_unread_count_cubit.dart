@@ -1,6 +1,8 @@
 import 'dart:async';
+
 import 'package:aqar_go/common/helpers/logging_helper.dart';
 import 'package:aqar_go/domain/model/domain_error.dart';
+import 'package:aqar_go/domain/repo/app_remote_config_repo.dart';
 import 'package:aqar_go/domain/repo/local_data_repo.dart';
 import 'package:aqar_go/domain/repo/notification_repo.dart';
 import 'package:bloc/bloc.dart';
@@ -13,12 +15,20 @@ part 'notification_unread_count_state.dart';
 class NotificationUnreadCountCubit extends Cubit<NotificationUnreadCountState> {
   final NotificationRepo _notificationRepo;
   final LocalDataRepo _localDataRepo;
-  Timer? _timer; // Timer for periodic fetching every 2 minutes
+  final AppRemoteConfigRepo _remoteConfigRepo;
 
-  NotificationUnreadCountCubit(this._notificationRepo, this._localDataRepo)
-    : super(const NotificationUnreadCountState.success(0)) {
+  Timer? _timer;
+
+  NotificationUnreadCountCubit(
+    this._notificationRepo,
+    this._localDataRepo,
+    this._remoteConfigRepo,
+  ) : super(const NotificationUnreadCountState.success(0)) {
     fetchCount();
-    _timer = Timer.periodic(const Duration(seconds: 10), (_) => fetchCount());
+    _timer = Timer.periodic(
+      Duration(seconds: _getFetchNotificationsInterval()),
+      (_) => fetchCount(),
+    );
   }
 
   Future<void> fetchCount() async {
@@ -40,6 +50,10 @@ class NotificationUnreadCountCubit extends Cubit<NotificationUnreadCountState> {
 
   void resetToZero() {
     emit(const NotificationUnreadCountState.success(0));
+  }
+
+  int _getFetchNotificationsInterval() {
+    return _remoteConfigRepo.config.notificationFetchInterval;
   }
 
   @override
