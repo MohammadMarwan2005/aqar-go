@@ -30,7 +30,7 @@ import 'api_constants.dart';
 part 'api_service.g.dart';
 
 // dart run build_runner watch -d
-@RestApi(baseUrl: APIConstants.baseUrl)
+@RestApi()
 abstract class APIService {
   factory APIService(Dio dio, {String baseUrl}) = _APIService;
 

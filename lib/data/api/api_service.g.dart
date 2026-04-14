@@ -9,9 +9,7 @@ part of 'api_service.dart';
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element,unnecessary_string_interpolations
 
 class _APIService implements APIService {
-  _APIService(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'http://116.203.254.150:8001/api';
-  }
+  _APIService(this._dio, {this.baseUrl, this.errorLogger});
 
   final Dio _dio;
 
@@ -30,7 +28,7 @@ class _APIService implements APIService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://116.203.254.150:8001/api/auth/login',
+            '/auth/login',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -63,7 +61,7 @@ class _APIService implements APIService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://116.203.254.150:8001/api/auth/register',
+            '/auth/register',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -93,7 +91,7 @@ class _APIService implements APIService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://116.203.254.150:8001/api/property/create',
+            '/property/create',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -126,7 +124,7 @@ class _APIService implements APIService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://116.203.254.150:8001/api/property/update/${id}',
+            '/property/update/${id}',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -156,7 +154,7 @@ class _APIService implements APIService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://116.203.254.150:8001/api/profile/getMyProfile',
+            '/profile/getMyProfile',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -190,7 +188,7 @@ class _APIService implements APIService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://116.203.254.150:8001/api/property/getUserProperties',
+            '/property/getUserProperties',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -226,7 +224,7 @@ class _APIService implements APIService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://116.203.254.150:8001/api/ad/create',
+            '/ad/create',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -256,7 +254,7 @@ class _APIService implements APIService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://116.203.254.150:8001/api/ad/show/${id}',
+            '/ad/show/${id}',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -286,7 +284,7 @@ class _APIService implements APIService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://116.203.254.150:8001/api/ad/getUserAds',
+            '/ad/getUserAds',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -327,7 +325,7 @@ class _APIService implements APIService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://116.203.254.150:8001/api/ad/search',
+            '/ad/search',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -363,7 +361,7 @@ class _APIService implements APIService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://116.203.254.150:8001/api/ad/notifyme',
+            '/ad/notifyme',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -397,7 +395,7 @@ class _APIService implements APIService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://116.203.254.150:8001/api/ad/nearToYou',
+            '/ad/nearToYou',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -434,7 +432,7 @@ class _APIService implements APIService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://116.203.254.150:8001/api/ad/recommend',
+            '/ad/recommend',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -472,7 +470,7 @@ class _APIService implements APIService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://116.203.254.150:8001/api/ad/similarTo/${adId}',
+            '/ad/similarTo/${adId}',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -508,7 +506,7 @@ class _APIService implements APIService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://116.203.254.150:8001/api/ad/activateSelectedAds',
+            '/ad/activateSelectedAds',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -541,7 +539,7 @@ class _APIService implements APIService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://116.203.254.150:8001/api/ad/unactivate/${id}',
+            '/ad/unactivate/${id}',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -571,7 +569,7 @@ class _APIService implements APIService {
       Options(method: 'DELETE', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://116.203.254.150:8001/api/ad/delete/${id}',
+            '/ad/delete/${id}',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -601,7 +599,7 @@ class _APIService implements APIService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://116.203.254.150:8001/api/email/verification-notification',
+            '/email/verification-notification',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -634,7 +632,7 @@ class _APIService implements APIService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://116.203.254.150:8001/api/auth/forgetPassword',
+            '/auth/forgetPassword',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -667,7 +665,7 @@ class _APIService implements APIService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://116.203.254.150:8001/api/auth/resetPassword',
+            '/auth/resetPassword',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -697,7 +695,7 @@ class _APIService implements APIService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://116.203.254.150:8001/api/profile/update',
+            '/profile/update',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -730,7 +728,7 @@ class _APIService implements APIService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://116.203.254.150:8001/api/report/create',
+            '/report/create',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -760,7 +758,7 @@ class _APIService implements APIService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://116.203.254.150:8001/api/ad/${adId}/reviews',
+            '/ad/${adId}/reviews',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -797,7 +795,7 @@ class _APIService implements APIService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://116.203.254.150:8001/api/reviews',
+            '/reviews',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -830,7 +828,7 @@ class _APIService implements APIService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://116.203.254.150:8001/api/reviews',
+            '/reviews',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -864,7 +862,7 @@ class _APIService implements APIService {
       Options(method: 'PUT', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://116.203.254.150:8001/api/reviews/${reviewId}',
+            '/reviews/${reviewId}',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -894,7 +892,7 @@ class _APIService implements APIService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://116.203.254.150:8001/api/user/ad/${adId}/reviews',
+            '/user/ad/${adId}/reviews',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -931,7 +929,7 @@ class _APIService implements APIService {
       Options(method: 'DELETE', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://116.203.254.150:8001/api/reviews/${reviewId}',
+            '/reviews/${reviewId}',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -961,7 +959,7 @@ class _APIService implements APIService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://116.203.254.150:8001/api/favorites/${adId}',
+            '/favorites/${adId}',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -991,7 +989,7 @@ class _APIService implements APIService {
       Options(method: 'DELETE', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://116.203.254.150:8001/api/favorites/${adId}',
+            '/favorites/${adId}',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -1024,7 +1022,7 @@ class _APIService implements APIService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://116.203.254.150:8001/api/favorites',
+            '/favorites',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -1057,7 +1055,7 @@ class _APIService implements APIService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://116.203.254.150:8001/api/user/upgrade',
+            '/user/upgrade',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -1087,7 +1085,7 @@ class _APIService implements APIService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://116.203.254.150:8001/api/user/downgrade',
+            '/user/downgrade',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -1121,7 +1119,7 @@ class _APIService implements APIService {
           Options(method: 'GET', headers: _headers, extra: _extra)
               .compose(
                 _dio.options,
-                'http://116.203.254.150:8001/api/fcm/notifications',
+                '/fcm/notifications',
                 queryParameters: queryParameters,
                 data: _data,
               )
@@ -1157,7 +1155,7 @@ class _APIService implements APIService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://116.203.254.150:8001/api/fcm/notifications/unread-count',
+            '/fcm/notifications/unread-count',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -1188,7 +1186,7 @@ class _APIService implements APIService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://116.203.254.150:8001/api/telegram/link',
+            '/telegram/link',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -1218,7 +1216,7 @@ class _APIService implements APIService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://116.203.254.150:8001/api/telegram/username',
+            '/telegram/username',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -1248,7 +1246,7 @@ class _APIService implements APIService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://116.203.254.150:8001/api/links',
+            '/links',
             queryParameters: queryParameters,
             data: _data,
           )

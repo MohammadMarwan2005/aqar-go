@@ -12,6 +12,7 @@ import 'package:aqar_go/presentation/routing/routing_use_case.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
@@ -22,10 +23,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../data/api/api_service.dart';
 import '../../data/api/safe_api_caller.dart';
 import '../../data/repo/ad_repo_impl.dart';
+import '../../data/repo/app_remote_config_repo_impl.dart';
 import '../../data/repo/contact_repo.dart';
 import '../../data/repo/notification_repo_impl.dart';
 import '../../data/repo/plan_repo_impl.dart';
 import '../../data/repo/review_repo_impl.dart';
+import '../../domain/repo/app_remote_config_repo.dart';
 import '../../domain/repo/contact_repo.dart';
 import '../../domain/repo/local_data_repo.dart';
 import '../../domain/repo/plan_repo.dart';
@@ -59,6 +62,15 @@ Future<void> di() async {
   final token = await pushNotificationService.getDeviceToken();
   debugLog(token.toString());
 
+  final remoteConfigRepo = AppRemoteConfigRepoImpl(
+    FirebaseRemoteConfig.instance,
+  );
+  await remoteConfigRepo.init();
+
+  getIt.registerLazySingleton<AppRemoteConfigRepo>(
+        () => remoteConfigRepo,
+  );
+
   getIt.registerLazySingleton<PushNotificationService>(
     () => pushNotificationService,
   );
@@ -68,18 +80,20 @@ Future<void> di() async {
   getIt.registerLazySingleton<Dio>(() {
     final dio = Dio();
 
+    final config = getIt<AppRemoteConfigRepo>().config;
+
     dio.options = BaseOptions(
+      baseUrl: config.baseUrl,
       connectTimeout: const Duration(seconds: 30),
       receiveTimeout: const Duration(seconds: 30),
       headers: {'Accept': 'application/json'},
     );
 
-    final localDataRepo = getIt<LocalDataRepo>();
 
     dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
-          final token = await localDataRepo.getToken();
+          final token = await getIt<LocalDataRepo>().getToken();
           if (token != null && token.isNotEmpty) {
             options.headers['Authorization'] = 'Bearer $token';
           }
